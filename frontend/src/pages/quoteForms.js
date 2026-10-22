@@ -4,6 +4,7 @@
 // Ranges mirror backend/calculators/<service>.js (the server is the source of truth and re-validates).
 
 export const quoteForms = {
+  calculation: [{ key: "surface", unit: "m2", min: 1, max: 50000, step: "any" }],
   framing: [
     { key: "length", unit: "m", min: 6, max: 150, step: "any" },
     { key: "width", unit: "m", min: 6, max: 40, step: "any" },

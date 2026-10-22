@@ -196,6 +196,26 @@ await test("quote: pending service, bad numbers, bad profile, bad action -> 400"
   assert.equal((await quote(undefined)).status, 400);
 });
 
+await test("quote: etude (calculation) - 15 DT/m2 up to 100 m2, 10 DT/m2 on the whole surface above, no taxes", async () => {
+  const price = async (surface) => (await quote({ action: "create", service: "calculation", surface })).json.result;
+  assert.equal((await price(80)).total, 1200);
+  assert.equal((await price(100)).total, 1500); // 100 m2 is still in the first tier
+  assert.equal("ratePerM2" in (await price(100)), false, "the rate per m2 must not be returned");
+  assert.equal((await price(100.5)).total, 1005); // above 100: whole surface at 10
+  assert.equal((await price(150)).total, 1500);
+  assert.equal((await price(1)).total, 15);
+  const r = await price(80);
+  assert.equal(r.total, r.subtotal);
+  assert.equal("tax" in r, false, "no tax field: the page shows the total excl. tax");
+  assert.equal("fodec" in r, false);
+  assert.equal(JSON.stringify(r).includes("15"), false, "no trace of the 15 DT rate in the response");
+});
+
+await test("quote: etude rejects 0, negative, text, missing and huge surfaces (400)", async () => {
+  for (const surface of [0, -5, "abc", undefined, null, 50001])
+    assert.equal((await quote({ action: "create", service: "calculation", surface })).status, 400, String(surface));
+});
+
 await test("quote: insert failure -> 500", async () => {
   assert.equal((await quote(framing, user, fakeAdmin({ failQuote: true }))).status, 500);
 });

@@ -360,6 +360,10 @@
   border: 1px solid var(--pc-steel);
 }
 
+.qresult__tiles--1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .qresult__tiles div {
   display: flex;
   flex-direction: column;

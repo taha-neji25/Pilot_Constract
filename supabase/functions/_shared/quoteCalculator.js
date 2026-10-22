@@ -5,6 +5,7 @@
 // { input } | { error } and `calculate(input)` -> { currency, subtotal, tax, total, ... }, register it below,
 // and add its form to frontend/src/pages/quoteForms.js (that is also what marks the service as available in the UI).
 
+import * as calculation from "./calculators/calculation.js";
 import * as framing from "./calculators/framing.js";
 
 export const SERVICE_IDS = [
@@ -19,6 +20,7 @@ export const SERVICE_IDS = [
 ];
 
 const CALCULATORS = {
+  calculation,
   framing,
 };
 

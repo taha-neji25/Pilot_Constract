@@ -251,7 +251,16 @@ export default function Quote() {
                 <p className="qresult__label">{quote.resultTitle}</p>
                 <p className="qresult__service">{serviceTitle(result.input.service)}</p>
                 <p className="qresult__total">{money(r.total, r.currency)}</p>
-                <p className="qresult__total-label">{quote.total}</p>
+                <p className="qresult__total-label">{r.tax == null ? quote.totalExclTax : quote.total}</p>
+
+                {r.surface != null && (
+                  <div className="qresult__tiles qresult__tiles--1">
+                    <div>
+                      <strong>{num(r.surface)} {quote.units.m2}</strong>
+                      <span>{quote.surface}</span>
+                    </div>
+                  </div>
+                )}
 
                 {r.steelKg != null && (
                   <div className="qresult__tiles">
@@ -270,18 +279,20 @@ export default function Quote() {
                   </div>
                 )}
 
-                <dl className="qresult__rows">
-                  <dt>{quote.subtotal}</dt>
-                  <dd>{money(r.subtotal, r.currency)}</dd>
-                  {r.fodec != null && (
-                    <>
-                      <dt>{quote.fodec}</dt>
-                      <dd>{money(r.fodec, r.currency)}</dd>
-                    </>
-                  )}
-                  <dt>{quote.tax}</dt>
-                  <dd>{money(r.tax, r.currency)}</dd>
-                </dl>
+                {r.tax != null && (
+                  <dl className="qresult__rows">
+                    <dt>{quote.subtotal}</dt>
+                    <dd>{money(r.subtotal, r.currency)}</dd>
+                    {r.fodec != null && (
+                      <>
+                        <dt>{quote.fodec}</dt>
+                        <dd>{money(r.fodec, r.currency)}</dd>
+                      </>
+                    )}
+                    <dt>{quote.tax}</dt>
+                    <dd>{money(r.tax, r.currency)}</dd>
+                  </dl>
+                )}
                 <p className="qresult__note">{quote.placeholder}</p>
               </div>
             ) : (
@@ -334,7 +345,9 @@ export default function Quote() {
                 {iconFor(q.input.service) && <img src={iconFor(q.input.service)} alt="" aria-hidden="true" />}
                 <span className="qhistory__name">{serviceTitle(q.input.service)}</span>
                 <span className="qhistory__kg">
-                  {num(q.result.steelKg ?? q.input.weightKg)} {quote.units.kg}
+                  {q.input.surface != null
+                    ? `${num(q.input.surface)} ${quote.units.m2}`
+                    : `${num(q.result.steelKg ?? q.input.weightKg)} ${quote.units.kg}`}
                 </span>
                 <strong>{money(q.result.total, q.result.currency)}</strong>
               </li>
