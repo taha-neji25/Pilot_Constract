@@ -45,12 +45,31 @@ bypassing it with the public key. The function keeps working with the switch off
 Open <https://pilotconstract.com>: create an account, log in, run a framing quote, refresh a deep link such as `/devis`.
 Supabase dashboard → **Table Editor → profiles / quotes** shows the new rows.
 
+## Admin dashboard (`/admin`)
+
+Admins see an **Admin** link in the navbar. The page has three tabs:
+
+- **Clients**: every account (name, phone, e-mail, address, tax ID / birth date, registration date), with each client's quotes.
+- **Quotes**: all quotes, filterable by service and client, with the full breakdown (profiles and weights, taxes, total).
+- **Prices**: the steel price per kg (framing), the two study rates per m² and the m² threshold. A change applies to **new** quotes at once; existing quotes keep their price. Every change is logged (who, when, old and new value).
+
+Who is an admin is decided in the database only (the website cannot create admins). To add or remove one, run in the Supabase SQL editor:
+
+```sql
+insert into public.admins (user_id) select id from auth.users where email = 'someone@example.com';
+delete from public.admins where user_id = (select id from auth.users where email = 'someone@example.com');
+```
+
+The security is enforced by the database (Row Level Security), not by the page: only admins can read other clients' data or the prices, whatever the browser does. Admins can read clients' personal data, so keep admin accounts to the people who need them and use strong passwords.
+Optional hardening: Supabase dashboard → Authentication → Passwords → *Leaked password protection* (may need a paid plan).
+
 ## Day-to-day
 
 | Task | How |
 |---|---|
 | Publish a site change | `git push` to `main` (GitHub builds and deploys) |
-| Change prices / profile lists | edit `supabase/functions/_shared/calculators/*.js`, run `npm test`, redeploy the `quote` function (below) |
+| Change prices | in the website: `/admin` → Prices (no code, no deploy) |
+| Change profile lists or formulas | edit `supabase/functions/_shared/calculators/*.js`, run `npm test`, redeploy the `quote` function (below) |
 | Add another service calculator | add `supabase/functions/_shared/calculators/<service>.js`, register it in `quoteCalculator.js`, add its form in `frontend/src/pages/quoteForms.js` |
 | Run the site locally | `frontend/.env.local` already points at the project; `npm run dev`. It talks to the **real** database, so prefer a second free Supabase project for experiments |
 | Run the tests | `npm test` |

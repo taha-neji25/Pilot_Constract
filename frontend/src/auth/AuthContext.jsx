@@ -28,16 +28,26 @@ async function loadUser(session) {
   return data ? toUser(data) : null;
 }
 
+// true when this login is listed in the `admins` table (public.is_admin() answers for the current user only)
+async function loadAdmin() {
+  const { data } = await supabase.rpc("is_admin");
+  return data === true;
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let active = true;
     const apply = async (session) => {
       const u = await loadUser(session).catch(() => null);
+      const admin = u ? await loadAdmin().catch(() => false) : false;
+      if (!active) return;
       // keep the same object when nothing changed, so effects that depend on `user` do not re-run
-      if (active) setUser((prev) => (JSON.stringify(prev) === JSON.stringify(u) ? prev : u));
+      setUser((prev) => (JSON.stringify(prev) === JSON.stringify(u) ? prev : u));
+      setIsAdmin(admin);
     };
 
     supabase.auth
@@ -72,6 +82,7 @@ export function AuthProvider({ children }) {
       await supabase.auth.signOut();
       throw new Error("Invalid email or password");
     }
+    setIsAdmin(await loadAdmin().catch(() => false));
     setUser(u);
   };
 
@@ -83,10 +94,11 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setIsAdmin(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, ready, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, isAdmin, ready, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

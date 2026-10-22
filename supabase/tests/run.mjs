@@ -7,8 +7,8 @@ import { handleQuote } from "../functions/_shared/quotes.js";
 
 const phone = { isSupportedCountry, parsePhoneNumberFromString };
 
-function fakeAdmin({ failProfile = false, failQuote = false } = {}) {
-  const db = { users: new Map(), profiles: [], quotes: [], attempts: new Map(), deleted: [] };
+function fakeAdmin({ failProfile = false, failQuote = false, pricing = [], failPricing = false } = {}) {
+  const db = { users: new Map(), profiles: [], quotes: [], attempts: new Map(), deleted: [], pricing };
   let seq = 0;
   const insertable = (table, row) => {
     const result = (() => {
@@ -47,7 +47,16 @@ function fakeAdmin({ failProfile = false, failQuote = false } = {}) {
         },
       },
     },
-    from: (table) => ({ insert: (row) => insertable(table, row) }),
+    from: (table) => ({
+      insert: (row) => insertable(table, row),
+      // only the pricing table is read in these tests: rows set by the admin dashboard (empty = fallback prices)
+      select: () =>
+        Promise.resolve(
+          table === "pricing"
+            ? { data: failPricing ? null : db.pricing, error: failPricing ? { message: "boom" } : null }
+            : { data: [], error: null }
+        ),
+    }),
   };
 }
 
@@ -253,6 +262,34 @@ await test("quote: etude (calculation) - 15 DT/m2 up to 100 m2, 10 DT/m2 on the 
 await test("quote: etude rejects 0, negative, text, missing and huge surfaces (400)", async () => {
   for (const surface of [0, -5, "abc", undefined, null, 50001])
     assert.equal((await quote({ action: "create", service: "calculation", surface })).status, 400, String(surface));
+});
+
+// ---- prices edited in the admin dashboard (table `pricing`)
+const hall11314 = { ...framing }; // 11,314 kg with the sheet profiles
+const priced = (rows, failPricing = false) => fakeAdmin({ pricing: rows, failPricing });
+
+await test("quote: framing price per kg is read from the pricing table (admin dashboard)", async () => {
+  const r = (await quote(hall11314, user, priced([{ key: "framing_price_per_kg", value: "7.250" }]))).json.result;
+  assert.equal(r.pricePerKg, 7.25);
+  assert.equal(r.subtotal, 82026.5); // 11,314 kg x 7.25
+});
+
+await test("quote: etude rates and threshold are read from the pricing table", async () => {
+  const etude = (surface, rows) => quote({ action: "create", service: "calculation", surface }, user, priced(rows)).then((x) => x.json.result.total);
+  const rows = [
+    { key: "calculation_rate_small", value: "20" },
+    { key: "calculation_rate_large", value: "12.5" },
+    { key: "calculation_threshold_m2", value: "50" },
+  ];
+  assert.equal(await etude(50, rows), 1000); // up to the new threshold: 20 per m2
+  assert.equal(await etude(60, rows), 750); // above: 12.5 per m2 on the whole surface
+  assert.equal(await etude(80, []), 1200); // no rows: fallback 15 per m2 (threshold 100)
+});
+
+await test("quote: invalid or unreadable prices fall back to the defaults (a quote is never blocked)", async () => {
+  const bad = [{ key: "framing_price_per_kg", value: "0" }, { key: "nope", value: "9" }, { key: "calculation_rate_small", value: "abc" }];
+  assert.equal((await quote(hall11314, user, priced(bad))).json.result.total, 88388.93);
+  assert.equal((await quote(hall11314, user, priced([], true))).json.result.total, 88388.93); // pricing table error
 });
 
 await test("quote: insert failure -> 500", async () => {

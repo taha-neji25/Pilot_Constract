@@ -7,6 +7,7 @@ import FAQs from "../pages/FAQs.jsx";
 import Gallery from "../pages/Gallery.jsx";
 import Quote from "../pages/Quote.jsx";
 const Auth = lazy(() => import("../pages/Auth.jsx"));
+const Admin = lazy(() => import("../pages/Admin.jsx"));
 import NotFound from "../pages/NotFound.jsx";
 
 export default function AppRoutes() {
@@ -21,6 +22,7 @@ export default function AppRoutes() {
       <Route path="/devis" element={<Quote />} />
       <Route path="/connexion" element={<Auth mode="login" />} />
       <Route path="/inscription" element={<Auth mode="signup" />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
     </Suspense>

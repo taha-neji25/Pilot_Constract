@@ -2,6 +2,7 @@
 // Pricing, cost price and margin live in ./calculators and never reach the browser except as the final result.
 
 import { calculateQuote, getForms, validateQuoteInput } from "./quoteCalculator.js";
+import { loadPrices } from "./pricing.js";
 
 // `user` is the authenticated Supabase user (or null). `admin` = service-role client.
 // body.action: "forms" -> allowed profiles per position; "create" -> validate, price and store a quote.
@@ -14,7 +15,7 @@ export async function handleQuote({ user, body }, { admin }) {
     const { input, error } = validateQuoteInput(body);
     if (error) return { status: 400, json: { error } };
 
-    const result = calculateQuote(input);
+    const result = calculateQuote(input, await loadPrices(admin)); // live prices set in the admin dashboard
     const { data, error: insertError } = await admin
       .from("quotes")
       .insert({ user_id: user.id, input, result })

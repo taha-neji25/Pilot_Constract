@@ -6,6 +6,7 @@
 // after a proper design; the dimension ranges below keep requests in a sensible band.
 
 import { profileWeight } from "./profiles.js";
+import { DEFAULT_PRICES } from "../pricing.js";
 
 export const INPUT_LIMITS = {
   length: { min: 6, max: 150 },
@@ -71,14 +72,13 @@ const STRUTS_PER_BAY = 4; // J6
 // with no column or rafter the section counts as 0, so only the terms that do not depend on it remain.
 const sectionHeightM = (profile) => (profile === NONE ? 0 : Number(profile.match(/\d+/)[0]) / 1000);
 
-// Selling price per kg of steel, excl. tax, as set by the owner (2026-10-22). It replaces the sheet's cost build-up
-// (cost 6.929 TND/kg + 20% margin, rounded to 8.31), which is no longer used.
-const PRICE_PER_KG = 6.5;
+// Selling price per kg of steel, excl. tax: `prices.framing_price_per_kg`, edited by admins in the dashboard
+// (fallback 6.5 in ../pricing.js). It replaced the sheet's cost build-up (cost 6.929 TND/kg + 20% margin = 8.31).
 const FODEC_RATE = 0.01;
 const TVA_RATE = 0.19;
 
 const round = (n, d = 2) => Math.round(n * 10 ** d) / 10 ** d;
-export const sellingPricePerKg = () => PRICE_PER_KG;
+export const sellingPricePerKg = (prices = DEFAULT_PRICES) => prices.framing_price_per_kg;
 
 export function validate(body) {
   const input = {};
@@ -141,10 +141,10 @@ export function takeOff({ length: F, width: H, height: G, baySpacing: E, profile
   };
 }
 
-export function calculate(input) {
+export function calculate(input, prices = DEFAULT_PRICES) {
   const { frames, lines, steelKg } = takeOff(input);
   const billableKg = Math.round(steelKg); // the offer bills whole kilos
-  const pricePerKg = sellingPricePerKg();
+  const pricePerKg = sellingPricePerKg(prices);
   const subtotal = round(billableKg * pricePerKg);
   const fodec = round(subtotal * FODEC_RATE);
   const tax = round((subtotal + fodec) * TVA_RATE); // the offer applies VAT on HT + FODEC

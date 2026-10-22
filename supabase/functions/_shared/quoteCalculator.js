@@ -38,6 +38,6 @@ export function validateQuoteInput(body) {
   return { input: { service, ...input } };
 }
 
-export function calculateQuote(input) {
-  return CALCULATORS[input.service].calculate(input);
+export function calculateQuote(input, prices) {
+  return CALCULATORS[input.service].calculate(input, prices);
 }
