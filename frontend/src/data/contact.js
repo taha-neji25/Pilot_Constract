@@ -11,7 +11,7 @@ const contact = {
   social: {
     facebook: "https://www.facebook.com/Pilot.Constract",
     instagram: "https://www.instagram.com/pilotconstract/",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/pilot-constract",
     whatsapp: "https://wa.me/21628831103",
   },
 };
