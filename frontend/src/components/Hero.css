@@ -1,7 +1,7 @@
 /* Pinned hero: the wrapper is tall, the hero sticks while the frame is erected */
 .hero-scroll {
   --nav-h: 75px;
-  --run: 590vh; /* scroll distance spent building (18 steps) */
+  --run: 280vh; /* scroll distance spent building (18 steps): lower = faster */
   height: calc(100vh - var(--nav-h) + var(--run));
   min-height: calc(520px + var(--run));
 }
@@ -47,10 +47,49 @@
 
 /* ---- The frame being built ---- */
 .hero__build {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   min-width: 0;
+  cursor: grab;
+  touch-action: pan-y; /* vertical swipes still scroll the page; horizontal drags turn the model */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hero__build.is-dragging {
+  cursor: grabbing;
+}
+
+.hero__build:focus-visible {
+  outline: 2px solid var(--pc-blue);
+  outline-offset: 4px;
+}
+
+.build__hint {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pc-sky);
+  background: rgba(26, 27, 28, 0.7);
+  border: 1px solid var(--pc-steel);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.build__hint.is-hidden {
+  opacity: 0;
 }
 
 .build {

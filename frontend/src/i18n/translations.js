@@ -24,7 +24,7 @@ const translations = {
       eyebrow: "Custom structural steel",
       title: "We build the frame that carries your project.",
       lead: "Pilot Constract designs, fabricates and installs industrial and commercial steel structures — from execution drawings to the last bolt on site.",
-      ctaPrimary: "View our services",
+      ctaPrimary: "Get a free quote",
       ctaSecondary: "See our projects",
       stats: [
         { value: "9+", label: "Years of experience" },
@@ -50,6 +50,7 @@ const translations = {
       scroll: "Scroll",
       build: {
         label: "Build sequence",
+        rotateHint: "Drag to rotate",
         steps: ["Anchor rods", "Under plates", "Base plates", "Columns", "Bracing", "Joists", "Left rafter", "Right rafter", "Girts", "Purlin cleats & gussets", "Purlins", "Roof bracing", "Compression struts", "Parapet bayonets", "Parapet gussets", "Parapet plates", "Roof sheeting", "Wall cladding"],
       },
       story: {
@@ -299,7 +300,7 @@ const translations = {
       eyebrow: "Structures métalliques sur mesure",
       title: "On construit l'ossature qui porte votre projet.",
       lead: "Pilot Constract conçoit, fabrique et installe des structures métalliques industrielles et commerciales — du plan d'exécution à la dernière boulonnerie sur site.",
-      ctaPrimary: "Voir nos services",
+      ctaPrimary: "Obtenir un devis gratuit",
       ctaSecondary: "Voir nos réalisations",
       stats: [
         { value: "9+", label: "Ans d'expérience" },
@@ -325,6 +326,7 @@ const translations = {
       scroll: "Défiler",
       build: {
         label: "Séquence de montage",
+        rotateHint: "Faites glisser pour pivoter",
         steps: ["Tiges d'ancrage", "Sous-platines", "Platines tôle", "Poteaux", "Contreventement", "Poutrelles", "Traverse gauche", "Traverse droite", "Lisses", "Attaches pannes & goussets", "Pannes", "Contreventement toiture", "Compression", "Bayonnettes d'acrotère", "Goussets d'acrotère", "Platines d'acrotère", "Couverture en tôle", "Bardage en tôle"],
       },
       story: {
@@ -574,7 +576,7 @@ const translations = {
       eyebrow: "هياكل معدنية حسب الطلب",
       title: "نبني الهيكل الذي يحمل مشروعكم.",
       lead: "تصمّم شركة القيادة و الإنشاء وتصنّع وتركّب الهياكل المعدنية الصناعية والتجارية، من مخططات التنفيذ إلى آخر مسمار في الموقع.",
-      ctaPrimary: "اكتشف خدماتنا",
+      ctaPrimary: "احصل على عرض سعر مجاني",
       ctaSecondary: "شاهد إنجازاتنا",
       stats: [
         { value: "+9", label: "سنة خبرة" },
@@ -600,6 +602,7 @@ const translations = {
       scroll: "مرّر للأسفل",
       build: {
         label: "مراحل التركيب",
+        rotateHint: "اسحب للتدوير",
         steps: ["قضبان التثبيت", "الصفائح السفلية", "صفائح القاعدة", "الأعمدة", "التربيط الجانبي", "الروافد الصغيرة", "العارضة اليسرى", "العارضة اليمنى", "المدّات الجانبية", "وصلات المدّات ومثلثات التقوية", "المدّات", "تربيط السقف", "عناصر الضغط", "حوامل حاجز السطح", "مثلثات حاجز السطح", "صفائح حاجز السطح", "تغطية السقف بالصفائح", "تلبيس الجدران بالصفائح"],
       },
       story: {

@@ -40,6 +40,17 @@ const SIN = Math.sin(Math.PI / 6);
 // 3D (x across, y up, z along) -> isometric screen
 const P = (x, y, z) => [(x - z) * COS * S, ((x + z) * SIN - y) * S];
 
+// The model turns around the vertical axis through the middle of the building (yaw angle `a`, radians)
+const CX = W / 2;
+const CZ = D / 2;
+const project = (x, y, z, a) => {
+  const dx = x - CX;
+  const dz = z - CZ;
+  const c = Math.cos(a);
+  const s = Math.sin(a);
+  return P(CX + dx * c - dz * s, y, CZ + dx * s + dz * c);
+};
+
 const slopeY = (x) => H + R * (1 - Math.abs(x - W / 2) / (W / 2));
 
 const STEP_COUNT = 18;
@@ -49,10 +60,10 @@ const ALPHA = { roof: 0.55, wall: 0.5 };
 
 function members() {
   const steps = Array.from({ length: STEP_COUNT }, () => []);
-  // line / polyline member through 3D points
-  const line = (step, kind, ...pts) => steps[step].push({ kind, pts: pts.map((q) => P(...q)) });
+  // line / polyline member through 3D points (projected at draw time, so the model can be rotated)
+  const line = (step, kind, ...pts) => steps[step].push({ kind, pts });
   // closed plate through 3D points
-  const plate = (step, kind, ...pts) => steps[step].push({ kind, pts: pts.map((q) => P(...q)), plate: true });
+  const plate = (step, kind, ...pts) => steps[step].push({ kind, pts, plate: true });
   // flat square plate in the x/z plane at height y
   const flat = (step, kind, x, y, z, a) =>
     plate(step, kind, [x - a, y, z - a], [x + a, y, z - a], [x + a, y, z + a], [x - a, y, z + a]);
@@ -208,8 +219,27 @@ function timeline() {
 const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
 const NAV_H = 75; // sticky navbar height (72 + 3px rule)
 
-const pathData = (m) =>
-  m.pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`).join("") + (m.plate ? "Z" : "");
+const pathData = (m, a) =>
+  m.pts
+    .map(([x, y, z], i) => {
+      const [px, py] = project(x, y, z, a);
+      return `${i ? "L" : "M"}${px.toFixed(1)} ${py.toFixed(1)}`;
+    })
+    .join("") + (m.plate ? "Z" : "");
+
+// ground slab corners (a little larger than the building)
+const GROUND = [
+  [-0.7, 0, -0.7],
+  [W + 0.7, 0, -0.7],
+  [W + 0.7, 0, D + 0.7],
+  [-0.7, 0, D + 0.7],
+];
+const groundPoints = (a) => GROUND.map(([x, y, z]) => project(x, y, z, a).map((n) => n.toFixed(1)).join(",")).join(" ");
+
+// How far a drag turns the model (radians per pixel), and the keyboard step
+const TURN_PER_PX = 0.012;
+const TURN_KEY = 0.2;
+const MAX_COAST = 0.08; // fastest glide after releasing a drag (radians per frame)
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -219,20 +249,31 @@ export default function Hero() {
   const reduced = useMemo(() => prefersReducedMotion(), []);
 
   const wrapRef = useRef(null);
+  const buildRef = useRef(null);
+  const groundRef = useRef(null);
+  const angleRef = useRef(0);
   const lineRefs = useRef([]);
+  const [touched, setTouched] = useState(false);
   const [step, setStep] = useState(reduced ? STEP_COUNT - 1 : 0);
   const [done, setDone] = useState(reduced);
 
   // view box around the whole building, padded (includes the anchor rods and the parapet)
   const box = useMemo(() => {
-    const pts = [
-      P(0, -0.7, 0),
-      P(W, -0.7, 0),
-      P(W, -0.7, D),
-      P(0, -0.7, D),
-      P(W / 2, H + R, 0),
-      P(0, H + 0.9, 0),
+    // union over every viewing angle, so the drawing never gets clipped while it turns
+    const corners = [
+      [-0.7, -0.7, -0.7],
+      [W + 0.7, -0.7, -0.7],
+      [W + 0.7, -0.7, D + 0.7],
+      [-0.7, -0.7, D + 0.7],
+      [0, H + 0.9, 0],
+      [W, H + 0.9, 0],
+      [0, H + 0.9, D],
+      [W, H + 0.9, D],
+      [W / 2, H + R, 0],
+      [W / 2, H + R, D],
     ];
+    const pts = [];
+    for (let deg = 0; deg < 360; deg += 5) corners.forEach(([x, y, z]) => pts.push(project(x, y, z, (deg * Math.PI) / 180)));
     const xs = pts.map((p) => p[0]);
     const ys = pts.map((p) => p[1]);
     const pad = 22;
@@ -283,6 +324,100 @@ export default function Hero() {
     };
   }, [elements, reduced]);
 
+  // Drag (mouse or finger) or arrow keys turn the model; double-click or Home resets the view
+  useEffect(() => {
+    const area = buildRef.current;
+    if (!area) return undefined;
+    let draw = 0;
+    let glide = 0;
+    let dragging = false;
+    let lastX = 0;
+    let vel = 0;
+    let announced = false;
+
+    const paint = () => {
+      draw = 0;
+      const a = angleRef.current;
+      elements.forEach((m, i) => lineRefs.current[i]?.setAttribute("d", pathData(m, a)));
+      groundRef.current?.setAttribute("points", groundPoints(a));
+    };
+    const turn = (da) => {
+      angleRef.current += da;
+      if (!draw) draw = requestAnimationFrame(paint);
+      if (!announced) {
+        announced = true;
+        setTouched(true);
+      }
+    };
+    const coast = () => {
+      glide = 0;
+      if (dragging || Math.abs(vel) < 0.0004) return;
+      turn(vel);
+      vel *= 0.93;
+      glide = requestAnimationFrame(coast);
+    };
+    const down = (e) => {
+      if (e.button) return;
+      dragging = true;
+      lastX = e.clientX;
+      vel = 0;
+      cancelAnimationFrame(glide);
+      try {
+        area.setPointerCapture(e.pointerId);
+      } catch {
+        /* pointer already gone: dragging still works without capture */
+      }
+      area.classList.add("is-dragging");
+    };
+    const move = (e) => {
+      if (!dragging) return;
+      vel = (e.clientX - lastX) * TURN_PER_PX;
+      lastX = e.clientX;
+      turn(vel);
+    };
+    const up = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      area.classList.remove("is-dragging");
+      try {
+        area.releasePointerCapture(e.pointerId);
+      } catch {
+        /* already released */
+      }
+      vel = Math.max(-MAX_COAST, Math.min(MAX_COAST, vel)); // a hard flick still glides only about a quarter turn
+      if (!reduced) glide = requestAnimationFrame(coast);
+    };
+    const reset = () => {
+      angleRef.current = 0;
+      vel = 0;
+      if (!draw) draw = requestAnimationFrame(paint);
+    };
+    const key = (e) => {
+      if (e.key === "ArrowLeft") turn(-TURN_KEY);
+      else if (e.key === "ArrowRight") turn(TURN_KEY);
+      else if (e.key === "Home") reset();
+      else return;
+      e.preventDefault();
+    };
+
+    area.addEventListener("pointerdown", down);
+    area.addEventListener("pointermove", move);
+    area.addEventListener("pointerup", up);
+    area.addEventListener("pointercancel", up);
+    area.addEventListener("dblclick", reset);
+    area.addEventListener("keydown", key);
+    return () => {
+      area.removeEventListener("pointerdown", down);
+      area.removeEventListener("pointermove", move);
+      area.removeEventListener("pointerup", up);
+      area.removeEventListener("pointercancel", up);
+      area.removeEventListener("dblclick", reset);
+      area.removeEventListener("keydown", key);
+      cancelAnimationFrame(draw);
+      cancelAnimationFrame(glide);
+    };
+  }, [elements, reduced]);
+
   const labels = home.build.steps;
   const pad = (n) => String(n).padStart(2, "0");
 
@@ -298,7 +433,7 @@ export default function Hero() {
             <h1 className="hero__title">{home.title}</h1>
             <p className="hero__lead">{home.lead}</p>
             <div className="hero__actions">
-              <Link to="/services" className="btn btn-primary">
+              <Link to="/devis" className="btn btn-primary">
                 {home.ctaPrimary}
               </Link>
               <Link to="/galerie" className="btn btn-outline">
@@ -307,7 +442,13 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="hero__build" role="img" aria-label={labels.join(", ")}>
+          <div
+            className="hero__build"
+            ref={buildRef}
+            role="group"
+            tabIndex={0}
+            aria-label={`${home.build.label}: ${labels.join(", ")}. ${home.build.rotateHint}`}
+          >
             <svg
               viewBox={`${box.x0} ${box.y0} ${box.w} ${box.h}`}
               className="build"
@@ -315,19 +456,14 @@ export default function Hero() {
               aria-hidden="true"
             >
               {/* ground slab */}
-              <polygon
-                className="build__ground"
-                points={[P(-0.7, 0, -0.7), P(W + 0.7, 0, -0.7), P(W + 0.7, 0, D + 0.7), P(-0.7, 0, D + 0.7)]
-                  .map((q) => q.join(","))
-                  .join(" ")}
-              />
+              <polygon className="build__ground" ref={groundRef} points={groundPoints(angleRef.current)} />
               {elements.map((m, i) => (
                 <path
                   key={i}
                   ref={(el) => {
                     lineRefs.current[i] = el;
                   }}
-                  d={pathData(m)}
+                  d={pathData(m, angleRef.current)}
                   pathLength="1"
                   className={`build__m build__m--${m.kind}`}
                   style={{
@@ -338,6 +474,20 @@ export default function Hero() {
                 />
               ))}
             </svg>
+
+            <p className={touched ? "build__hint is-hidden" : "build__hint"} aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16">
+                <path
+                  d="M20 12a8 8 0 11-2.7-6M20 4v4.5h-4.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              {home.build.rotateHint}
+            </p>
 
             <div className="build__steps" aria-hidden="true">
               <p className="build__label">
