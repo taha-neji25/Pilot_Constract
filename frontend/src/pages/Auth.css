@@ -1,0 +1,161 @@
+.auth__container {
+  max-width: 440px;
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.auth__form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.9rem;
+  color: var(--color-navy);
+}
+
+.auth__form input,
+.auth__form select {
+  font: inherit;
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 0.65em 0.8em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.auth__form input:focus,
+.auth__form select:focus {
+  outline: 2px solid var(--color-steel);
+  outline-offset: 1px;
+}
+
+.auth__form small {
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--color-text-muted);
+}
+
+.auth__error {
+  margin: 0;
+  color: #b3261e;
+  font-size: 0.95rem;
+}
+
+.auth__switch {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.auth__switch a {
+  color: var(--color-steel);
+  text-decoration: underline;
+}
+
+.auth__choice {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+}
+
+.auth__choice legend {
+  padding: 0;
+  margin-bottom: 0.4rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.9rem;
+  color: var(--color-navy);
+}
+
+.auth__form label.auth__radio {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.auth__radio input {
+  accent-color: var(--pc-deep);
+}
+
+.auth__container--wide {
+  max-width: 560px;
+}
+
+.auth__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+.auth__row--phone {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.auth__row > label {
+  min-width: 0;
+}
+
+.auth__short {
+  max-width: 12rem;
+}
+
+.auth__phone {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.auth__dial {
+  display: flex;
+  align-items: center;
+  padding: 0 0.7em;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-inline-end: 0;
+  font-family: var(--font-body);
+  letter-spacing: normal;
+  color: var(--color-text-muted);
+}
+
+.auth__phone input {
+  flex: 1;
+  min-width: 0;
+}
+
+.auth__form small.auth__field-error {
+  color: #b3261e;
+}
+
+.auth__form input[aria-invalid="true"] {
+  border-color: #b3261e;
+}
+
+@media (max-width: 520px) {
+  .auth__row,
+  .auth__row--phone {
+    grid-template-columns: 1fr;
+  }
+
+  .auth__short {
+    max-width: none;
+  }
+}

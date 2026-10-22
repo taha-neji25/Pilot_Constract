@@ -1,0 +1,50 @@
+/* Pilot Constract: graphic language (Brand Guidelines, section 05).
+   Isometric grid, the steel L-bracket, keylines, focus and selection. */
+
+::selection {
+  background: var(--pc-sky);
+  color: var(--pc-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--pc-blue);
+  outline-offset: 2px;
+}
+
+/* 30 degree isometric grid: Steel lines on Ink, Concrete lines on Paper */
+.pc-grid-dark {
+  background-image: url("/brand/iso-grid-dark.svg");
+  background-size: var(--pc-grid-w) var(--pc-grid-h);
+}
+
+.pc-grid-light {
+  background-image: url("/brand/iso-grid-light.svg");
+  background-size: var(--pc-grid-w) var(--pc-grid-h);
+}
+
+/* The steel L as a layout corner: the frame of the mark.
+   Usage: add .pc-bracket to a positioned element; tune with --bracket / --bracket-color. */
+.pc-bracket {
+  position: relative;
+}
+
+.pc-bracket::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: var(--bracket, 64px);
+  height: var(--bracket, 64px);
+  background: var(--bracket-color, var(--pc-steel));
+  clip-path: polygon(0 0, 100% 0, 100% 20%, 20% 20%, 20% 100%, 0 100%);
+  pointer-events: none;
+}
+
+html[dir="rtl"] .pc-bracket::before {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 80% 100%, 80% 20%, 0 20%);
+}
+
+/* Section header: Barlow label + Deep Blue rule, replaces the old orange accents */
+.pc-rule {
+  border-top: 3px solid var(--pc-deep);
+}

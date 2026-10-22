@@ -1,0 +1,104 @@
+.lang-switcher {
+  position: relative;
+}
+
+.lang-switcher__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.45em 0.7em;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.lang-switcher__trigger:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Flag image styles */
+.lang-switcher__flag-img {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+.lang-switcher__flag {
+  font-size: 1.1em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.lang-switcher__code {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lang-switcher__menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  min-width: 150px;
+  box-shadow: 0 8px 20px rgba(26, 27, 28, 0.18);
+  z-index: 60;
+  padding: 0.25rem;
+  list-style: none;
+  margin: 0;
+}
+
+.lang-switcher__option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: transparent;
+  border: none;
+  text-align: start;
+  padding: 0.65rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  cursor: pointer;
+  border-radius: calc(var(--radius) - 2px);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lang-switcher__option:hover {
+  background: var(--color-bg);
+}
+
+.lang-switcher__option--active {
+  color: var(--color-navy);
+  font-weight: 600;
+  background: var(--color-bg);
+}
+
+/* Optional: Add a subtle hover effect on flag images */
+.lang-switcher__option:hover .lang-switcher__flag-img {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .lang-switcher__flag-img {
+    width: 24px;
+    height: 18px;
+  }
+  
+  .lang-switcher__trigger {
+    padding: 0.4em 0.6em;
+  }
+}

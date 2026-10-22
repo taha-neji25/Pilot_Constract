@@ -1,0 +1,51 @@
+/* Pilot Constract design tokens: Brand Guidelines v1.0 (brand/colors/tokens.css).
+   Change a colour here and the whole site follows. */
+:root {
+  /* ---- Brand colour (taken from the logo) ---- */
+  --pc-ink: #1a1b1c;       /* side faces of the mark, text, dark fields */
+  --pc-steel: #333536;     /* top face of the mark, secondary dark */
+  --pc-deep: #307faf;      /* brand blue: wordmark, links, headings, buttons on light */
+  --pc-blue: #49a9d9;      /* highlights, charts, the project block */
+  --pc-sky: #81c9eb;       /* light accent, accents on dark */
+
+  /* ---- Neutrals ---- */
+  --pc-paper: #f5f6f4;     /* default page background */
+  --pc-white: #ffffff;     /* keylines, surfaces, text on dark */
+  --pc-concrete: #c7cdd1;  /* borders, rules, text on dark */
+  --pc-slate: #4b5a66;     /* secondary text on light */
+
+  /* ---- Signal: actions and safety only. Never decoration. ---- */
+  --pc-safety: #d9762b;
+  --pc-safety-dark: #b8611f;
+
+  /* ---- Names the site already uses, now pointing at the brand tokens ---- */
+  --color-navy: var(--pc-ink);
+  --color-navy-light: var(--pc-steel);
+  --color-steel: var(--pc-deep);
+  --color-steel-light: var(--pc-blue);
+  --color-safety: var(--pc-safety);
+  --color-safety-dark: var(--pc-safety-dark);
+  --color-bg: var(--pc-paper);
+  --color-surface: var(--pc-white);
+  --color-text: var(--pc-ink);
+  --color-text-muted: var(--pc-slate);
+  --color-border: var(--pc-concrete);
+  --color-accent: var(--pc-deep);
+  --color-on-dark: var(--pc-concrete);   /* body text on Ink */
+
+  /* ---- Type ---- */
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+  /* Arabic script needs unbroken letterforms and its own display face:
+     Barlow Condensed / Source Sans have no Arabic glyphs. */
+  --font-display-rtl: "Cairo", sans-serif;
+  --font-body-rtl: "Tajawal", sans-serif;
+
+  /* ---- Layout and geometry ---- */
+  --max-width: 1180px;
+  --radius: 2px;
+  --gap-section: clamp(3.5rem, 6vw, 6rem);
+  --pc-keyline: 3px;       /* the white joint between parts of the mark */
+  --pc-grid-w: 103.923px;  /* isometric grid tile (30 degrees) */
+  --pc-grid-h: 60px;
+}

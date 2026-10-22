@@ -1,0 +1,10 @@
+# Supabase CLI project config (only what we need; the CLI fills in the rest).
+project_id = "pilotconstract"
+
+# Both functions check the caller themselves (signup is public; quote verifies the user's token),
+# so the gateway's own JWT check is off. This also keeps working with Supabase's newer signing keys.
+[functions.signup]
+verify_jwt = false
+
+[functions.quote]
+verify_jwt = false

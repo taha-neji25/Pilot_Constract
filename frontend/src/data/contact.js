@@ -1,0 +1,18 @@
+// Company contact details shown in the footer.
+// Anything left empty ("" or []) is simply not rendered, so fill these in when you have them.
+const contact = {
+  // Phone numbers, e.g. "+216 74 123 456". Add one entry per line to show.
+  phones: [],
+  // Fax / landline shown with the printer icon (optional)
+  fax: "",
+  // `label` is a key under t.footer.emailLabels in src/i18n/translations.js
+  emails: [{ label: "general", address: "pilotconstract@gmail.com" }],
+  // Full URLs. WhatsApp: "https://wa.me/<number without + or spaces>"
+  social: {
+    facebook: "",
+    linkedin: "",
+    whatsapp: "",
+  },
+};
+
+export default contact;

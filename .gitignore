@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.env.local
+.env.*.local
+# Large working material (brand kit, showreel, archived files): keep out of the website repository
+extras/
+showreel/
+# Retired Express backend and its local database
+backend/
+.claude/

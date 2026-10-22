@@ -1,0 +1,14 @@
+{
+  "name": "pilot-constract-site",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w frontend",
+    "build": "npm run build -w frontend",
+    "preview": "npm run preview -w frontend",
+    "test": "node --no-warnings supabase/tests/run.mjs"
+  }
+}

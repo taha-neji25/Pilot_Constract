@@ -1,0 +1,274 @@
+/* Pinned hero: the wrapper is tall, the hero sticks while the frame is erected */
+.hero-scroll {
+  --nav-h: 75px;
+  --run: 590vh; /* scroll distance spent building (18 steps) */
+  height: calc(100vh - var(--nav-h) + var(--run));
+  min-height: calc(520px + var(--run));
+}
+
+.hero-scroll--static {
+  height: auto;
+  min-height: 0;
+}
+
+.hero-scroll .hero {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.hero-scroll--static .hero {
+  position: relative;
+  height: auto;
+  padding: clamp(3rem, 8vw, 5rem) 0;
+}
+
+.hero__layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  width: 100%;
+}
+
+.hero__layout .hero__inner {
+  max-width: none;
+}
+
+.hero__layout .hero__title {
+  max-width: 12em;
+}
+
+/* ---- The frame being built ---- */
+.hero__build {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.build {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - var(--nav-h) - 11rem);
+  overflow: visible;
+}
+
+.build__ground {
+  fill: rgba(129, 201, 235, 0.06);
+  stroke: rgba(199, 205, 209, 0.28);
+  stroke-width: 1;
+}
+
+.build__m {
+  fill: none;
+  stroke-linecap: butt;
+}
+
+/* One colour family per kind of member */
+.build__m--col {
+  stroke: #fff;
+  stroke-width: 6;
+}
+
+.build__m--raft {
+  stroke: var(--pc-sky);
+  stroke-width: 5;
+}
+
+.build__m--purlin {
+  stroke: var(--pc-concrete);
+  stroke-width: 3;
+}
+
+.build__m--brace {
+  stroke: var(--pc-blue);
+  stroke-width: 1.8;
+}
+
+.build__m--strut {
+  stroke: var(--pc-deep);
+  stroke-width: 4;
+}
+
+.build__m--rod {
+  stroke: var(--pc-sky);
+  stroke-width: 1.6;
+}
+
+.build__m--joist {
+  stroke: #a9d6ee;
+  stroke-width: 3;
+}
+
+.build__m--girt {
+  stroke: var(--pc-concrete);
+  stroke-width: 2;
+}
+
+.build__m--bay {
+  stroke: #fff;
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+}
+
+/* Plates: outline draws, fill fades in */
+.build__m--under,
+.build__m--base,
+.build__m--roof,
+.build__m--wall,
+.build__m--cleat,
+.build__m--gusset,
+.build__m--acrplate {
+  stroke-width: 1.4;
+}
+
+.build__m--under {
+  stroke: var(--pc-concrete);
+  fill: #7d8a94;
+}
+
+.build__m--base {
+  stroke: #fff;
+  fill: var(--pc-concrete);
+}
+
+.build__m--cleat {
+  stroke: var(--pc-sky);
+  fill: var(--pc-sky);
+}
+
+.build__m--gusset {
+  stroke: var(--pc-blue);
+  fill: var(--pc-blue);
+}
+
+.build__m--acrplate {
+  stroke: #fff;
+  fill: var(--pc-sky);
+}
+
+.build__m--roof {
+  stroke: var(--pc-sky);
+  fill: var(--pc-blue);
+  stroke-width: 1;
+}
+
+.build__m--wall {
+  stroke: var(--pc-concrete);
+  fill: var(--pc-deep);
+  stroke-width: 1;
+}
+
+/* ---- Step caption + 16-segment progress ---- */
+.build__label {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 0.25rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  color: var(--pc-sky);
+}
+
+.build__label em {
+  font-style: normal;
+}
+
+.build__label span {
+  color: #fff;
+  letter-spacing: 0.06em;
+}
+
+.build__now {
+  margin: 0 0 0.6rem;
+  min-height: 1.5em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #fff;
+}
+
+.build__steps ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.build__steps li {
+  height: 4px;
+  background: var(--pc-steel);
+  transition: background 0.3s ease;
+}
+
+.build__steps li.is-done {
+  background: var(--pc-deep);
+}
+
+.build__steps li.is-active {
+  background: var(--pc-sky);
+}
+
+html[dir="rtl"] .build__label,
+html[dir="rtl"] .build__now {
+  font-family: var(--font-display-rtl);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* ---- Smaller screens: stack, keep it inside one pinned screen ---- */
+@media (max-width: 960px) {
+  .hero-scroll .hero__scroll {
+    display: none;
+  }
+
+  .hero__layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .hero__layout .hero__title {
+    max-width: none;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+
+  .hero__lead {
+    display: none;
+  }
+
+  .hero__actions {
+    margin-top: 1rem;
+  }
+
+  .build {
+    max-height: 34vh;
+  }
+
+  .build__now {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-height: 640px) and (min-width: 961px) {
+  .build {
+    max-height: calc(100vh - var(--nav-h) - 8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .build__steps li {
+    transition: none;
+  }
+}
