@@ -9,7 +9,6 @@ import "./Home.css";
 import metaliana from "../../assets/logo/images.jpg"
 import ceg from "../../assets/logo/socatra.png"
 import socatra from "../../assets/logo/logo-ceg.png"
-import global from "../../assets/logo/global acier.jpg"
 import cofimas from "../../assets/logo/cofimas gros.jpg"
 import soquibat from "../../assets/logo/soquibat-group.webp"
 import mystere from "../../assets/logo/mystère.jpg"
@@ -23,7 +22,6 @@ export default function Home() {
     { name: "So.Ca.Tra", initials: "P1", image: socatra },
     { name: "CEG", initials: "P2", image: ceg },
     { name: "Metaliana", initials: "P3", image: metaliana },
-    { name: "Global Acier", initials: "P4", image: global },
     { name: "Cofimas Gros", initials: "P5", image: cofimas },
     { name: "Soquibat Group", initials: "P6", image: soquibat },
     { name: "Mystère", initials: "P7", image: mystere },

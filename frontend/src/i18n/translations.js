@@ -119,6 +119,8 @@ const translations = {
       eyebrow: "What our clients say",
       title: "Client reviews",
       items: [
+        { quote: "We have worked with Pilot Constract for years, and that trust has been built project after project. Their teams are serious, responsive and keep their commitments. I recommend them without hesitation.", name: "Firas Maatar", role: "Manager, SO.MA.TRAV" },
+        { quote: "For many years, Pilot Constract has been a reliable partner for us. We value the quality of their work, their rigour and the clarity of their communication from start to finish. They are a company you can count on.", name: "Mohamed Hbaieb", role: "General Manager, MTR-Ressort" },
         { quote: "Delivered on time despite a complex site. Coordination with our team was flawless from start to finish.", name: "Faycel Trabelsi", role: "Project Director, food industry" },
         { quote: "The design office caught a load issue before fabrication, which saved us a costly rework.", name: "Sana Ben Amor", role: "Architect, private practice" },
         { quote: "Clean finish, tidy welds, and a serious installation crew. We've already re-hired them for a second hall.", name: "Karim Jendoubi", role: "Manager, industrial unit" },
@@ -384,6 +386,8 @@ const translations = {
       eyebrow: "Ce qu'en disent nos clients",
       title: "Avis clients",
       items: [
+        { quote: "Nous travaillons avec Pilot Constract depuis des années, et cette confiance s'est construite projet après projet. Leurs équipes sont sérieuses, réactives et respectent leurs engagements. Je les recommande sans hésitation.", name: "Firas Maatar", role: "Gérant, SO.MA.TRAV" },
+        { quote: "Pilot Constract est pour nous un partenaire fiable depuis de nombreuses années. Nous apprécions la qualité de leur travail, leur rigueur et la clarté de leur communication du début à la fin. C'est une entreprise sur laquelle on peut compter.", name: "Mohamed Hbaieb", role: "Directeur général, MTR-Ressort" },
         { quote: "Livraison dans les délais malgré un chantier compliqué. La coordination avec notre équipe a été impeccable du début à la fin.", name: "Faycel Trabelsi", role: "Directeur de projet, agroalimentaire" },
         { quote: "Le bureau d'études a détecté un problème de charge avant fabrication, ce qui nous a évité une reprise coûteuse.", name: "Sana Ben Amor", role: "Architecte, cabinet privé" },
         { quote: "Bonne finition, soudures propres, et une équipe de pose sérieuse. On a déjà reconduit avec eux sur un second hall.", name: "Karim Jendoubi", role: "Gérant, unité industrielle" },
@@ -649,6 +653,8 @@ const translations = {
       eyebrow: "آراء عملائنا",
       title: "آراء العملاء",
       items: [
+        { quote: "نعمل مع Pilot Constract منذ سنوات، وقد بُنيت هذه الثقة مشروعًا بعد مشروع. فرقهم جادة وسريعة الاستجابة وتحترم التزاماتها. أنصح بهم دون تردد.", name: "Firas Maatar", role: "مسير، شركة SO.MA.TRAV" },
+        { quote: "تُعدّ Pilot Constract شريكًا موثوقًا بالنسبة لنا منذ سنوات طويلة. نقدّر جودة عملهم ودقّتهم ووضوح تواصلهم من البداية إلى النهاية. إنها شركة يمكن الاعتماد عليها.", name: "Mohamed Hbaieb", role: "المدير العام، شركة MTR-Ressort" },
         { quote: "تم التسليم في الآجال رغم تعقيد الورشة. التنسيق مع فريقنا كان ممتازًا من البداية إلى النهاية.", name: "فيصل الطرابلسي", role: "مدير مشروع، صناعات غذائية" },
         { quote: "اكتشف مكتب الدراسات مشكلة في الحمولة قبل التصنيع، مما جنّبنا إعادة عمل مكلفة.", name: "سناء بن عمر", role: "مهندسة معمارية، مكتب خاص" },
         { quote: "لمسة نهائية نظيفة، لحام متقن، وفريق تركيب جاد. تعاملنا معهم مجددًا في قاعة ثانية.", name: "كريم الجندوبي", role: "مسير، وحدة صناعية" },
