@@ -9,9 +9,10 @@ const contact = {
   emails: [{ label: "general", address: "pilotconstract@gmail.com" }],
   // Full URLs. WhatsApp: "https://wa.me/<number without + or spaces>"
   social: {
-    facebook: "",
+    facebook: "https://www.facebook.com/Pilot.Constract",
+    instagram: "https://www.instagram.com/pilotconstract/",
     linkedin: "",
-    whatsapp: "",
+    whatsapp: "https://wa.me/21628831103",
   },
 };
 

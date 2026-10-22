@@ -42,6 +42,11 @@ const SOCIAL = {
     label: "Facebook",
     path: "M14 8h2V5h-2.5C10.9 5 10 6.6 10 8.5V10H8v3h2v7h3v-7h2.2l.4-3H13V8.7c0-.5.2-.7 1-.7z",
   },
+  instagram: {
+    label: "Instagram",
+    rule: "evenodd", // ring shapes: rounded square, lens and dot
+    path: "M7.5 3h9A4.5 4.5 0 0121 7.5v9a4.5 4.5 0 01-4.5 4.5h-9A4.5 4.5 0 013 16.5v-9A4.5 4.5 0 017.5 3zm0 2A2.5 2.5 0 005 7.5v9A2.5 2.5 0 007.5 19h9a2.5 2.5 0 002.5-2.5v-9A2.5 2.5 0 0016.5 5h-9zM12 7.8a4.2 4.2 0 100 8.4 4.2 4.2 0 000-8.4zm0 1.8a2.4 2.4 0 110 4.8 2.4 2.4 0 010-4.8zm5.2-3.4a1.1 1.1 0 100 2.2 1.1 1.1 0 000-2.2z",
+  },
   linkedin: {
     label: "LinkedIn",
     path: "M6.5 9h-3v10h3V9zM5 4.5a1.7 1.7 0 100 3.4 1.7 1.7 0 000-3.4zM20.5 19h-3v-5c0-1.3-.5-2.1-1.6-2.1-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19h-3s.1-8.5 0-9.4h3v1.3c.4-.6 1.1-1.5 2.8-1.5 2 0 3.5 1.3 3.5 4.1V19z",
@@ -99,7 +104,7 @@ export default function Footer() {
                     className={`footer__social-link footer__social-link--${key}`}
                   >
                     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                      <path d={SOCIAL[key].path} fill="currentColor" />
+                      <path d={SOCIAL[key].path} fill="currentColor" fillRule={SOCIAL[key].rule} />
                     </svg>
                   </a>
                 ))}
