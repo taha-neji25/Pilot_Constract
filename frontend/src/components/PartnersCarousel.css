@@ -1,0 +1,118 @@
+/* Partner logos carousel (Home). Direction is forced to ltr: it holds no text, and one animation direction
+   then works the same in French, English and Arabic. */
+.partners {
+  position: relative;
+  direction: ltr;
+}
+
+.partners__viewport {
+  overflow: hidden;
+  /* soft fade at both edges */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.partners__track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0.5rem 0;
+  list-style: none;
+  animation: partners-scroll var(--duration, 35s) linear infinite;
+}
+
+.partners__track--paused,
+.partners__viewport:hover .partners__track,
+.partners__viewport:focus-within .partners__track {
+  animation-play-state: paused;
+}
+
+@keyframes partners-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* margin (not gap) so both copies have exactly the same width: that is what makes the loop seamless */
+.partners__item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 120px;
+  margin-right: 2rem;
+  background: var(--color-bg, #f5f6f4);
+  border: 1px solid transparent;
+  border-radius: var(--radius, 2px);
+  transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.partners__item:hover {
+  background: var(--color-surface, #fff);
+  border-color: var(--color-border, #c7cdd1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.partners__item img {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  object-fit: contain;
+  user-select: none;
+}
+
+.partners__toggle {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 1rem auto 0;
+  padding: 0;
+  color: var(--color-navy, #1a1b1c);
+  background: transparent;
+  border: 1px solid var(--color-border, #c7cdd1);
+  border-radius: var(--radius, 2px);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.partners__toggle:hover {
+  color: #fff;
+  background: var(--color-navy, #1a1b1c);
+  border-color: var(--color-navy, #1a1b1c);
+}
+
+.partners__toggle svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+@media (max-width: 600px) {
+  .partners__item {
+    width: 140px;
+    height: 96px;
+    margin-right: 1rem;
+  }
+}
+
+/* No auto-scroll for people who prefer reduced motion: a plain swipeable row, no duplicate logos, no pause button */
+@media (prefers-reduced-motion: reduce) {
+  .partners__viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .partners__track {
+    animation: none;
+    width: auto;
+  }
+
+  .partners__item[aria-hidden="true"],
+  .partners__toggle {
+    display: none;
+  }
+}

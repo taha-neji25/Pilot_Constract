@@ -3,21 +3,30 @@ import Hero from "../components/Hero.jsx";
 import Story from "../components/Story.jsx";
 import Reveal from "../components/Reveal.jsx";
 import CountUp from "../components/CountUp.jsx";
+import PartnersCarousel from "../components/PartnersCarousel.jsx";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
 import "./Home.css";
 import metaliana from "../../assets/logo/images.jpg"
 import ceg from "../../assets/logo/socatra.png"
 import socatra from "../../assets/logo/logo-ceg.png"
+import global from "../../assets/logo/global acier.jpg"
+import cofimas from "../../assets/logo/cofimas gros.jpg"
+import soquibat from "../../assets/logo/soquibat-group.webp"
+import mystere from "../../assets/logo/mystère.jpg"
 
 export default function Home() {
   const { t } = useLanguage();
   const { home } = t;
 
-  // Placeholder partners - replace with actual logos later
+  // Partner logos (frontend/assets/logo). To add one: import its image above and add a line here.
   const partners = [
     { name: "So.Ca.Tra", initials: "P1", image: socatra },
     { name: "CEG", initials: "P2", image: ceg },
     { name: "Metaliana", initials: "P3", image: metaliana },
+    { name: "Global Acier", initials: "P4", image: global },
+    { name: "Cofimas Gros", initials: "P5", image: cofimas },
+    { name: "Soquibat Group", initials: "P6", image: soquibat },
+    { name: "Mystère", initials: "P7", image: mystere },
   ];
 
 
@@ -87,15 +96,13 @@ export default function Home() {
             <p>{home.partnershipText}</p>
           </Reveal>
 
-          <div className="partnership__grid">
-            {partners.map((partner, i) => (
-              <Reveal key={partner.name} className="partnership__item" delay={i * 120}>
-                <div className="partnership__placeholder">
-                  <img src={partner.image} alt={partner.name} />
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <PartnersCarousel
+              partners={partners}
+              pauseLabel={home.partnersPause}
+              playLabel={home.partnersPlay}
+            />
+          </Reveal>
         </div>
       </section>
     </>

@@ -45,6 +45,8 @@ const translations = {
       partnershipEyebrow: "Our Partners",
       partnershipTitle: "Working together to build better",
       partnershipText: "We collaborate with industry leaders to deliver exceptional results",
+      partnersPause: "Pause the partners carousel",
+      partnersPlay: "Resume the partners carousel",
       scroll: "Scroll",
       build: {
         label: "Build sequence",
@@ -308,6 +310,8 @@ const translations = {
       "partnershipEyebrow": "Nos partenaires",
       "partnershipTitle": "Travailler ensemble pour construire mieux",
       "partnershipText": "Nous collaborons avec les leaders de l'industrie pour offrir des résultats exceptionnels",
+      "partnersPause": "Mettre en pause le défilement des partenaires",
+      "partnersPlay": "Reprendre le défilement des partenaires",
       scroll: "Défiler",
       build: {
         label: "Séquence de montage",
@@ -571,6 +575,8 @@ const translations = {
       "partnershipEyebrow": "شركاؤنا",
       "partnershipTitle": "نعمل معًا لبناء الأفضل",
       "partnershipText": "نتعاون مع قادة الصناعة لتقديم نتائج استثنائية",
+      "partnersPause": "إيقاف تمرير الشركاء مؤقتًا",
+      "partnersPlay": "استئناف تمرير الشركاء",
       scroll: "مرّر للأسفل",
       build: {
         label: "مراحل التركيب",
