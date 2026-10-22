@@ -91,6 +91,11 @@ export default function Quote() {
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    // every position starts on "none": at least one profile must be chosen (the server checks it too)
+    if (profileForm.length && profileForm.every((p) => profileValue(p) === "_")) {
+      setError(quote.errors.noProfile);
+      return;
+    }
     setBusy(true);
     try {
       const body = { service };
@@ -104,7 +109,7 @@ export default function Quote() {
         requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
       }
     } catch (err) {
-      setError(err.status === 400 ? err.message : auth.errors.generic);
+      setError(quote.errors[err.message] ?? (err.status === 400 ? err.message : auth.errors.generic));
     } finally {
       setBusy(false);
     }
@@ -209,6 +214,7 @@ export default function Quote() {
                       <span className="qstep__num">3</span>
                       {quote.profilesTitle}
                     </legend>
+                    <p className="qstep__hint">{quote.profilesHint}</p>
                     <div className="qfields qfields--profiles">
                       {profileForm.map((p) => (
                         <label className="qfield" key={p.id}>

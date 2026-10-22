@@ -150,7 +150,13 @@ await test("signup: profile insert failure -> 500 and the login is rolled back",
 
 // ---------------------------------------------------------------- quotes
 const user = { id: "u1" };
-const framing = { action: "create", service: "framing", length: 24, width: 18, height: 6, baySpacing: 6 };
+// Every position now starts on "none"; these are the profiles the sheet used to pre-select (its example hall).
+const sheetProfiles = {
+  posts: "IPE 270", rafters: "IPE 300", gablePosts: "IPE 220", purlins: "Pane C 160/2.5", struts: "HEA 100",
+  bracing: "CE 60", anchorRods: "Rond 25", basePlates: "tole 20", cleats: "tole 6", underPlates: "tole 4",
+};
+const hall = { action: "create", service: "framing", length: 24, width: 18, height: 6, baySpacing: 6 };
+const framing = { ...hall, profiles: sheetProfiles };
 const quote = (body, u = user, admin = fakeAdmin()) => handleQuote({ user: u, body }, { admin });
 
 await test("quote: no user -> 401", async () => {
@@ -163,9 +169,10 @@ await test("quote: forms -> 14 profile positions, each list starts with none", a
   assert.equal(r.status, 200);
   assert.equal(r.json.framing.profiles.length, 14);
   assert.ok(r.json.framing.profiles.every((p) => p.options[0] === "_"));
+  assert.ok(r.json.framing.profiles.every((p) => p.default === "_"), "every position is preselected on none");
 });
 
-await test("quote: framing with sheet defaults -> 201, 11,314 kg, 113,001.84 TND, stored for that user", async () => {
+await test("quote: framing with the sheet's profiles -> 201, 11,314 kg, 113,001.84 TND, stored for that user", async () => {
   const admin = fakeAdmin();
   const r = await quote(framing, user, admin);
   assert.equal(r.status, 201);
@@ -184,7 +191,7 @@ await test("quote: result never exposes cost price or margin", async () => {
 
 await test("quote: custom profiles change the price", async () => {
   const base = (await quote(framing)).json.result.total;
-  const bigger = (await quote({ ...framing, profiles: { bracing: "CE 80", rails: "UPN 100" } })).json.result.total;
+  const bigger = (await quote({ ...framing, profiles: { ...sheetProfiles, bracing: "CE 80", rails: "UPN 100" } })).json.result.total;
   assert.ok(bigger > base);
 });
 
@@ -193,14 +200,28 @@ await test("quote: parapet bayonets accept IPE 100-200 and HEA 100-160 (sheet up
   assert.deepEqual(opts, ["_", "IPE 100", "IPE 120", "IPE 140", "IPE 160", "IPE 180", "IPE 200", "HEA 100", "HEA 120", "HEA 140", "HEA 160"]);
   const base = (await quote(framing)).json.result;
   for (const [profile, kgPerM] of [["HEA 100", 17.1], ["HEA 120", 20.3], ["HEA 140", 25.2], ["HEA 160", 31]]) {
-    const r = (await quote({ ...framing, profiles: { parapetBayonets: profile } })).json.result;
+    const r = (await quote({ ...framing, profiles: { ...sheetProfiles, parapetBayonets: profile } })).json.result;
     const line = r.lines.find((l) => l.id === "parapetBayonets");
     assert.equal(line.profile, profile);
     assert.equal(line.quantity, 20); // 5 frames x 2 + 10 m, as in the sheet (=I*2+10)
     assert.equal(line.kg, Math.round(20 * kgPerM * 10) / 10);
     assert.ok(r.total > base.total);
   }
-  assert.equal((await quote({ ...framing, profiles: { parapetBayonets: "HEA 180" } })).status, 400);
+  assert.equal((await quote({ ...framing, profiles: { ...sheetProfiles, parapetBayonets: "HEA 180" } })).status, 400);
+});
+
+await test("quote: with no profile chosen (all none, or none sent) -> 400 'Select at least one steel profile'", async () => {
+  for (const body of [hall, { ...hall, profiles: {} }, { ...hall, profiles: { posts: "_", rafters: "_" } }]) {
+    const r = await quote(body);
+    assert.equal(r.status, 400);
+    assert.equal(r.json.error, "Select at least one steel profile");
+  }
+});
+
+await test("quote: a single chosen profile is enough, the others stay none", async () => {
+  const r = await quote({ ...hall, profiles: { bracing: "CE 60" } });
+  assert.equal(r.status, 201);
+  assert.deepEqual(r.json.result.lines.map((l) => l.id), ["bracing"]);
 });
 
 await test("quote: pending service, bad numbers, bad profile, bad action -> 400", async () => {
