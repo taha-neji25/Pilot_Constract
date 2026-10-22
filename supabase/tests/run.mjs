@@ -188,6 +188,21 @@ await test("quote: custom profiles change the price", async () => {
   assert.ok(bigger > base);
 });
 
+await test("quote: parapet bayonets accept IPE 100-200 and HEA 100-160 (sheet update), priced by length x kg/m", async () => {
+  const opts = (await quote({ action: "forms" })).json.framing.profiles.find((p) => p.id === "parapetBayonets").options;
+  assert.deepEqual(opts, ["_", "IPE 100", "IPE 120", "IPE 140", "IPE 160", "IPE 180", "IPE 200", "HEA 100", "HEA 120", "HEA 140", "HEA 160"]);
+  const base = (await quote(framing)).json.result;
+  for (const [profile, kgPerM] of [["HEA 100", 17.1], ["HEA 120", 20.3], ["HEA 140", 25.2], ["HEA 160", 31]]) {
+    const r = (await quote({ ...framing, profiles: { parapetBayonets: profile } })).json.result;
+    const line = r.lines.find((l) => l.id === "parapetBayonets");
+    assert.equal(line.profile, profile);
+    assert.equal(line.quantity, 20); // 5 frames x 2 + 10 m, as in the sheet (=I*2+10)
+    assert.equal(line.kg, Math.round(20 * kgPerM * 10) / 10);
+    assert.ok(r.total > base.total);
+  }
+  assert.equal((await quote({ ...framing, profiles: { parapetBayonets: "HEA 180" } })).status, 400);
+});
+
 await test("quote: pending service, bad numbers, bad profile, bad action -> 400", async () => {
   assert.equal((await quote({ action: "create", service: "walkways", weightKg: 100 })).status, 400);
   assert.equal((await quote({ ...framing, length: 3 })).status, 400);

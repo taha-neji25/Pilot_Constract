@@ -45,7 +45,11 @@ export const POSITIONS = [
   },
   { id: "bracing", default: "CE 60", options: ["CE 40", "CE 45", "CE 50", "CE 60", "CE 70", "CE 80"] },
   { id: "anchorRods", default: "Rond 25", options: ["Rond 16", "Rond 18", "Rond 20", "Rond 25", "Rond 30", "Rond 35"] },
-  { id: "parapetBayonets", default: NONE, options: ["IPE 100", "IPE 120", "IPE 140", "IPE 160", "IPE 180", "IPE 200"] },
+  {
+    id: "parapetBayonets",
+    default: NONE,
+    options: ["IPE 100", "IPE 120", "IPE 140", "IPE 160", "IPE 180", "IPE 200", "HEA 100", "HEA 120", "HEA 140", "HEA 160"],
+  },
   { id: "rails", default: NONE, options: ["UPN 80", "UPN 100", "UPN 120", "UPN 140", "UPN 160", ...PANE_C] },
   { id: "basePlates", default: "tole 20", options: ["tole 8", "tole 10", "tole 12", "tole 15", "tole 20", "tole 25", "tole 30"] },
   { id: "cleats", default: "tole 6", options: ["tole 5", "tole 6", "tole 8"] },
