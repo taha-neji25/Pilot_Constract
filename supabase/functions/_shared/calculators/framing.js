@@ -71,30 +71,14 @@ const STRUTS_PER_BAY = 4; // J6
 // with no column or rafter the section counts as 0, so only the terms that do not depend on it remain.
 const sectionHeightM = (profile) => (profile === NONE ? 0 : Number(profile.match(/\d+/)[0]) / 1000);
 
-// Selling price. The sheet builds a cost per kg ("Prix Dheker" tab), adds a margin, and the offer
-// ("Offre Dheker") bills ROUND(cost * (1 + margin), 2) per kg. The cost build-up stays server-side.
-const COST_PER_KG = {
-  purchase: 3.57,
-  workshopRent: 0.375,
-  bolts: 0.2,
-  weldingConsumables: 0.15,
-  forklift: 0.15,
-  depreciation: 0.1,
-  labour: 1,
-  erection: 0.8,
-  blasting: 0,
-  paintMaterial: 0.3,
-  sitePaintCoat: 0,
-  transport: 0.114,
-  offcuts: 0.17,
-};
-const MARGIN = 0.2;
+// Selling price per kg of steel, excl. tax, as set by the owner (2026-10-22). It replaces the sheet's cost build-up
+// (cost 6.929 TND/kg + 20% margin, rounded to 8.31), which is no longer used.
+const PRICE_PER_KG = 6.5;
 const FODEC_RATE = 0.01;
 const TVA_RATE = 0.19;
 
-const sum = (o) => Object.values(o).reduce((a, b) => a + b, 0);
 const round = (n, d = 2) => Math.round(n * 10 ** d) / 10 ** d;
-export const sellingPricePerKg = () => round(sum(COST_PER_KG) * (1 + MARGIN), 2);
+export const sellingPricePerKg = () => PRICE_PER_KG;
 
 export function validate(body) {
   const input = {};

@@ -172,13 +172,16 @@ await test("quote: forms -> 14 profile positions, each list starts with none", a
   assert.ok(r.json.framing.profiles.every((p) => p.default === "_"), "every position is preselected on none");
 });
 
-await test("quote: framing with the sheet's profiles -> 201, 11,314 kg, 113,001.84 TND, stored for that user", async () => {
+await test("quote: framing with the sheet's profiles -> 201, 11,314 kg at 6.50 TND/kg, 88,388.93 TND all taxes included", async () => {
   const admin = fakeAdmin();
   const r = await quote(framing, user, admin);
   assert.equal(r.status, 201);
   assert.equal(r.json.result.steelKg, 11314);
-  assert.equal(r.json.result.subtotal, 94019.34);
-  assert.equal(r.json.result.total, 113001.84);
+  assert.equal(r.json.result.pricePerKg, 6.5);
+  assert.equal(r.json.result.subtotal, 73541); // 11,314 kg x 6.5
+  assert.equal(r.json.result.fodec, 735.41); // 1% of the subtotal
+  assert.equal(r.json.result.tax, 14112.52); // 19% of (subtotal + FODEC)
+  assert.equal(r.json.result.total, 88388.93);
   assert.equal(admin.db.quotes.length, 1);
   assert.equal(admin.db.quotes[0].user_id, "u1");
 });
