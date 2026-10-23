@@ -1,6 +1,10 @@
 // Signup logic, ported from the old Express backend (same rules, same English error strings: the frontend
 // maps them to translated messages). Kept free of Deno/Node specifics so it can be unit-tested in Node:
-// the HTTP wiring is in ../signup/index.ts, which injects the Supabase admin client and the phone library.
+// the HTTP wiring is in ../signup/index.ts, which injects the Supabase admin client, the phone library and the mailer.
+//
+// Accounts are created UNCONFIRMED: Supabase refuses their logins until the e-mail code is verified (see verification.js).
+
+import { handleResend, handleVerify, issueCode } from "./verification.js";
 
 // Practical email check: one @, sane local part, dotted domain with a 2+ letter TLD,
 // no leading/trailing/consecutive dots, no spaces.
@@ -76,8 +80,11 @@ export function validateSignup(body, phone) {
   return { error: "Invalid account type" };
 }
 
+const first = (data) => (Array.isArray(data) ? data[0] : data) ?? null;
+const isTaken = (e) => e.code === "email_exists" || /already|registered|exists/i.test(e.message ?? "");
+
 // Returns { status, json }. `admin` is a Supabase client with the service-role key.
-export async function handleSignup({ body, ip }, { admin, phone }) {
+export async function handleSignup({ body, ip }, { admin, phone, mailer }) {
   const { data, error } = validateSignup(body, phone);
   if (error) return { status: 400, json: { error } };
 
@@ -90,15 +97,21 @@ export async function handleSignup({ body, ip }, { admin, phone }) {
   if (rateError) return { status: 500, json: { error: "Server error" } };
   if (!allowed) return { status: 429, json: { error: "Too many attempts, try again later" } };
 
-  // email_confirm: true = no confirmation e-mail, same behaviour as the old site (instant account).
-  const { data: created, error: createError } = await admin.auth.admin.createUser({
-    email: data.profile.email,
-    password: data.password,
-    email_confirm: true,
-  });
+  await admin.rpc("purge_unverified"); // tidy up: accounts that never verified within 2 days (errors ignored)
+
+  // email_confirm: false = locked until the code sent by e-mail is verified.
+  const credentials = { email: data.profile.email, password: data.password, email_confirm: false };
+  let { data: created, error: createError } = await admin.auth.admin.createUser(credentials);
+  if (createError && isTaken(createError)) {
+    // a signup that was never verified does not block the address: replace it (nothing was ever usable on it)
+    const stale = first((await admin.rpc("signup_user", { p_email: data.profile.email })).data);
+    if (stale && !stale.confirmed) {
+      await admin.auth.admin.deleteUser(stale.id);
+      ({ data: created, error: createError } = await admin.auth.admin.createUser(credentials));
+    }
+  }
   if (createError) {
-    const taken = createError.code === "email_exists" || /already|registered|exists/i.test(createError.message ?? "");
-    if (taken) return { status: 409, json: { error: "Email already registered" } };
+    if (isTaken(createError)) return { status: 409, json: { error: "Email already registered" } };
     if (createError.code === "weak_password") return { status: 400, json: { error: "Password must be 8 to 72 characters" } };
     return { status: 500, json: { error: "Server error" } };
   }
@@ -110,5 +123,20 @@ export async function handleSignup({ body, ip }, { admin, phone }) {
     return { status: 500, json: { error: "Server error" } };
   }
 
-  return { status: 201, json: { ok: true } };
+  // e-mail the code; if that is impossible, undo everything so the address stays free to try again
+  const sent = await issueCode({ admin, mailer, userId: created.user.id, email: data.profile.email, lang: body?.lang });
+  if (!sent.ok) {
+    await admin.auth.admin.deleteUser(created.user.id);
+    return { status: sent.status, json: { error: sent.error } };
+  }
+
+  return { status: 201, json: { ok: true, verification: "email_code" } };
+}
+
+// One endpoint, three actions: { action: "verify" | "resend" } or a signup form (no action).
+export function handleAccount(request, deps) {
+  const action = request.body?.action;
+  if (action === "verify") return handleVerify(request, deps);
+  if (action === "resend") return handleResend(request, deps);
+  return handleSignup(request, deps);
 }

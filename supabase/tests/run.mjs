@@ -2,13 +2,16 @@
 // A tiny in-memory fake stands in for the Supabase admin client (no network, no Docker needed).
 import assert from "node:assert/strict";
 import { isSupportedCountry, parsePhoneNumberFromString } from "libphonenumber-js";
-import { handleSignup, SIGNUP_LIMIT } from "../functions/_shared/signup.js";
+import { handleAccount, handleSignup, SIGNUP_LIMIT } from "../functions/_shared/signup.js";
+import { handleResend, handleVerify, hashCode, MAX_ATTEMPTS, RESEND_COOLDOWN_MS } from "../functions/_shared/verification.js";
+import { createMailer } from "../functions/_shared/mailer.js";
+import { verificationEmail } from "../functions/_shared/emailTemplates.js";
 import { handleQuote } from "../functions/_shared/quotes.js";
 
 const phone = { isSupportedCountry, parsePhoneNumberFromString };
 
 function fakeAdmin({ failProfile = false, failQuote = false, pricing = [], failPricing = false } = {}) {
-  const db = { users: new Map(), profiles: [], quotes: [], attempts: new Map(), deleted: [], pricing };
+  const db = { users: new Map(), profiles: [], quotes: [], attempts: new Map(), deleted: [], pricing, verifications: new Map() };
   let seq = 0;
   const insertable = (table, row) => {
     const result = (() => {
@@ -24,39 +27,86 @@ function fakeAdmin({ failProfile = false, failQuote = false, pricing = [], failP
       }),
     });
   };
+  const byId = (id) => [...db.users.values()].find((u) => u.id === id);
+  let userSeq = 0;
   return {
     db,
-    rpc: async (_name, { p_ip, p_limit }) => {
-      const n = db.attempts.get(p_ip) ?? 0;
-      db.attempts.set(p_ip, n + 1);
-      return { data: n < p_limit, error: null };
+    rpc: async (name, args) => {
+      if (name === "check_signup_rate") {
+        const n = db.attempts.get(args.p_ip) ?? 0;
+        db.attempts.set(args.p_ip, n + 1);
+        return { data: n < args.p_limit, error: null };
+      }
+      if (name === "signup_user") {
+        const u = db.users.get(String(args.p_email).toLowerCase());
+        return { data: u ? [{ id: u.id, confirmed: u.confirmed }] : [], error: null };
+      }
+      if (name === "bump_verification_attempt") {
+        const row = db.verifications.get(args.p_user);
+        if (row) row.attempts += 1;
+        return { data: row ? row.attempts : null, error: null };
+      }
+      return { data: null, error: null }; // purge_unverified
     },
     auth: {
       admin: {
-        createUser: async ({ email, password }) => {
+        createUser: async ({ email, password, email_confirm }) => {
           if (db.users.has(email))
             return { data: null, error: { code: "email_exists", message: "A user with this email address has already been registered" } };
-          const user = { id: `u${db.users.size + 1}`, email, password };
+          const user = { id: `u${++userSeq}`, email, password, confirmed: email_confirm === true };
           db.users.set(email, user);
           return { data: { user }, error: null };
+        },
+        updateUserById: async (id, patch) => {
+          const u = byId(id);
+          if (u && patch.email_confirm) u.confirmed = true;
+          return { error: null };
         },
         deleteUser: async (id) => {
           db.deleted.push(id);
           for (const [e, u] of db.users) if (u.id === id) db.users.delete(e);
+          db.verifications.delete(id); // cascade
           return { error: null };
         },
       },
     },
     from: (table) => ({
       insert: (row) => insertable(table, row),
-      // only the pricing table is read in these tests: rows set by the admin dashboard (empty = fallback prices)
-      select: () =>
-        Promise.resolve(
+      upsert: async (row) => {
+        db.verifications.set(row.user_id, { ...row });
+        return { error: null };
+      },
+      delete: () => ({
+        eq: async (_col, val) => {
+          db.verifications.delete(val);
+          return { error: null };
+        },
+      }),
+      select: () => {
+        // `await ...select()` (pricing rows set by the admin dashboard) or `...select().eq(col, val).maybeSingle()`
+        const all =
           table === "pricing"
             ? { data: failPricing ? null : db.pricing, error: failPricing ? { message: "boom" } : null }
-            : { data: [], error: null }
-        ),
+            : { data: [], error: null };
+        return Object.assign(Promise.resolve(all), {
+          eq: (_col, val) => ({ maybeSingle: async () => ({ data: table === "email_verifications" ? (db.verifications.get(val) ?? null) : null, error: null }) }),
+        });
+      },
     }),
+  };
+}
+
+// a mailer that remembers the codes instead of sending them
+function fakeMailer({ fail = false } = {}) {
+  const sent = [];
+  return {
+    sent,
+    last: () => sent[sent.length - 1],
+    sendVerification: async ({ to, code, lang }) => {
+      if (fail) return false;
+      sent.push({ to, code, lang });
+      return true;
+    },
   };
 }
 
@@ -76,13 +126,15 @@ const test = async (name, fn) => {
   passed++;
   console.log("ok -", name);
 };
-const signup = (body, admin = fakeAdmin(), ip = "1.1.1.1") => handleSignup({ body, ip }, { admin, phone });
+const signup = (body, admin = fakeAdmin(), ip = "1.1.1.1", mailer = fakeMailer()) => handleSignup({ body, ip }, { admin, phone, mailer });
 
-await test("signup: valid person -> 201, user + profile stored, E.164 phone, email normalised", async () => {
+await test("signup: valid person -> 201, LOCKED account + profile stored, E.164 phone, email normalised, code e-mailed", async () => {
   const admin = fakeAdmin();
-  const r = await signup(person, admin);
+  const mailer = fakeMailer();
+  const r = await signup(person, admin, "1.1.1.1", mailer);
   assert.equal(r.status, 201);
-  assert.deepEqual(r.json, { ok: true });
+  assert.deepEqual(r.json, { ok: true, verification: "email_code" });
+  assert.equal(admin.db.users.get("amine@example.com").confirmed, false, "the account must be locked until the code is verified");
   assert.equal(admin.db.profiles.length, 1);
   const p = admin.db.profiles[0];
   assert.equal(p.email, "amine@example.com");
@@ -92,6 +144,10 @@ await test("signup: valid person -> 201, user + profile stored, E.164 phone, ema
   assert.equal(p.tax_id, null);
   assert.equal(p.id, admin.db.users.get("amine@example.com").id);
   assert.equal(JSON.stringify(admin.db.profiles).includes("correct-horse"), false, "password must never be stored in the profile");
+  assert.equal(mailer.sent.length, 1);
+  assert.equal(mailer.last().to, "amine@example.com");
+  assert.match(mailer.last().code, /^\d{6}$/);
+  assert.equal(JSON.stringify(r.json).includes(mailer.last().code), false, "the code must never be returned to the browser");
 });
 
 await test("signup: valid company -> 201 with tax id and position", async () => {
@@ -102,10 +158,12 @@ await test("signup: valid company -> 201 with tax id and position", async () => 
   assert.equal(admin.db.profiles[0].birth_date, null);
 });
 
-await test("signup: duplicate email -> 409", async () => {
+await test("signup: email already used by a VERIFIED account -> 409", async () => {
   const admin = fakeAdmin();
-  await signup(person, admin);
-  const r = await signup(person, admin, "2.2.2.2");
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  await handleVerify({ body: { email: "amine@example.com", code: mailer.last().code }, ip: "9.9.9.9" }, { admin });
+  const r = await signup(person, admin, "2.2.2.2", mailer);
   assert.equal(r.status, 409);
   assert.equal(r.json.error, "Email already registered");
 });
@@ -155,6 +213,212 @@ await test("signup: profile insert failure -> 500 and the login is rolled back",
   assert.equal(r.status, 500);
   assert.equal(admin.db.users.size, 0);
   assert.equal(admin.db.deleted.length, 1);
+});
+
+// ---------------------------------------------------------------- e-mail verification
+const verify = (admin, email, code, extra = {}) => handleVerify({ body: { email, code }, ip: "5.5.5.5", ...extra }, { admin });
+const resend = (admin, mailer, email, extra = {}) => handleResend({ body: { email, lang: "en" }, ip: "6.6.6.6", ...extra }, { admin, mailer });
+const wrongOf = (code) => String((Number(code) + 1) % 1_000_000).padStart(6, "0");
+
+await test("verify: the right code unlocks the account, once", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  const { code } = mailer.last();
+  const r = await verify(admin, " Amine@Example.com ", code);
+  assert.equal(r.status, 200);
+  assert.deepEqual(r.json, { ok: true });
+  assert.equal(admin.db.users.get("amine@example.com").confirmed, true);
+  assert.equal(admin.db.verifications.size, 0, "the code is deleted once used");
+  assert.equal((await verify(admin, "amine@example.com", code)).status, 400, "a used code cannot be replayed");
+});
+
+await test("verify: the code is stored only as a salted hash, never in clear", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  const row = [...admin.db.verifications.values()][0];
+  const { code } = mailer.last();
+  assert.equal(JSON.stringify(row).includes(code), false);
+  assert.match(row.code_hash, /^[0-9a-f]{64}$/);
+  assert.equal(row.code_hash, await hashCode(row.salt, admin.db.users.get("amine@example.com").id, code));
+  await signup({ ...person, email: "other@example.com" }, admin, "1.1.1.1", mailer);
+  const salts = [...admin.db.verifications.values()].map((v) => v.salt);
+  assert.notEqual(salts[0], salts[1], "every code gets its own salt");
+});
+
+await test("verify: wrong code / unknown address / bad format -> the SAME 400 answer (nothing to learn from it)", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  const { code } = mailer.last();
+  const answers = [
+    await verify(admin, "amine@example.com", wrongOf(code)),
+    await verify(admin, "nobody@example.com", code),
+    await verify(admin, "amine@example.com", "12345"),
+    await verify(admin, "amine@example.com", "abcdef"),
+    await verify(admin, "not-an-email", code),
+    await verify(admin, "amine@example.com", ""),
+  ];
+  for (const a of answers) {
+    assert.equal(a.status, 400);
+    assert.equal(a.json.error, "Invalid or expired code");
+  }
+  assert.equal(admin.db.users.get("amine@example.com").confirmed, false);
+});
+
+await test(`verify: ${MAX_ATTEMPTS} wrong tries lock the code, even the right one, until a new code is requested`, async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  const { code } = mailer.last();
+  for (let i = 0; i < MAX_ATTEMPTS; i++) assert.equal((await verify(admin, "amine@example.com", wrongOf(code))).status, 400);
+  const locked = await verify(admin, "amine@example.com", code);
+  assert.equal(locked.status, 429);
+  assert.equal(locked.json.error, "Too many attempts, request a new code");
+  assert.equal(admin.db.users.get("amine@example.com").confirmed, false);
+  // a new code (after the cooldown) works again
+  const later = Date.now() + RESEND_COOLDOWN_MS + 1000;
+  assert.equal((await resend(admin, mailer, "amine@example.com", { now: later })).status, 200);
+  assert.equal((await verify(admin, "amine@example.com", mailer.last().code, { now: later })).status, 200);
+});
+
+await test("verify: an expired code (after 10 minutes) is refused", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  const { code } = mailer.last();
+  const r = await verify(admin, "amine@example.com", code, { now: Date.now() + 10 * 60 * 1000 + 5000 });
+  assert.equal(r.status, 400);
+  assert.equal(admin.db.users.get("amine@example.com").confirmed, false);
+  assert.equal((await verify(admin, "amine@example.com", code, { now: Date.now() + 9 * 60 * 1000 })).status, 200, "still fine at 9 minutes");
+});
+
+await test("verify: a per-IP limit stops brute forcing across many accounts", async () => {
+  const admin = fakeAdmin();
+  let last;
+  for (let i = 0; i < 31; i++) last = await verify(admin, `user${i}@example.com`, "123456");
+  assert.equal(last.status, 429);
+});
+
+await test("resend: unknown or already verified address -> 200 and NO e-mail (does not reveal who has an account)", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  assert.equal((await resend(admin, mailer, "ghost@example.com")).status, 200);
+  await signup(person, admin, "1.1.1.1", mailer);
+  await verify(admin, "amine@example.com", mailer.last().code);
+  const before = mailer.sent.length;
+  assert.equal((await resend(admin, mailer, "amine@example.com")).status, 200);
+  assert.equal(mailer.sent.length, before);
+});
+
+await test("resend: once a minute, 5 an hour; a new code replaces the old one", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  const first = mailer.last().code;
+  const t0 = Date.now();
+  const tooSoon = await resend(admin, mailer, "amine@example.com", { now: t0 + 10_000 });
+  assert.equal(tooSoon.status, 429);
+  assert.equal(tooSoon.json.error, "Please wait before asking for a new code");
+  assert.equal(mailer.sent.length, 1, "nothing was sent while waiting");
+
+  assert.equal((await resend(admin, mailer, "amine@example.com", { now: t0 + 61_000 })).status, 200);
+  const second = mailer.last().code;
+  assert.equal(mailer.sent.length, 2);
+  if (second !== first) assert.equal((await verify(admin, "amine@example.com", first, { now: t0 + 62_000 })).status, 400, "the old code no longer works");
+
+  // sends 3, 4, 5 within the hour are allowed, the 6th is refused
+  for (let i = 0; i < 3; i++) assert.equal((await resend(admin, mailer, "amine@example.com", { now: t0 + (2 + i) * 61_000 })).status, 200);
+  assert.equal(mailer.sent.length, 5);
+  const sixth = await resend(admin, mailer, "amine@example.com", { now: t0 + 6 * 61_000 });
+  assert.equal(sixth.status, 429);
+  assert.equal(sixth.json.error, "Too many attempts, try again later");
+  assert.equal(mailer.sent.length, 5);
+});
+
+await test("signup: if the e-mail cannot be sent -> 502 and everything is rolled back (the address stays free)", async () => {
+  const admin = fakeAdmin();
+  const r = await signup(person, admin, "1.1.1.1", fakeMailer({ fail: true }));
+  assert.equal(r.status, 502);
+  assert.equal(r.json.error, "Could not send the verification code");
+  assert.equal(admin.db.users.size, 0);
+  assert.equal(admin.db.verifications.size, 0);
+  assert.equal((await signup(person, admin, "2.2.2.2", fakeMailer())).status, 201, "the same address can try again");
+});
+
+await test("signup: an abandoned, never-verified signup does not block the address (it is replaced, old code dies)", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  await signup(person, admin, "1.1.1.1", mailer);
+  const oldCode = mailer.last().code;
+  const oldId = admin.db.users.get("amine@example.com").id;
+  const r = await signup({ ...person, password: "another-password" }, admin, "2.2.2.2", mailer);
+  assert.equal(r.status, 201);
+  const fresh = admin.db.users.get("amine@example.com");
+  assert.notEqual(fresh.id, oldId);
+  assert.equal(fresh.password, "another-password");
+  assert.equal(fresh.confirmed, false);
+  if (mailer.last().code !== oldCode) assert.equal((await verify(admin, "amine@example.com", oldCode)).status, 400);
+  assert.equal((await verify(admin, "amine@example.com", mailer.last().code)).status, 200);
+});
+
+await test("handleAccount: routes verify / resend / signup by the `action` field", async () => {
+  const admin = fakeAdmin();
+  const mailer = fakeMailer();
+  const deps = { admin, phone, mailer };
+  assert.equal((await handleAccount({ body: person, ip: "1.1.1.1" }, deps)).status, 201);
+  assert.equal((await handleAccount({ body: { action: "resend", email: "amine@example.com" }, ip: "1.1.1.1" }, deps)).status, 429); // within the minute
+  assert.equal((await handleAccount({ body: { action: "verify", email: "amine@example.com", code: mailer.last().code }, ip: "1.1.1.1" }, deps)).status, 200);
+});
+
+// ---- the e-mail itself and the provider calls
+await test("e-mail: fr / en / ar versions contain the code, 10 minutes, and escape the HTML", async () => {
+  for (const lang of ["fr", "en", "ar"]) {
+    const m = verificationEmail("482913", lang);
+    assert.ok(m.subject.includes("Pilot Constract"));
+    assert.ok(m.text.includes("482913") && m.html.includes("482913"));
+    assert.ok(/10/.test(m.text));
+    assert.equal(m.html.includes(`lang="${lang}"`), true);
+  }
+  assert.ok(verificationEmail("123456", "ar").html.includes('dir="rtl"'));
+  assert.ok(verificationEmail("123456", "xx").subject.includes("Votre"), "unknown language falls back to French");
+  assert.equal(verificationEmail("<b>1</b>", "en").html.includes("<b>1</b>"), false, "html is escaped");
+});
+
+await test("mailer: Resend and Brevo request shapes; no provider or a refusal -> false; the code is never logged", async () => {
+  const calls = [];
+  const okFetch = async (url, init) => (calls.push({ url, init, body: JSON.parse(init.body) }), { ok: true, status: 200, text: async () => "" });
+  const logs = [];
+  const realError = console.error;
+  console.error = (...a) => logs.push(a.join(" "));
+  try {
+    const resendMailer = createMailer({ resendKey: "re_test", from: "Pilot Constract <no-reply@pilotconstract.com>" }, okFetch);
+    assert.equal(await resendMailer.sendVerification({ to: "a@b.co", code: "111222", lang: "en" }), true);
+    assert.equal(calls[0].url, "https://api.resend.com/emails");
+    assert.equal(calls[0].init.headers.Authorization, "Bearer re_test");
+    assert.deepEqual(calls[0].body.to, ["a@b.co"]);
+    assert.equal(calls[0].body.from, "Pilot Constract <no-reply@pilotconstract.com>");
+    assert.ok(calls[0].body.text.includes("111222"));
+
+    const brevoMailer = createMailer({ brevoKey: "xkey", from: "Pilot Constract <no-reply@pilotconstract.com>" }, okFetch);
+    assert.equal(await brevoMailer.sendVerification({ to: "a@b.co", code: "333444", lang: "fr" }), true);
+    assert.equal(calls[1].url, "https://api.brevo.com/v3/smtp/email");
+    assert.equal(calls[1].init.headers["api-key"], "xkey");
+    assert.deepEqual(calls[1].body.sender, { name: "Pilot Constract", email: "no-reply@pilotconstract.com" });
+    assert.deepEqual(calls[1].body.to, [{ email: "a@b.co" }]);
+
+    const before = calls.length;
+    assert.equal(await createMailer({}, okFetch).sendVerification({ to: "a@b.co", code: "555666", lang: "en" }), false);
+    assert.equal(calls.length, before, "no provider configured: nothing is sent");
+    const refused = async () => ({ ok: false, status: 403, text: async () => "domain not verified" });
+    assert.equal(await createMailer({ resendKey: "k", from: "x@y.z" }, refused).sendVerification({ to: "a@b.co", code: "777888", lang: "en" }), false);
+    const boom = async () => { throw new Error("network down"); };
+    assert.equal(await createMailer({ resendKey: "k", from: "x@y.z" }, boom).sendVerification({ to: "a@b.co", code: "999000", lang: "en" }), false);
+    for (const code of ["111222", "333444", "555666", "777888", "999000"]) assert.equal(logs.join("\n").includes(code), false, "the code must never be logged");
+  } finally {
+    console.error = realError;
+  }
 });
 
 // ---------------------------------------------------------------- quotes

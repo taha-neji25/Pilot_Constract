@@ -63,6 +63,32 @@ delete from public.admins where user_id = (select id from auth.users where email
 The security is enforced by the database (Row Level Security), not by the page: only admins can read other clients' data or the prices, whatever the browser does. Admins can read clients' personal data, so keep admin accounts to the people who need them and use strong passwords.
 Optional hardening: Supabase dashboard → Authentication → Passwords → *Leaked password protection* (may need a paid plan).
 
+## E-mail verification code at signup
+
+New accounts are created **locked**. A 6-digit code is e-mailed to the address, and the account only works once the code is entered
+(valid 10 minutes, 5 tries per code, a new code at most once a minute and 5 per hour). Accounts that never verify are deleted after 2 days.
+Existing accounts are not affected.
+
+The code needs an e-mail provider. Both options below are free for this volume:
+
+**Resend (recommended)** — free: 100 e-mails a day, 3,000 a month
+1. Create an account at <https://resend.com> and add the domain `pilotconstract.com` (Domains → Add domain).
+2. Resend shows a few DNS records. Add them at **Porkbun** (your domain → DNS records), then press *Verify* in Resend (a few minutes, sometimes an hour).
+3. Create an API key (API Keys → Create, permission *Sending access*).
+
+**Brevo (alternative)** — free: 300 e-mails a day. Create an account, verify the sender address in *Senders & IP*, and create an API key.
+
+Then give the key to the site as Supabase **secrets** (Dashboard → Edge Functions → Secrets, or the CLI):
+
+| Secret | Value |
+|---|---|
+| `RESEND_API_KEY` (or `BREVO_API_KEY`) | the provider key |
+| `MAIL_FROM` | `Pilot Constract <no-reply@pilotconstract.com>` (an address the provider has verified) |
+
+Roll-out order (so nobody is blocked): the site (GitHub push) first, then the updated `signup` function, then a test signup with a real mailbox.
+If the provider is not configured, or refuses, signup is **refused** with a clear message instead of silently skipping the verification.
+Each signup uses one e-mail (plus any resend); the limits above are far from your expected volume.
+
 ## Day-to-day
 
 | Task | How |
@@ -74,6 +100,7 @@ Optional hardening: Supabase dashboard → Authentication → Passwords → *Lea
 | Run the site locally | `frontend/.env.local` already points at the project; `npm run dev`. It talks to the **real** database, so prefer a second free Supabase project for experiments |
 | Run the tests | `npm test` |
 | Redeploy functions | `npx supabase login`, `npx supabase link --project-ref xtuwuethiumsuedhhgbi`, `npx supabase functions deploy quote signup --use-api` (or ask Claude, which can deploy through the Supabase connector) |
+| Change the e-mail wording | `supabase/functions/_shared/emailTemplates.js`, then redeploy the `signup` function |
 | Change the database | add a new file in `supabase/migrations/` and `npx supabase db push` |
 
 ## Things to know

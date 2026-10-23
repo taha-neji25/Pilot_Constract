@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   AsYouType,
@@ -27,7 +27,7 @@ export default function Auth({ mode }) {
   const isSignup = mode === "signup";
   const { t, language } = useLanguage();
   const { auth } = t;
-  const { user, login, signup } = useAuth();
+  const { user, login, signup, verifyEmail, resendCode } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const redirectTo = location.state?.from ?? "/devis";
@@ -50,6 +50,19 @@ export default function Auth({ mode }) {
   const [touched, setTouched] = useState({});
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  // e-mail verification: { email, password } while the code screen is shown
+  const [verifying, setVerifying] = useState(null);
+  const [code, setCode] = useState("");
+  const [cooldown, setCooldown] = useState(0);
+  const [notice, setNotice] = useState("");
+  const [unverified, setUnverified] = useState(false); // a login was refused because the e-mail was never verified
+
+  // counts the seconds before a new code can be requested
+  useEffect(() => {
+    if (cooldown <= 0) return undefined;
+    const id = setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(id);
+  }, [cooldown]);
 
   // Country names in the current UI language, sorted alphabetically for that language.
   const countries = useMemo(() => {
@@ -94,10 +107,70 @@ export default function Auth({ mode }) {
     }
 
     setBusy(true);
+    setUnverified(false);
     try {
-      if (isSignup) await signup(form);
-      else await login(form.email, form.password);
+      if (isSignup) {
+        const r = await signup({ ...form, lang: language });
+        if (r.needsCode) {
+          openVerify(form.email, form.password, 60);
+          return;
+        }
+      } else await login(form.email, form.password);
       navigate(redirectTo, { replace: true });
+    } catch (err) {
+      setError(auth.errors[err.message] ?? auth.errors.generic);
+      if (err.message === "Email not verified") setUnverified(true);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const openVerify = (email, password, wait) => {
+    setVerifying({ email: email.trim().toLowerCase(), password });
+    setCode("");
+    setNotice("");
+    setError("");
+    setCooldown(wait);
+  };
+
+  // login of an account that never entered its code: send a fresh one and show the code screen
+  const verifyNow = async () => {
+    setBusy(true);
+    try {
+      await resendCode(form.email, language);
+      openVerify(form.email, form.password, 60);
+    } catch (err) {
+      if (err.message === "Please wait before asking for a new code") openVerify(form.email, form.password, 30); // a code was just sent
+      else setError(auth.errors[err.message] ?? auth.errors.generic);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onVerify = async (e) => {
+    e.preventDefault();
+    setError("");
+    setNotice("");
+    setBusy(true);
+    try {
+      await verifyEmail(verifying.email, code, verifying.password);
+      navigate(redirectTo, { replace: true });
+    } catch (err) {
+      setError(auth.errors[err.message] ?? auth.errors.generic);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onResend = async () => {
+    setError("");
+    setNotice("");
+    setBusy(true);
+    try {
+      await resendCode(verifying.email, language);
+      setCode("");
+      setCooldown(60);
+      setNotice(auth.verify.resent);
     } catch (err) {
       setError(auth.errors[err.message] ?? auth.errors.generic);
     } finally {
@@ -111,6 +184,63 @@ export default function Auth({ mode }) {
         {text}
       </small>
     ) : null;
+
+  if (verifying) {
+    return (
+      <section className="section auth">
+        <div className="container auth__container">
+          <p className="eyebrow">
+            <IBeam />
+            {t.nav.cta}
+          </p>
+          <h1>{auth.verify.title}</h1>
+          <form className="auth__form" onSubmit={onVerify}>
+            <p className="auth__verify-text">
+              {auth.verify.sent} <strong dir="ltr">{verifying.email}</strong>
+              <br />
+              <small>{auth.verify.expires}</small>
+            </p>
+            <label>
+              {auth.verify.code}
+              <input
+                className="auth__code"
+                type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                pattern="[0-9]{6}"
+                maxLength={6}
+                dir="ltr"
+                value={code}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                placeholder="______"
+                required
+                autoFocus
+              />
+            </label>
+            {notice && (
+              <p className="auth__notice" role="status">
+                {notice}
+              </p>
+            )}
+            {error && (
+              <p className="auth__error" role="alert">
+                {error}
+              </p>
+            )}
+            <button className="btn btn-primary" type="submit" disabled={busy || code.length !== 6}>
+              {busy ? auth.loading : auth.verify.submit}
+            </button>
+            <button className="btn btn-outline auth__resend" type="button" onClick={onResend} disabled={busy || cooldown > 0}>
+              {cooldown > 0 ? `${auth.verify.resendIn} ${cooldown} ${auth.verify.sec}` : auth.verify.resend}
+            </button>
+            <button className="auth__link" type="button" onClick={() => setVerifying(null)}>
+              {auth.verify.back}
+            </button>
+          </form>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="section auth">
@@ -309,6 +439,11 @@ export default function Auth({ mode }) {
             <p className="auth__error" role="alert">
               {error}
             </p>
+          )}
+          {unverified && (
+            <button className="auth__link" type="button" onClick={verifyNow} disabled={busy}>
+              {auth.verify.verifyNow}
+            </button>
           )}
 
           <button className="btn btn-primary" type="submit" disabled={busy}>

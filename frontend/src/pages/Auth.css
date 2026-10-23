@@ -159,3 +159,51 @@
     max-width: none;
   }
 }
+
+/* ---- e-mail verification code screen */
+.auth__verify-text {
+  margin: 0;
+}
+
+.auth__form input.auth__code {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  padding-inline: 0.5rem;
+}
+
+.auth__notice {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-inline-start: 3px solid var(--pc-deep);
+  background: #e7f2f8;
+  color: var(--pc-ink);
+  font-size: 0.95rem;
+}
+
+.auth__resend {
+  color: var(--color-navy);
+  border-color: var(--color-navy);
+}
+
+.auth__resend:hover:not(:disabled) {
+  background: var(--color-navy);
+  color: #fff;
+}
+
+.auth__resend:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth__link {
+  align-self: start;
+  padding: 0;
+  font: inherit;
+  color: var(--pc-deep);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}

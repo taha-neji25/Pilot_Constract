@@ -72,7 +72,10 @@ export function AuthProvider({ children }) {
       password,
     });
     if (error) {
-      const err = new Error(error.status === 400 ? "Invalid email or password" : "Request failed");
+      // an account whose e-mail code was never entered is locked by Supabase until it is verified
+      const message =
+        error.code === "email_not_confirmed" ? "Email not verified" : error.status === 400 ? "Invalid email or password" : "Request failed";
+      const err = new Error(message);
       err.status = error.status;
       throw err;
     }
@@ -86,10 +89,21 @@ export function AuthProvider({ children }) {
     setUser(u);
   };
 
+  // Returns { needsCode: true } when a verification code was e-mailed (the account stays locked until it is entered).
   const signup = async (fields) => {
-    await callFunction("signup", fields);
+    const d = await callFunction("signup", fields);
+    if (d?.verification) return { needsCode: true };
     await login(fields.email, fields.password);
+    return { needsCode: false };
   };
+
+  // Checks the code, then logs in with the password typed at signup.
+  const verifyEmail = async (email, code, password) => {
+    await callFunction("signup", { action: "verify", email, code });
+    await login(email, password);
+  };
+
+  const resendCode = (email, lang) => callFunction("signup", { action: "resend", email, lang });
 
   const logout = async () => {
     await supabase.auth.signOut();
@@ -98,7 +112,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin, ready, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, isAdmin, ready, login, signup, verifyEmail, resendCode, logout }}>
       {children}
     </AuthContext.Provider>
   );
