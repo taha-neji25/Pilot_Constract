@@ -1,0 +1,121 @@
+.service-page__crumbs {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.service-page__crumbs a:hover {
+  color: var(--pc-deep);
+}
+
+.service-page__intro {
+  font-size: 1.1rem;
+  max-width: 70ch;
+  margin-bottom: 2.5rem;
+}
+
+.service-page__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.service-page h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.service-page__points {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.service-page__points li {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-inline-start: 3px solid var(--pc-deep);
+  padding: 0.7rem 1rem;
+}
+
+.service-page__area {
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.service-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.service-page__faq,
+.service-page__all {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  color: var(--color-navy);
+}
+
+.service-page__faq:hover,
+.service-page__all:hover {
+  color: var(--pc-deep);
+}
+
+.service-page__work {
+  margin-top: 3rem;
+}
+
+.service-page__photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.service-page__photos img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-border);
+}
+
+.service-page__others {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.service-page__others a {
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 0.95rem;
+}
+
+.service-page__others a:hover {
+  border-color: var(--color-navy);
+}
+
+@media (max-width: 800px) {
+  .service-page__cols {
+    grid-template-columns: 1fr;
+  }
+
+  .service-page__photos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

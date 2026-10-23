@@ -14,7 +14,7 @@ const icons = import.meta.glob("../assets/brand/icons/*.svg", { eager: true, que
 const iconFor = (id) => icons[`../assets/brand/icons/${id}.svg`];
 
 export default function Quote() {
-  const { t, language: lang } = useLanguage();
+  const { t, language: lang, path } = useLanguage();
   const { quote, services, auth } = t;
   const { user, ready } = useAuth();
   const location = useLocation();
@@ -76,10 +76,10 @@ export default function Quote() {
           <h1>{quote.title}</h1>
           <p>{quote.loginRequired}</p>
           <div className="quote__actions">
-            <Link className="btn btn-primary" to="/connexion" state={{ from: location.pathname }}>
+            <Link className="btn btn-primary" to={path("login")} state={{ from: location.pathname }}>
               {auth.loginTitle}
             </Link>
-            <Link className="btn btn-outline" to="/inscription" state={{ from: location.pathname }}>
+            <Link className="btn btn-outline" to={path("signup")} state={{ from: location.pathname }}>
               {auth.signupTitle}
             </Link>
           </div>

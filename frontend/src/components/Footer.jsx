@@ -58,21 +58,21 @@ const SOCIAL = {
 };
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, path } = useLanguage();
   const { footer, nav } = t;
 
   const socials = Object.entries(contact.social).filter(([, url]) => url);
   const telHref = (n) => `tel:${n.replace(/[^\d+]/g, "")}`;
 
   const companyLinks = [
-    { to: "/", label: nav.home },
-    { to: "/services", label: nav.services },
-    { to: "/galerie", label: nav.gallery },
+    { to: path("home"), label: nav.home },
+    { to: path("services"), label: nav.services },
+    { to: path("gallery"), label: nav.gallery },
   ];
   const resourceLinks = [
-    { to: "/avis", label: nav.reviews },
-    { to: "/faq", label: nav.faq },
-    { to: "/devis", label: nav.cta },
+    { to: path("reviews"), label: nav.reviews },
+    { to: path("faq"), label: nav.faq },
+    { to: path("quote"), label: nav.cta },
   ];
 
   const LinkList = ({ links }) => (

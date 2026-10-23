@@ -14,7 +14,7 @@ function rowHeightFor(width) {
 }
 
 function useRowHeight() {
-  const [height, setHeight] = useState(() => rowHeightFor(window.innerWidth));
+  const [height, setHeight] = useState(() => rowHeightFor(typeof window === "undefined" ? 1200 : window.innerWidth));
   useEffect(() => {
     const onResize = () => setHeight(rowHeightFor(window.innerWidth));
     window.addEventListener("resize", onResize);
@@ -114,7 +114,7 @@ export default function Gallery() {
               >
                 <img
                   src={`/gallery/thumb/${img.id}.webp`}
-                  alt={categoryLabel(img.section)}
+                  alt={`${categoryLabel(img.section)} — Pilot Constract, Sfax`}
                   loading="lazy"
                   decoding="async"
                 />

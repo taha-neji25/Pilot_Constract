@@ -15,7 +15,7 @@ const PRICE_FIELDS = [
 ];
 
 export default function Admin() {
-  const { t, language: lang } = useLanguage();
+  const { t, language: lang, path } = useLanguage();
   const { admin: a, services, quote } = t;
   const { user, ready, isAdmin } = useAuth();
 
@@ -59,8 +59,8 @@ export default function Admin() {
   const currentPrices = useMemo(() => Object.fromEntries(data.pricing.map((r) => [r.key, r])), [data.pricing]);
 
   if (!ready) return null;
-  if (!user) return <Navigate to="/connexion" replace state={{ from: "/admin" }} />;
-  if (!isAdmin) return <Navigate to="/" replace />;
+  if (!user) return <Navigate to={path("login")} replace state={{ from: path("admin") }} />;
+  if (!isAdmin) return <Navigate to={path("home")} replace />;
 
   const money = (n) =>
     new Intl.NumberFormat(lang, { style: "currency", currency: "TND", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);

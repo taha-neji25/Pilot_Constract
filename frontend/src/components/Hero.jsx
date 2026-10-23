@@ -242,7 +242,7 @@ const TURN_KEY = 0.2;
 const MAX_COAST = 0.08; // fastest glide after releasing a drag (radians per frame)
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, path } = useLanguage();
   const { home } = t;
 
   const elements = useMemo(timeline, []);
@@ -433,10 +433,10 @@ export default function Hero() {
             <h1 className="hero__title">{home.title}</h1>
             <p className="hero__lead">{home.lead}</p>
             <div className="hero__actions">
-              <Link to="/devis" className="btn btn-primary">
+              <Link to={path("quote")} className="btn btn-primary">
                 {home.ctaPrimary}
               </Link>
-              <Link to="/galerie" className="btn btn-outline">
+              <Link to={path("gallery")} className="btn btn-outline">
                 {home.ctaSecondary}
               </Link>
             </div>

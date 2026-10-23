@@ -22,7 +22,7 @@ const translations = {
       rights: "Pilot Constract — Piloting and Constructing Cooperation",
     },
     home: {
-      eyebrow: "Custom structural steel",
+      eyebrow: "Steel structures · Sfax, Tunisia",
       title: "We build the frame that carries your project.",
       lead: "Pilot Constract designs, fabricates and installs industrial and commercial steel structures — from execution drawings to the last bolt on site.",
       ctaPrimary: "Get a free quote",
@@ -383,7 +383,7 @@ const translations = {
       rights: "Pilot Constract — Société Pilotage et Construction",
     },
     home: {
-      eyebrow: "Structures métalliques sur mesure",
+      eyebrow: "Charpente et structures métalliques · Sfax, Tunisie",
       title: "On construit l'ossature qui porte votre projet.",
       lead: "Pilot Constract conçoit, fabrique et installe des structures métalliques industrielles et commerciales — du plan d'exécution à la dernière boulonnerie sur site.",
       ctaPrimary: "Obtenir un devis gratuit",
@@ -744,7 +744,7 @@ const translations = {
       rights: "شركة القيادة و الإنشاء ",
     },
     home: {
-      eyebrow: "هياكل معدنية حسب الطلب",
+      eyebrow: "هياكل معدنية · صفاقس، تونس",
       title: "نبني الهيكل الذي يحمل مشروعكم.",
       lead: "تصمّم شركة القيادة و الإنشاء وتصنّع وتركّب الهياكل المعدنية الصناعية والتجارية، من مخططات التنفيذ إلى آخر مسمار في الموقع.",
       ctaPrimary: "احصل على عرض سعر مجاني",

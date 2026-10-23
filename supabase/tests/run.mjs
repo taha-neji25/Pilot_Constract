@@ -7,6 +7,8 @@ import { handleResend, handleVerify, hashCode, MAX_ATTEMPTS, RESEND_COOLDOWN_MS 
 import { createMailer } from "../functions/_shared/mailer.js";
 import { verificationEmail } from "../functions/_shared/emailTemplates.js";
 import { handleQuote } from "../functions/_shared/quotes.js";
+import { INDEXED_PAGES, LANGS, PRIVATE_PAGES, SLUGS, canonicalUrl, parsePath, pathFor } from "../../frontend/src/seo/routes.js";
+import { jsonLdFor, pageMeta } from "../../frontend/src/seo/meta.js";
 
 const phone = { isSupportedCountry, parsePhoneNumberFromString };
 
@@ -558,6 +560,46 @@ await test("quote: invalid or unreadable prices fall back to the defaults (a quo
 
 await test("quote: insert failure -> 500", async () => {
   assert.equal((await quote(framing, user, fakeAdmin({ failQuote: true }))).status, 500);
+});
+
+// ---- page addresses and search-engine tags (frontend/src/seo)
+await test("seo: every page and language has its own address, and the address maps back to the page", () => {
+  const seen = new Set();
+  for (const lang of LANGS)
+    for (const page of Object.keys(SLUGS)) {
+      const address = pathFor(page, lang);
+      assert.ok(!seen.has(address), `duplicate address ${address}`);
+      seen.add(address);
+      assert.deepEqual(parsePath(address), { lang, page });
+      assert.deepEqual(parsePath(address + "/"), { lang, page }); // GitHub Pages serves folders with a trailing slash
+    }
+  assert.equal(pathFor("home", "fr"), "/");
+  assert.equal(pathFor("services", "en"), "/en/services");
+  assert.equal(parsePath("/en/avis").page, null); // French address under /en: unknown (404)
+  assert.equal(canonicalUrl("faq", "ar"), "https://pilotconstract.com/ar/faq/");
+});
+
+await test("seo: indexable pages have a distinct title and a description of sensible length in every language", () => {
+  const titles = new Set();
+  for (const lang of LANGS)
+    for (const page of INDEXED_PAGES) {
+      const { title, description } = pageMeta(page, lang);
+      assert.ok(title.length >= 20 && title.length <= 75, `${lang}/${page} title length ${title.length}`);
+      assert.ok(description.length >= 70 && description.length <= 175, `${lang}/${page} description length ${description.length}`);
+      assert.ok(!titles.has(title), `duplicate title ${title}`);
+      titles.add(title);
+    }
+  assert.ok(PRIVATE_PAGES.every((p) => !INDEXED_PAGES.includes(p)));
+});
+
+await test("seo: structured data has the company, the FAQ questions and the service breadcrumb", () => {
+  const types = (page, lang) => jsonLdFor(page, lang)["@graph"].map((n) => n["@type"]);
+  assert.deepEqual(types("home", "fr"), ["GeneralContractor", "WebSite"]);
+  assert.ok(types("faq", "en").includes("FAQPage"));
+  assert.deepEqual(types("service:framing", "ar").slice(2), ["Service", "BreadcrumbList"]);
+  const company = jsonLdFor("home", "fr")["@graph"][0];
+  assert.equal(company.address.addressLocality, "Sfax");
+  assert.ok(!("aggregateRating" in company) && !("review" in company)); // no ratings that are not real, verifiable ones
 });
 
 console.log(`\n${passed} tests passed`);

@@ -25,12 +25,12 @@ const isPhoneValid = (value, country) =>
 
 export default function Auth({ mode }) {
   const isSignup = mode === "signup";
-  const { t, language } = useLanguage();
+  const { t, language, path } = useLanguage();
   const { auth } = t;
   const { user, login, signup, verifyEmail, resendCode } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const redirectTo = location.state?.from ?? "/devis";
+  const redirectTo = location.state?.from ?? path("quote");
 
   const [form, setForm] = useState({
     accountType: "person",
@@ -453,7 +453,7 @@ export default function Auth({ mode }) {
 
         <p className="auth__switch">
           {isSignup ? auth.haveAccount : auth.noAccount}{" "}
-          <Link to={isSignup ? "/connexion" : "/inscription"} state={location.state}>
+          <Link to={path(isSignup ? "login" : "signup")} state={location.state}>
             {isSignup ? auth.loginTitle : auth.signupTitle}
           </Link>
         </p>

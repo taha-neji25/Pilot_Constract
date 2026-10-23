@@ -89,6 +89,20 @@ Roll-out order (so nobody is blocked): the site (GitHub push) first, then the up
 If the provider is not configured, or refuses, signup is **refused** with a clear message instead of silently skipping the verification.
 Each signup uses one e-mail (plus any resend); the limits above are far from your expected volume.
 
+## Google search (SEO)
+
+The build (`npm run build`) writes one real HTML page per page and language, so Google reads the content without running JavaScript:
+
+- French at the original addresses (`/`, `/services`, `/faq`...), English under `/en/`, Arabic under `/ar/`; one page per service (`/services/charpente-metallique-industrielle`...).
+- Each page has its own title, description, canonical address, `hreflang` links, social preview and structured data (company, services, FAQ). Texts: `frontend/src/seo/meta.js` and `frontend/src/i18n/serviceDetails.js`; addresses: `frontend/src/seo/routes.js`.
+- `sitemap.xml` and `robots.txt` are generated at the same time. Login, account, quote tool and admin pages are `noindex`.
+- A new page or service needs: its address in `routes.js`, its texts, and nothing else (sitemap and tags follow).
+
+What only the owner can do (a website alone does not make Google rank it):
+1. **Google Search Console** (<https://search.google.com/search-console>): add the property `pilotconstract.com` (Domain, verify with the DNS record at Porkbun), then *Sitemaps* -> submit `sitemap.xml`. Check *Pages* after a week for problems.
+2. **Google Business Profile** (<https://business.google.com>): create the profile for the Sfax workshop (name, address, phones, category, photos, opening hours, link to the site). This is what makes the company appear on Google Maps and in the local results ("charpente métallique Sfax").
+3. **Reviews and links**: ask satisfied clients for a Google review; get the site listed in partner/supplier pages, directories and social profiles (Facebook, Instagram and LinkedIn already link to it).
+
 ## Day-to-day
 
 | Task | How |

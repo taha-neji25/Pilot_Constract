@@ -16,7 +16,7 @@ const CHAPTERS = [
 const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
 
 export default function Story() {
-  const { t } = useLanguage();
+  const { t, path } = useLanguage();
   const { story } = t.home;
   const { nav } = t;
 
@@ -125,7 +125,7 @@ export default function Story() {
                 </p>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
-                <Link className="story-step__link" to={`/galerie?section=${CHAPTERS[i].section}`}>
+                <Link className="story-step__link" to={path("gallery", `section=${CHAPTERS[i].section}`)}>
                   {story.seePhotos} →
                 </Link>
               </article>
@@ -134,10 +134,10 @@ export default function Story() {
             <Reveal className="story__final">
               <h3>{story.finalTitle}</h3>
               <div className="story__final-actions">
-                <Link to="/devis" className="btn btn-primary">
+                <Link to={path("quote")} className="btn btn-primary">
                   {story.finalCta}
                 </Link>
-                <Link to="/faq" className="story__faq">
+                <Link to={path("faq")} className="story__faq">
                   {t.home.introLink}
                 </Link>
               </div>

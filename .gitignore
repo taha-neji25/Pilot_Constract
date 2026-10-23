@@ -9,3 +9,4 @@ showreel/
 # Retired Express backend and its local database
 backend/
 .claude/
+dist-ssr
