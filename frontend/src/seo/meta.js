@@ -123,12 +123,17 @@ export function pageMeta(page, lang) {
 
 const ORG_ID = `${SITE_URL}/#organization`;
 
+// "Constract" is the company's own spelling (not the English word "contract"): tell search engines the exact name
+// and its other written forms, so the brand is recognised as a name rather than corrected as a typo.
+const ALTERNATE_NAMES = ["PilotConstract", "Société Pilotage et Construction"];
+
 const organization = (lang) => {
   const t = translations[lang];
   return {
     "@type": "GeneralContractor",
     "@id": ORG_ID,
     name: BRAND,
+    alternateName: ALTERNATE_NAMES,
     url: SITE_URL,
     logo: `${SITE_URL}/icon-512.png`,
     image: `${SITE_URL}/og-image.png`,
@@ -153,7 +158,7 @@ const organization = (lang) => {
 export function jsonLdFor(page, lang) {
   const graph = [
     organization(lang),
-    { "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: SITE_URL, name: BRAND, inLanguage: lang, publisher: { "@id": ORG_ID } },
+    { "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: SITE_URL, name: BRAND, alternateName: ALTERNATE_NAMES, inLanguage: lang, publisher: { "@id": ORG_ID } },
   ];
   if (page === "faq") {
     graph.push({
