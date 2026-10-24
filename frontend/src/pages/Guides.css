@@ -1,0 +1,147 @@
+.guides__lead {
+  font-size: 1.05rem;
+  max-width: 65ch;
+  margin-bottom: 2.5rem;
+}
+
+.guides__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.guide-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-steel);
+  padding: 1.75rem;
+}
+
+.guide-card:hover {
+  border-top-color: var(--pc-deep);
+}
+
+.guide-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.guide-card p {
+  flex: 1;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.guide-card__read,
+.guide__link {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--color-navy);
+}
+
+.guide-card:hover .guide-card__read,
+.guide__link:hover {
+  color: var(--pc-deep);
+}
+
+/* article */
+.guide {
+  max-width: 820px;
+}
+
+.guide__crumbs {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.guide__crumbs a:hover {
+  color: var(--pc-deep);
+}
+
+.guide__intro {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.guide__by {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+.guide__section h2 {
+  font-size: 1.3rem;
+  margin: 2rem 0 0.75rem;
+}
+
+.guide__section p {
+  max-width: 68ch;
+}
+
+.guide__section ul {
+  padding-inline-start: 1.25rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.guide__cta {
+  margin-top: 3rem;
+  padding: 1.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-safety);
+}
+
+.guide__cta h2 {
+  font-size: 1.3rem;
+  margin: 0 0 1rem;
+}
+
+.guide__cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.guide__cta-actions .guide__link {
+  margin-top: 0;
+}
+
+.guide__more {
+  font-size: 1.15rem;
+  margin: 2.5rem 0 0.75rem;
+}
+
+.guide__others {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.guide__others a {
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.guide__others a:hover {
+  color: var(--pc-deep);
+}
+
+@media (max-width: 900px) {
+  .guides__grid {
+    grid-template-columns: 1fr;
+  }
+}

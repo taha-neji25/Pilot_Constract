@@ -40,8 +40,22 @@ for (const id of SERVICE_IDS) {
   SLUGS[servicePage(id)] = { fr: `services/${s.fr}`, en: `services/${s.en}`, ar: `services/${s.en}` };
 }
 
+// Guides: /guides and one article per id (addresses in English for Arabic too, like the services).
+export const GUIDE_IDS = ["steps", "steel-or-concrete", "quote"];
+const GUIDE_SLUGS = {
+  steps: { fr: "etapes-projet-charpente-metallique", en: "steel-building-project-steps" },
+  "steel-or-concrete": { fr: "hangar-metallique-ou-beton", en: "steel-or-concrete-building" },
+  quote: { fr: "devis-charpente-metallique", en: "steel-frame-quote" },
+};
+export const guidePage = (id) => `guide:${id}`;
+SLUGS.guides = { fr: "guides", en: "guides", ar: "guides" };
+for (const id of GUIDE_IDS) {
+  const s = GUIDE_SLUGS[id];
+  SLUGS[guidePage(id)] = { fr: `guides/${s.fr}`, en: `guides/${s.en}`, ar: `guides/${s.en}` };
+}
+
 // Pages Google should list; the others (account, quote tool, admin) carry a "noindex" tag.
-export const INDEXED_PAGES = ["home", "services", ...SERVICE_IDS.map(servicePage), "reviews", "faq", "gallery"];
+export const INDEXED_PAGES = ["home", "services", ...SERVICE_IDS.map(servicePage), "guides", ...GUIDE_IDS.map(guidePage), "reviews", "faq", "gallery"];
 export const PRIVATE_PAGES = ["quote", "login", "signup", "admin"];
 
 // "/services", "/en/services", "/ar" ... (no trailing slash: what the router and the links use)

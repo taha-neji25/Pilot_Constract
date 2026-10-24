@@ -5,6 +5,7 @@
 import contact from "../data/contact.js";
 import translations from "../i18n/translations.js";
 import serviceDetails, { serviceUi } from "../i18n/serviceDetails.js";
+import guides, { guideUi, guidesIndexMeta } from "../i18n/guides.js";
 import { SITE_URL, canonicalUrl } from "./routes.js";
 
 const BRAND = "Pilot Constract";
@@ -112,7 +113,12 @@ export const notFoundMeta = (lang) => ({
 
 const serviceIdOf = (page) => (page?.startsWith("service:") ? page.slice(8) : null);
 
+const guideIdOf = (page) => (page?.startsWith("guide:") ? page.slice(6) : null);
+
 export function pageMeta(page, lang) {
+  if (page === "guides") return guidesIndexMeta[lang];
+  const gid = guideIdOf(page);
+  if (gid) return { title: guides[lang][gid].metaTitle, description: guides[lang][gid].metaDesc };
   const id = serviceIdOf(page);
   if (id) {
     const d = serviceDetails[lang][id];
@@ -193,6 +199,32 @@ export function jsonLdFor(page, lang) {
           { "@type": "ListItem", position: 1, name: ui.home, item: canonicalUrl("home", lang) },
           { "@type": "ListItem", position: 2, name: ui.services, item: canonicalUrl("services", lang) },
           { "@type": "ListItem", position: 3, name: d.h1, item: canonicalUrl(page, lang) },
+        ],
+      },
+    );
+  }
+  const gid = guideIdOf(page);
+  if (gid) {
+    const g = guides[lang][gid];
+    const ui = guideUi[lang];
+    graph.push(
+      {
+        "@type": "Article",
+        headline: g.h1,
+        description: g.metaDesc,
+        inLanguage: lang,
+        image: `${SITE_URL}/og-image.png`,
+        datePublished: "2026-10-24",
+        author: { "@id": ORG_ID },
+        publisher: { "@id": ORG_ID },
+        mainEntityOfPage: canonicalUrl(page, lang),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: ui.home, item: canonicalUrl("home", lang) },
+          { "@type": "ListItem", position: 2, name: ui.guides, item: canonicalUrl("guides", lang) },
+          { "@type": "ListItem", position: 3, name: g.h1, item: canonicalUrl(page, lang) },
         ],
       },
     );

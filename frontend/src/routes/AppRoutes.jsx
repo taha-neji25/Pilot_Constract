@@ -9,8 +9,9 @@ import Quote from "../pages/Quote.jsx";
 const Auth = lazy(() => import("../pages/Auth.jsx"));
 const Admin = lazy(() => import("../pages/Admin.jsx"));
 import ServicePage from "../pages/ServicePage.jsx";
+import { GuidePage, GuidesIndex } from "../pages/Guides.jsx";
 import NotFound from "../pages/NotFound.jsx";
-import { LANGS, SERVICE_IDS, pathFor, servicePage } from "../seo/routes.js";
+import { GUIDE_IDS, LANGS, SERVICE_IDS, guidePage, pathFor, servicePage } from "../seo/routes.js";
 
 // page key (see seo/routes.js) -> component
 const PAGES = {
@@ -24,6 +25,8 @@ const PAGES = {
   signup: () => <Auth mode="signup" />,
   admin: Admin,
   ...Object.fromEntries(SERVICE_IDS.map((id) => [servicePage(id), () => <ServicePage id={id} />])),
+  guides: GuidesIndex,
+  ...Object.fromEntries(GUIDE_IDS.map((id) => [guidePage(id), () => <GuidePage id={id} />])),
 };
 
 export default function AppRoutes() {

@@ -70,6 +70,7 @@ export default function Footer() {
     { to: path("gallery"), label: nav.gallery },
   ];
   const resourceLinks = [
+    { to: path("guides"), label: nav.guides },
     { to: path("reviews"), label: nav.reviews },
     { to: path("faq"), label: nav.faq },
     { to: path("quote"), label: nav.cta },

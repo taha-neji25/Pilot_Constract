@@ -15,6 +15,7 @@ export default function Navbar() {
   const links = [
     { page: "home", label: t.nav.home },
     { page: "services", label: t.nav.services },
+    { page: "guides", label: t.nav.guides },
     { page: "reviews", label: t.nav.reviews },
     { page: "faq", label: t.nav.faq },
     { page: "gallery", label: t.nav.gallery },

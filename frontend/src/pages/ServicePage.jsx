@@ -3,7 +3,8 @@ import IBeam from "../components/IBeam.jsx";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
 import serviceDetails, { serviceUi } from "../i18n/serviceDetails.js";
 import galleryImages from "../data/galleryImages.js";
-import { SERVICE_IDS, servicePage } from "../seo/routes.js";
+import guides, { guideUi } from "../i18n/guides.js";
+import { GUIDE_IDS, guidePage, servicePage } from "../seo/routes.js";
 import "./ServicePage.css";
 
 // One page per service (address in seo/routes.js, text in i18n/serviceDetails.js): what we do, photos, other services.
@@ -77,6 +78,15 @@ export default function ServicePage({ id }) {
             </Link>
           </>
         )}
+
+        <h2 className="service-page__work">{guideUi[language].guides}</h2>
+        <ul className="service-page__others">
+          {GUIDE_IDS.map((gid) => (
+            <li key={gid}>
+              <Link to={path(guidePage(gid))}>{guides[language][gid].h1}</Link>
+            </li>
+          ))}
+        </ul>
 
         <h2 className="service-page__work">{ui.others}</h2>
         <ul className="service-page__others">
