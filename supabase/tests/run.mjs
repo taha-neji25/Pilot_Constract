@@ -590,6 +590,12 @@ await test("seo: indexable pages have a distinct title and a description of sens
       titles.add(title);
     }
   assert.ok(PRIVATE_PAGES.every((p) => !INDEXED_PAGES.includes(p)));
+  // the company's French name is a keyword that must be on every French page (title and description)
+  for (const page of INDEXED_PAGES) {
+    const { title, description } = pageMeta(page, "fr");
+    assert.ok(title.includes("Pilotage et Construction") || description.includes("Pilotage et Construction"), `fr/${page}: missing the company name`);
+    assert.ok(title.length <= 70, `fr/${page}: title too long to be shown whole (${title.length})`);
+  }
 });
 
 await test("seo: structured data has the company, the FAQ questions and the service breadcrumb", () => {

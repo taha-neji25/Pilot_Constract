@@ -114,7 +114,7 @@ export default function Gallery() {
               >
                 <img
                   src={`/gallery/thumb/${img.id}.webp`}
-                  alt={`${categoryLabel(img.section)} — Pilot Constract, Sfax`}
+                  alt={`${categoryLabel(img.section)} — Sfax`}
                   loading="lazy"
                   decoding="async"
                 />

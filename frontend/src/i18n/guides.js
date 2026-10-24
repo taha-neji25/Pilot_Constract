@@ -14,7 +14,7 @@ export const guideUi = {
     ctaQuote: "Demander un devis gratuit",
     more: "À lire aussi",
     services: "Nos services",
-    published: "Par Pilot Constract, Sfax",
+    published: "Par Pilotage et Construction (Pilot Constract), Sfax",
   },
   en: {
     home: "Home",
@@ -45,7 +45,7 @@ export const guideUi = {
 };
 
 export const guidesIndexMeta = {
-  fr: { title: "Guides : construire en charpente métallique | Pilot Constract", description: "Conseils de Pilot Constract pour préparer un projet de charpente métallique, de hangar ou d'entrepôt : étapes, choix de la structure, devis." },
+  fr: { title: "Guides : construire en charpente métallique | Pilotage et Construction", description: "Conseils de Pilot Constract pour préparer un projet de charpente métallique, de hangar ou d'entrepôt : étapes, choix de la structure, devis." },
   en: { title: "Guides: Building with a Steel Frame | Pilot Constract", description: "Pilot Constract's advice for preparing a steel frame, hangar or warehouse project: steps, choosing the structure, and quotes." },
   ar: { title: "أدلة: البناء بالهياكل المعدنية | Pilot Constract", description: "نصائح Pilot Constract لإعداد مشروع هيكل معدني أو هنقار أو مستودع: المراحل واختيار الهيكل وعرض السعر." },
 };
@@ -54,7 +54,7 @@ export const guidesIndexMeta = {
 const guides = {
   fr: {
     steps: {
-      metaTitle: "Étapes d'un projet de charpente métallique | Pilot Constract",
+      metaTitle: "Étapes d'un projet de charpente métallique | Pilotage et Construction",
       metaDesc: "De l'étude et la note de calcul à la fabrication, la pose et la réception : les étapes d'un projet de hall ou d'entrepôt métallique, avec les délais indicatifs.",
       h1: "Les étapes d'un projet de charpente métallique, de l'étude à la réception",
       intro: "Un hall, un entrepôt ou un atelier métallique se réalise en quatre grandes étapes. Les connaître aide à préparer son projet, à comparer les offres et à tenir son planning.",
@@ -68,7 +68,7 @@ const guides = {
       ],
     },
     "steel-or-concrete": {
-      metaTitle: "Hangar métallique ou béton : comment choisir ? | Pilot Constract",
+      metaTitle: "Hangar métallique ou béton ? | Pilotage et Construction",
       metaDesc: "Rapidité, portées, évolutivité, entretien, budget : les critères pour choisir entre une charpente métallique et une construction en béton pour un hall ou un entrepôt.",
       h1: "Hangar métallique ou construction en béton : comment choisir ?",
       intro: "Pour un entrepôt, un atelier ou un hall industriel, la charpente métallique est souvent comparée à la construction en béton. Voici les critères qui comptent vraiment.",
@@ -83,7 +83,7 @@ const guides = {
       ],
     },
     quote: {
-      metaTitle: "Devis charpente métallique : ce qui fait le prix | Pilot Constract",
+      metaTitle: "Devis de charpente métallique | Pilotage et Construction",
       metaDesc: "Poids d'acier, dimensions, profilés, couverture, taxes : ce que comprend le devis d'une charpente métallique et comment estimer son projet en ligne.",
       h1: "Devis de charpente métallique : ce qui fait le prix",
       intro: "Le prix d'une charpente métallique n'est pas un forfait : il découle d'un calcul. Voici ce que contient un devis et ce qui le fait varier.",

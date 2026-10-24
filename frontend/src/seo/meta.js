@@ -13,29 +13,29 @@ const BRAND = "Pilot Constract";
 const META = {
   fr: {
     home: {
-      title: "Charpente métallique à Sfax, Tunisie | Pilot Constract",
+      title: "Pilotage et Construction – Pilot Constract | Charpente métallique Sfax",
       description:
-        "Pilot Constract (Société Pilotage et Construction) : conception, fabrication et pose de charpentes et structures métalliques à Sfax et partout en Tunisie. Devis gratuit.",
+        "Pilotage et Construction (Pilot Constract) à Sfax : conception, fabrication et pose de charpentes et structures métalliques partout en Tunisie. Devis gratuit.",
     },
     services: {
-      title: "Services de construction métallique en Tunisie | Pilot Constract",
+      title: "Services de construction métallique | Pilotage et Construction",
       description:
         "Étude et calcul, fabrication en atelier, montage, charpente industrielle, passerelles et escaliers, maintenance, ferronnerie et containers sur mesure. Basés à Sfax.",
     },
     reviews: {
-      title: "Avis clients | Pilot Constract, constructeur métallique à Sfax",
+      title: "Avis clients | Pilotage et Construction à Sfax",
       description:
-        "Ce que disent nos clients industriels de Pilot Constract : sérieux, respect des délais, qualité de fabrication et de pose des structures métalliques.",
+        "Ce que disent nos clients industriels de Pilotage et Construction (Pilot Constract) : sérieux, respect des délais, qualité de fabrication et de pose.",
     },
     faq: {
-      title: "Questions fréquentes sur les structures métalliques | Pilot Constract",
+      title: "Questions fréquentes | Pilotage et Construction (Pilot Constract)",
       description:
-        "Types d'ouvrages, délais, zone d'intervention, suivi après livraison, obtention d'un devis : les réponses de Pilot Constract, constructeur métallique à Sfax.",
+        "Types d'ouvrages, délais, zone d'intervention, suivi après livraison, devis : les réponses de Pilotage et Construction (Pilot Constract), constructeur métallique à Sfax.",
     },
     gallery: {
-      title: "Réalisations : charpentes et structures métalliques | Pilot Constract",
+      title: "Réalisations : charpentes métalliques | Pilotage et Construction",
       description:
-        "Photos de chantiers et de fabrication en atelier : charpentes industrielles, passerelles, escaliers, ferronnerie et containers réalisés par Pilot Constract à Sfax.",
+        "Photos de chantiers et de fabrication en atelier : charpentes industrielles, passerelles, escaliers, ferronnerie et containers réalisés par Pilotage et Construction à Sfax.",
     },
     quote: { title: "Devis gratuit | Pilot Constract", description: "Estimez votre projet de structure métallique en ligne." },
     login: { title: "Connexion | Pilot Constract", description: "Connectez-vous à votre compte Pilot Constract." },

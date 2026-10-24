@@ -385,11 +385,11 @@ const translations = {
       email: "E-mail",
       address: "Sfax, Tunisie",
       emailLabels: { general: "Renseignements" },
-      tagline: "Structures métalliques — conception, fabrication et pose, Sfax, Tunisie.",
+      tagline: "Pilotage et Construction (Pilot Constract) — structures métalliques : conception, fabrication et pose, Sfax, Tunisie.",
       rights: "Pilot Constract — Société Pilotage et Construction",
     },
     home: {
-      eyebrow: "Charpente et structures métalliques · Sfax, Tunisie",
+      eyebrow: "Pilotage et Construction · Charpente métallique · Sfax",
       title: "On construit l'ossature qui porte votre projet.",
       lead: "Pilot Constract conçoit, fabrique et installe des structures métalliques industrielles et commerciales — du plan d'exécution à la dernière boulonnerie sur site.",
       ctaPrimary: "Obtenir un devis gratuit",
@@ -438,7 +438,7 @@ const translations = {
       },
       about: {
         eyebrow: "Qui sommes-nous",
-        title: "Un partenaire métallique fondé sur la confiance",
+        title: "Pilotage et Construction : un partenaire métallique fondé sur la confiance",
         lead: "Pilot Constract (Société Pilotage et Construction) est une entreprise tunisienne de structures métalliques basée à Sfax, présente du premier plan à la dernière boulonnerie.",
         foundation: {
           title: "Fondation",
