@@ -72,7 +72,7 @@ const translations = {
       about: {
         eyebrow: "About us",
         title: "A steel partner built on trust",
-        lead: "Pilot Constract is a Tunisian structural steel company based in Sfax, working from the first drawing to the last bolt.",
+        lead: "Pilot Constract (Société Pilotage et Construction) is a Tunisian structural steel company based in Sfax, working from the first drawing to the last bolt.",
         foundation: {
           title: "Foundation",
           text: "Pilot Constract was founded in Sfax, Tunisia, on a simple idea: one partner who carries a steel structure from design to handover. Over nine years later, we serve clients across Tunisia and abroad.",
@@ -137,6 +137,10 @@ const translations = {
         { q: "How long does a typical project take?", a: "Depending on the size of the structure: between 6 and 16 weeks from drawing approval to site handover." },
         { q: "Do you offer support after delivery?", a: "Yes, we provide follow-up, preventive maintenance and diagnosis of existing structures after commissioning." },
         { q: "How do I get a quote?", a: "Send us your drawings or a project description by email; we'll get back to you within 48h with an initial estimate." },
+        { q: "Who is Pilot Constract (Société Pilotage et Construction)?", a: "Pilot Constract (Société Pilotage et Construction) is a Tunisian structural steel company based in Sfax, with an engineering office, a fabrication workshop and qualified installation crews." },
+        { q: "Do you build steel hangars and industrial steel frames?", a: "Yes: hangars, industrial halls, warehouses and workshops in steel framing, from design to installation, with sheet roofing and cladding." },
+        { q: "Where is Pilot Constract located?", a: "Pilot Constract is based in Sfax, Tunisia, and our teams work across the country. Phone: +216 28 831 103." },
+        { q: "Can I get a price estimate online?", a: "Yes, for engineering studies (per m²) and industrial steel framing (by steel weight): create a free account and use the quote calculator. For other services, email us." },
       ],
     },
     gallery: {
@@ -433,7 +437,7 @@ const translations = {
       about: {
         eyebrow: "Qui sommes-nous",
         title: "Un partenaire métallique fondé sur la confiance",
-        lead: "Pilot Constract est une entreprise tunisienne de structures métalliques basée à Sfax, présente du premier plan à la dernière boulonnerie.",
+        lead: "Pilot Constract (Société Pilotage et Construction) est une entreprise tunisienne de structures métalliques basée à Sfax, présente du premier plan à la dernière boulonnerie.",
         foundation: {
           title: "Fondation",
           text: "Pilot Constract est née à Sfax, en Tunisie, d'une idée simple : un seul partenaire qui accompagne une structure métallique de la conception à la réception. Plus de neuf ans après, nous servons des clients partout en Tunisie et à l'étranger.",
@@ -498,6 +502,10 @@ const translations = {
         { q: "Combien de temps prend un projet type ?", a: "Selon la taille de l'ouvrage : entre 6 et 16 semaines depuis la validation des plans jusqu'à la réception de chantier." },
         { q: "Proposez-vous un accompagnement après livraison ?", a: "Oui, nous assurons le suivi, la maintenance préventive et le diagnostic de structures existantes après mise en service." },
         { q: "Comment obtenir un devis ?", a: "Envoyez-nous vos plans ou une description du projet par e-mail ; nous revenons vers vous sous 48h avec une première estimation." },
+        { q: "Qui est Pilot Constract (Société Pilotage et Construction) ?", a: "Pilot Constract (Société Pilotage et Construction) est une entreprise tunisienne de structures métalliques basée à Sfax, avec un bureau d'études, un atelier de fabrication et des équipes de pose qualifiées." },
+        { q: "Faites-vous des hangars et des charpentes métalliques ?", a: "Oui : hangars, halls industriels, entrepôts et ateliers en charpente métallique, de l'étude à la pose, avec couverture et bardage en tôle." },
+        { q: "Où se trouve Pilot Constract ?", a: "Pilot Constract est basée à Sfax, en Tunisie, et ses équipes interviennent sur tout le territoire tunisien. Téléphone : +216 28 831 103." },
+        { q: "Peut-on estimer le prix en ligne ?", a: "Oui, pour l'étude (au m²) et la charpente industrielle (selon le poids d'acier) : créez un compte gratuit et utilisez le calculateur de devis. Pour les autres services, écrivez-nous par e-mail." },
       ],
     },
     gallery: {
@@ -794,7 +802,7 @@ const translations = {
       about: {
         eyebrow: "من نحن",
         title: "شريك في الهياكل المعدنية قائم على الثقة",
-        lead: "القيادة و الإنشاء شركة تونسية للهياكل المعدنية مقرها صفاقس، ترافقكم من أول مخطط إلى آخر مسمار.",
+        lead: "القيادة و الإنشاء (Société Pilotage et Construction) شركة تونسية للهياكل المعدنية مقرها صفاقس، ترافقكم من أول مخطط إلى آخر مسمار.",
         foundation: {
           title: "التأسيس",
           text: "تأسست شركة القيادة و الإنشاء في صفاقس، تونس، على فكرة بسيطة: شريك واحد يرافق الهيكل المعدني من التصميم إلى التسليم. وبعد أكثر من تسع سنوات، نخدم حرفاء في كامل تونس وخارجها.",
@@ -859,6 +867,10 @@ const translations = {
         { q: "كم من الوقت يستغرق المشروع عادة؟", a: "حسب حجم الهيكل: بين 6 و16 أسبوعًا من المصادقة على المخططات إلى تسليم الموقع." },
         { q: "هل تقدمون متابعة بعد التسليم؟", a: "نعم، نضمن المتابعة والصيانة الوقائية وتشخيص الهياكل القائمة بعد دخولها الخدمة." },
         { q: "كيف أحصل على عرض سعر؟", a: "أرسلوا لنا مخططاتكم أو وصفًا للمشروع عبر البريد الإلكتروني، وسنعود إليكم خلال 48 ساعة بتقدير أولي." },
+        { q: "من هي Pilot Constract (Société Pilotage et Construction)؟", a: "Pilot Constract (القيادة و الإنشاء) شركة تونسية للهياكل المعدنية مقرها صفاقس، لديها مكتب دراسات وورشة تصنيع وفرق تركيب مؤهلة." },
+        { q: "هل تنجزون هناقر وهياكل حديدية صناعية؟", a: "نعم: هناقر وقاعات صناعية ومستودعات وورشات بهيكل معدني، من الدراسة إلى التركيب، مع التغطية والتكسية بالصفائح." },
+        { q: "أين يوجد مقر Pilot Constract؟", a: "مقرنا في صفاقس، تونس، وفرقنا تتدخل في كامل البلاد. الهاتف: +216 28 831 103." },
+        { q: "هل يمكن تقدير السعر عبر الإنترنت؟", a: "نعم، بالنسبة للدراسة (بالمتر المربع) والهياكل الصناعية المعدنية (حسب وزن الحديد): أنشئ حسابًا مجانيًا واستعمل حاسبة عرض السعر. أما الخدمات الأخرى فراسلنا عبر البريد الإلكتروني." },
       ],
     },
     gallery: {

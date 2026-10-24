@@ -14,7 +14,7 @@ const META = {
     home: {
       title: "Charpente métallique à Sfax, Tunisie | Pilot Constract",
       description:
-        "Conception, fabrication et pose de charpentes et structures métalliques à Sfax et partout en Tunisie : hangars, entrepôts, escaliers, ferronnerie. Devis gratuit.",
+        "Pilot Constract (Société Pilotage et Construction) : conception, fabrication et pose de charpentes et structures métalliques à Sfax et partout en Tunisie. Devis gratuit.",
     },
     services: {
       title: "Services de construction métallique en Tunisie | Pilot Constract",
@@ -45,7 +45,7 @@ const META = {
     home: {
       title: "Steel Structures & Metal Buildings in Sfax, Tunisia | Pilot Constract",
       description:
-        "Pilot Constract designs, fabricates and installs steel structures in Sfax and across Tunisia: industrial frames, warehouses, stairs, metalwork. Free quote.",
+        "Pilot Constract (Société Pilotage et Construction) designs, fabricates and installs steel structures in Sfax and across Tunisia: industrial frames, warehouses. Free quote.",
     },
     services: {
       title: "Steel Construction Services in Tunisia | Pilot Constract",
@@ -76,7 +76,7 @@ const META = {
     home: {
       title: "Pilot Constract | هياكل معدنية وحدادة في صفاقس، تونس",
       description:
-        "تصميم وتصنيع وتركيب الهياكل المعدنية في صفاقس وكامل تونس: هياكل حديدية صناعية، مستودعات، سلالم، حدادة وحاويات. احصل على عرض سعر مجاني.",
+        "Pilot Constract (Société Pilotage et Construction): تصميم وتصنيع وتركيب الهياكل المعدنية في صفاقس وكامل تونس، هياكل صناعية ومستودعات وسلالم. عرض سعر مجاني.",
     },
     services: {
       title: "خدمات البناء المعدني في تونس | Pilot Constract",
@@ -125,7 +125,8 @@ const ORG_ID = `${SITE_URL}/#organization`;
 
 // "Constract" is the company's own spelling (not the English word "contract"): tell search engines the exact name
 // and its other written forms, so the brand is recognised as a name rather than corrected as a typo.
-const ALTERNATE_NAMES = ["PilotConstract", "Société Pilotage et Construction"];
+const LEGAL_NAME = "Société Pilotage et Construction";
+const ALTERNATE_NAMES = ["PilotConstract", LEGAL_NAME, "Pilotage et Construction"];
 
 const organization = (lang) => {
   const t = translations[lang];
@@ -133,6 +134,7 @@ const organization = (lang) => {
     "@type": "GeneralContractor",
     "@id": ORG_ID,
     name: BRAND,
+    legalName: LEGAL_NAME,
     alternateName: ALTERNATE_NAMES,
     url: SITE_URL,
     logo: `${SITE_URL}/icon-512.png`,
