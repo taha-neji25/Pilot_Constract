@@ -8,7 +8,7 @@ import serviceDetails, { serviceUi } from "../i18n/serviceDetails.js";
 import guides, { guideUi, guidesIndexMeta } from "../i18n/guides.js";
 import { contactMeta } from "../i18n/contactText.js";
 import { SITE_URL, canonicalUrl } from "./routes.js";
-import { ADDRESS, BRAND, FR_NAME, LEGAL_NAME } from "../data/company.js";
+import { ADDRESS, BRAND, FR_NAME, HOURS, LEGAL_NAME } from "../data/company.js";
 
 
 const META = {
@@ -152,6 +152,7 @@ const organization = (lang) => {
     email: contact.emails[0]?.address,
     address: { "@type": "PostalAddress", streetAddress: `${ADDRESS.street}, ${ADDRESS.area}`, addressLocality: ADDRESS.city, addressCountry: ADDRESS.country },
     areaServed: { "@type": "Country", name: "Tunisia" },
+    openingHoursSpecification: { "@type": "OpeningHoursSpecification", dayOfWeek: HOURS.days, opens: HOURS.opens, closes: HOURS.closes },
     sameAs: [contact.social.facebook, contact.social.instagram, contact.social.linkedin].filter(Boolean),
     hasOfferCatalog: {
       "@type": "OfferCatalog",

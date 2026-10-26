@@ -20,5 +20,17 @@ export const ADDRESS = {
   },
 };
 
+// Opening hours (24-hour times). `line` is how they are written on the site, in each language.
+export const HOURS = {
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  opens: "08:00",
+  closes: "17:00",
+  line: {
+    fr: "Du lundi au samedi, de 8 h à 17 h",
+    en: "Monday to Saturday, 8:00 am to 5:00 pm",
+    ar: "من الاثنين إلى السبت، من 8:00 إلى 17:00",
+  },
+};
+
 // Opens the place in Google Maps.
 export const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${BRAND}, ${ADDRESS.area}, ${ADDRESS.street}, ${ADDRESS.city}`)}`;

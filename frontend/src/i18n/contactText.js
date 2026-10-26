@@ -1,6 +1,6 @@
 // Text of the /contact page (numbers, e-mail and links come from data/contact.js).
 
-import { ADDRESS, BRAND, FR_NAME } from "../data/company.js";
+import { ADDRESS, BRAND, FR_NAME, HOURS } from "../data/company.js";
 import contact from "../data/contact.js";
 
 export const contactMeta = {
@@ -32,6 +32,8 @@ const contactText = {
     addressValue: ADDRESS.line.fr,
     area: "Zone d'intervention",
     mapsCta: "Voir sur Google Maps",
+    hours: "Horaires d'ouverture",
+    hoursValue: HOURS.line.fr,
     areaValue: "Toute la Tunisie",
     social: "Réseaux sociaux",
     quote: "Demander un devis gratuit",
@@ -50,6 +52,8 @@ const contactText = {
     addressValue: ADDRESS.line.en,
     area: "Where we work",
     mapsCta: "View on Google Maps",
+    hours: "Opening hours",
+    hoursValue: HOURS.line.en,
     areaValue: "All across Tunisia",
     social: "Social networks",
     quote: "Request a free quote",
@@ -68,6 +72,8 @@ const contactText = {
     addressValue: ADDRESS.line.ar,
     area: "مناطق التدخل",
     mapsCta: "عرض على خرائط Google",
+    hours: "ساعات العمل",
+    hoursValue: HOURS.line.ar,
     areaValue: "كامل تونس",
     social: "شبكات التواصل",
     quote: "اطلب عرض سعر مجاني",

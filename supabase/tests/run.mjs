@@ -617,6 +617,8 @@ await test("seo: structured data has the company, the FAQ questions and the serv
   assert.deepEqual(types("service:framing", "ar").slice(2), ["Service", "BreadcrumbList"]);
   const company = jsonLdFor("home", "fr")["@graph"][0];
   assert.equal(company.address.addressLocality, "Sfax");
+  assert.equal(company.openingHoursSpecification.dayOfWeek.length, 6); // Monday to Saturday
+  assert.equal(company.openingHoursSpecification.opens, "08:00");
   assert.equal(company.contactPoint.length, 3); // every phone number is declared, not only the first
   assert.ok(types("contact", "fr").includes("ContactPage"));
   assert.ok(!("aggregateRating" in company) && !("review" in company)); // no ratings that are not real, verifiable ones

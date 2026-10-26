@@ -79,6 +79,11 @@ export default function Contact() {
           </div>
 
           <div className="contact-page__card">
+            <h2>{c.hours}</h2>
+            <p>{c.hoursValue}</p>
+          </div>
+
+          <div className="contact-page__card">
             <h2>{c.area}</h2>
             <p>{c.areaValue}</p>
           </div>
