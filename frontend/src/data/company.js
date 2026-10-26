@@ -31,7 +31,7 @@ export const PLACES = {
     line: {
       fr: "Km 10, route Saltnia, Sfax 3000, Tunisie",
       en: "Km 10, Route Saltnia, Sfax 3000, Tunisia",
-      ar: "الكلم 10، طريق سلتنية، صفاقس 3000، تونس",
+      ar: "الكلم 10، طريق السلطنية، صفاقس 3000، تونس",
     },
   },
 };
