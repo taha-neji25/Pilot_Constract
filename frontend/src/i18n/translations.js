@@ -1,4 +1,4 @@
-import { ADDRESS, AR_NAME, BRAND, FR_NAME, LEGAL_NAME } from "../data/company.js";
+import { AR_NAME, BRAND, FR_NAME, LEGAL_NAME, PLACES } from "../data/company.js";
 const translations = {
   en: {
     nav: {
@@ -19,7 +19,8 @@ const translations = {
       resources: "Resources",
       contacts: "Contact",
       email: "Email",
-      address: ADDRESS.line.en,
+      address: PLACES.office.line.en,
+      factory: PLACES.factory.line.en,
       emailLabels: { general: "General enquiries" },
       tagline: "Structural steel — design, fabrication and installation, Sfax, Tunisia.",
       rights: `${BRAND} — Piloting and Constructing Cooperation`,
@@ -386,7 +387,8 @@ const translations = {
       resources: "Ressources",
       contacts: "Contacts",
       email: "E-mail",
-      address: ADDRESS.line.fr,
+      address: PLACES.office.line.fr,
+      factory: PLACES.factory.line.fr,
       emailLabels: { general: "Renseignements" },
       tagline: `${FR_NAME} (${BRAND}) — structures métalliques : conception, fabrication et pose, Sfax, Tunisie.`,
       rights: `${BRAND} — ${LEGAL_NAME}`,
@@ -753,7 +755,8 @@ const translations = {
       resources: "موارد",
       contacts: "اتصل بنا",
       email: "البريد الإلكتروني",
-      address: ADDRESS.line.ar,
+      address: PLACES.office.line.ar,
+      factory: PLACES.factory.line.ar,
       emailLabels: { general: "استفسارات عامة" },
       tagline: "الهياكل المعدنية — تصميم وتصنيع وتركيب، صفاقس، تونس.",
       rights: `شركة ${AR_NAME} `,

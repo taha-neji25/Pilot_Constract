@@ -8,7 +8,7 @@ import serviceDetails, { serviceUi } from "../i18n/serviceDetails.js";
 import guides, { guideUi, guidesIndexMeta } from "../i18n/guides.js";
 import { contactMeta } from "../i18n/contactText.js";
 import { SITE_URL, canonicalUrl } from "./routes.js";
-import { ADDRESS, BRAND, FR_NAME, HOURS, LEGAL_NAME } from "../data/company.js";
+import { BRAND, FR_NAME, HOURS, LEGAL_NAME, PLACES, mapsUrl } from "../data/company.js";
 
 
 const META = {
@@ -135,6 +135,19 @@ const ORG_ID = `${SITE_URL}/#organization`;
 // and its other written forms, so the brand is recognised as a name rather than corrected as a typo.
 const ALTERNATE_NAMES = [BRAND.replace(" ", ""), LEGAL_NAME, FR_NAME];
 
+const postalAddress = (place) => ({
+  "@type": "PostalAddress",
+  streetAddress: [place.street, place.area].filter(Boolean).join(", "),
+  addressLocality: place.city,
+  ...(place.postalCode ? { postalCode: place.postalCode } : {}),
+  addressCountry: place.country,
+});
+const placeNames = {
+  fr: { office: "Administration", factory: "Usine" },
+  en: { office: "Head office", factory: "Factory" },
+  ar: { office: "الإدارة", factory: "المصنع" },
+};
+
 const organization = (lang) => {
   const t = translations[lang];
   return {
@@ -150,7 +163,11 @@ const organization = (lang) => {
     telephone: contact.phones[0],
     contactPoint: contact.phones.map((telephone) => ({ "@type": "ContactPoint", telephone, contactType: "customer service", areaServed: "TN" })),
     email: contact.emails[0]?.address,
-    address: { "@type": "PostalAddress", streetAddress: `${ADDRESS.street}, ${ADDRESS.area}`, addressLocality: ADDRESS.city, addressCountry: ADDRESS.country },
+    address: postalAddress(PLACES.office),
+    location: [
+      { "@type": "Place", name: `${BRAND} - ${placeNames[lang].office}`, address: postalAddress(PLACES.office), hasMap: mapsUrl(PLACES.office) },
+      { "@type": "Place", name: `${BRAND} - ${placeNames[lang].factory}`, address: postalAddress(PLACES.factory), hasMap: mapsUrl(PLACES.factory) },
+    ],
     areaServed: { "@type": "Country", name: "Tunisia" },
     openingHoursSpecification: { "@type": "OpeningHoursSpecification", dayOfWeek: HOURS.days, opens: HOURS.opens, closes: HOURS.closes },
     sameAs: [contact.social.facebook, contact.social.instagram, contact.social.linkedin].filter(Boolean),

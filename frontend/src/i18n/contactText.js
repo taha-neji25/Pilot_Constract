@@ -1,6 +1,6 @@
 // Text of the /contact page (numbers, e-mail and links come from data/contact.js).
 
-import { ADDRESS, BRAND, FR_NAME, HOURS } from "../data/company.js";
+import { BRAND, FR_NAME, HOURS } from "../data/company.js";
 import contact from "../data/contact.js";
 
 export const contactMeta = {
@@ -28,8 +28,8 @@ const contactText = {
     whatsapp: "WhatsApp",
     whatsappCta: "Écrire sur WhatsApp",
     email: "E-mail",
-    address: "Adresse",
-    addressValue: ADDRESS.line.fr,
+    office: "Administration",
+    factory: "Usine (atelier de fabrication)",
     area: "Zone d'intervention",
     mapsCta: "Voir sur Google Maps",
     hours: "Horaires d'ouverture",
@@ -48,8 +48,8 @@ const contactText = {
     whatsapp: "WhatsApp",
     whatsappCta: "Message us on WhatsApp",
     email: "E-mail",
-    address: "Address",
-    addressValue: ADDRESS.line.en,
+    office: "Head office (administration)",
+    factory: "Factory (fabrication workshop)",
     area: "Where we work",
     mapsCta: "View on Google Maps",
     hours: "Opening hours",
@@ -68,8 +68,8 @@ const contactText = {
     whatsapp: "واتساب",
     whatsappCta: "راسلنا عبر واتساب",
     email: "البريد الإلكتروني",
-    address: "العنوان",
-    addressValue: ADDRESS.line.ar,
+    office: "الإدارة",
+    factory: "المصنع (ورشة التصنيع)",
     area: "مناطق التدخل",
     mapsCta: "عرض على خرائط Google",
     hours: "ساعات العمل",

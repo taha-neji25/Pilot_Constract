@@ -7,18 +7,35 @@ export const FR_NAME = "Pilotage et Construction"; // the company's name in Fren
 export const LEGAL_NAME = `Société ${FR_NAME}`;
 export const AR_NAME = "القيادة و الإنشاء"; // the company's name in Arabic
 
-// Where the workshop is. `line` is the address as written on the site, in each language.
-export const ADDRESS = {
-  street: "Hedi Cheker St, km 9",
-  area: "Sakiet Ezzit",
-  city: "Sfax",
-  country: "TN",
-  line: {
-    fr: "Sakiet Ezzit, Hedi Cheker St, km 9, Sfax, Tunisie",
-    en: "Sakiet Ezzit, Hedi Cheker St, km 9, Sfax, Tunisia",
-    ar: "ساقية الزيت، شارع الهادي شاكر، الكلم 9، صفاقس، تونس",
+// The two places. `line` is the address as written on the site, in each language.
+export const PLACES = {
+  // Administration: the company's main address
+  office: {
+    street: "Hedi Cheker St, km 9",
+    area: "Sakiet Ezzit",
+    city: "Sfax",
+    country: "TN",
+    line: {
+      fr: "Sakiet Ezzit, Hedi Cheker St, km 9, Sfax, Tunisie",
+      en: "Sakiet Ezzit, Hedi Cheker St, km 9, Sfax, Tunisia",
+      ar: "ساقية الزيت، شارع الهادي شاكر، الكلم 9، صفاقس، تونس",
+    },
+  },
+  // Factory (fabrication workshop)
+  factory: {
+    street: "km 10, Route Saltnia",
+    area: "",
+    city: "Sfax",
+    postalCode: "3000",
+    country: "TN",
+    line: {
+      fr: "Km 10, route Saltnia, Sfax 3000, Tunisie",
+      en: "Km 10, Route Saltnia, Sfax 3000, Tunisia",
+      ar: "الكلم 10، طريق سلتنية، صفاقس 3000، تونس",
+    },
   },
 };
+export const ADDRESS = PLACES.office; // main address (administration)
 
 // Opening hours (24-hour times). `line` is how they are written on the site, in each language.
 export const HOURS = {
@@ -32,5 +49,7 @@ export const HOURS = {
   },
 };
 
-// Opens the place in Google Maps.
-export const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${BRAND}, ${ADDRESS.area}, ${ADDRESS.street}, ${ADDRESS.city}`)}`;
+// Opens a place in Google Maps.
+export const mapsUrl = (place) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([BRAND, place.area, place.street, place.city].filter(Boolean).join(", "))}`;
+export const MAPS_URL = mapsUrl(PLACES.office);

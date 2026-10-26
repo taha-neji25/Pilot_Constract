@@ -132,6 +132,10 @@ export default function Footer() {
                 {ICONS.pin}
                 <span>{footer.address}</span>
               </li>
+              <li>
+                {ICONS.pin}
+                <span>{footer.factory}</span>
+              </li>
               {contact.phones.map((p) => (
                 <li key={p}>
                   {ICONS.phone}
