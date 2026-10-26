@@ -73,6 +73,7 @@ export default function Footer() {
     { to: path("guides"), label: nav.guides },
     { to: path("reviews"), label: nav.reviews },
     { to: path("faq"), label: nav.faq },
+    { to: path("contact"), label: nav.contact },
     { to: path("quote"), label: nav.cta },
   ];
 

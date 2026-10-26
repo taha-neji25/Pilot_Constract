@@ -19,6 +19,7 @@ export default function Navbar() {
     { page: "reviews", label: t.nav.reviews },
     { page: "faq", label: t.nav.faq },
     { page: "gallery", label: t.nav.gallery },
+    { page: "contact", label: t.nav.contact },
   ];
 
   return (

@@ -6,6 +6,7 @@ import contact from "../data/contact.js";
 import translations from "../i18n/translations.js";
 import serviceDetails, { serviceUi } from "../i18n/serviceDetails.js";
 import guides, { guideUi, guidesIndexMeta } from "../i18n/guides.js";
+import { contactMeta } from "../i18n/contactText.js";
 import { SITE_URL, canonicalUrl } from "./routes.js";
 
 const BRAND = "Pilot Constract";
@@ -117,6 +118,7 @@ const guideIdOf = (page) => (page?.startsWith("guide:") ? page.slice(6) : null);
 
 export function pageMeta(page, lang) {
   if (page === "guides") return guidesIndexMeta[lang];
+  if (page === "contact") return contactMeta[lang];
   const gid = guideIdOf(page);
   if (gid) return { title: guides[lang][gid].metaTitle, description: guides[lang][gid].metaDesc };
   const id = serviceIdOf(page);
@@ -147,6 +149,7 @@ const organization = (lang) => {
     image: `${SITE_URL}/og-image.png`,
     description: META[lang].home.description,
     telephone: contact.phones[0],
+    contactPoint: contact.phones.map((telephone) => ({ "@type": "ContactPoint", telephone, contactType: "customer service", areaServed: "TN" })),
     email: contact.emails[0]?.address,
     address: { "@type": "PostalAddress", addressLocality: "Sfax", addressCountry: "TN" },
     areaServed: { "@type": "Country", name: "Tunisia" },
@@ -202,6 +205,9 @@ export function jsonLdFor(page, lang) {
         ],
       },
     );
+  }
+  if (page === "contact") {
+    graph.push({ "@type": "ContactPage", url: canonicalUrl(page, lang), name: contactMeta[lang].title, inLanguage: lang, about: { "@id": ORG_ID } });
   }
   const gid = guideIdOf(page);
   if (gid) {

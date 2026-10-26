@@ -6,6 +6,7 @@ import Reviews from "../pages/Reviews.jsx";
 import FAQs from "../pages/FAQs.jsx";
 import Gallery from "../pages/Gallery.jsx";
 import Quote from "../pages/Quote.jsx";
+import Contact from "../pages/Contact.jsx";
 const Auth = lazy(() => import("../pages/Auth.jsx"));
 const Admin = lazy(() => import("../pages/Admin.jsx"));
 import ServicePage from "../pages/ServicePage.jsx";
@@ -24,6 +25,7 @@ const PAGES = {
   login: () => <Auth mode="login" />,
   signup: () => <Auth mode="signup" />,
   admin: Admin,
+  contact: Contact,
   ...Object.fromEntries(SERVICE_IDS.map((id) => [servicePage(id), () => <ServicePage id={id} />])),
   guides: GuidesIndex,
   ...Object.fromEntries(GUIDE_IDS.map((id) => [guidePage(id), () => <GuidePage id={id} />])),
