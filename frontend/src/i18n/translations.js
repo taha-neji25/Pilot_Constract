@@ -1,3 +1,4 @@
+import { ADDRESS, AR_NAME, BRAND, FR_NAME, LEGAL_NAME } from "../data/company.js";
 const translations = {
   en: {
     nav: {
@@ -18,15 +19,15 @@ const translations = {
       resources: "Resources",
       contacts: "Contact",
       email: "Email",
-      address: "Sfax, Tunisia",
+      address: ADDRESS.line.en,
       emailLabels: { general: "General enquiries" },
       tagline: "Structural steel — design, fabrication and installation, Sfax, Tunisia.",
-      rights: "Pilot Constract — Piloting and Constructing Cooperation",
+      rights: `${BRAND} — Piloting and Constructing Cooperation`,
     },
     home: {
       eyebrow: "Steel structures · Sfax, Tunisia",
       title: "We build the frame that carries your project.",
-      lead: "Pilot Constract designs, fabricates and installs industrial and commercial steel structures — from execution drawings to the last bolt on site.",
+      lead: `${BRAND} designs, fabricates and installs industrial and commercial steel structures — from execution drawings to the last bolt on site.`,
       ctaPrimary: "Get a free quote",
       ctaSecondary: "See our projects",
       stats: [
@@ -74,10 +75,10 @@ const translations = {
       about: {
         eyebrow: "About us",
         title: "A steel partner built on trust",
-        lead: "Pilot Constract (Société Pilotage et Construction) is a Tunisian structural steel company based in Sfax, working from the first drawing to the last bolt.",
+        lead: `${BRAND} (${LEGAL_NAME}) is a Tunisian structural steel company based in Sfax, working from the first drawing to the last bolt.`,
         foundation: {
           title: "Foundation",
-          text: "Pilot Constract was founded in Sfax, Tunisia, on a simple idea: one partner who carries a steel structure from design to handover. Over nine years later, we serve clients across Tunisia and abroad.",
+          text: `${BRAND} was founded in Sfax, Tunisia, on a simple idea: one partner who carries a steel structure from design to handover. Over nine years later, we serve clients across Tunisia and abroad.`,
         },
         activity: {
           title: "Activity",
@@ -123,8 +124,8 @@ const translations = {
       eyebrow: "What our clients say",
       title: "Client reviews",
       items: [
-        { quote: "We have worked with Pilot Constract for years, and that trust has been built project after project. Their teams are serious, responsive and keep their commitments. I recommend them without hesitation.", name: "Firas Maatar", role: "Manager, SO.MA.TRAV" },
-        { quote: "For many years, Pilot Constract has been a reliable partner for us. We value the quality of their work, their rigour and the clarity of their communication from start to finish. They are a company you can count on.", name: "Mohamed Hbaieb", role: "General Manager, MTR-Ressort" },
+        { quote: `We have worked with ${BRAND} for years, and that trust has been built project after project. Their teams are serious, responsive and keep their commitments. I recommend them without hesitation.`, name: "Firas Maatar", role: "Manager, SO.MA.TRAV" },
+        { quote: `For many years, ${BRAND} has been a reliable partner for us. We value the quality of their work, their rigour and the clarity of their communication from start to finish. They are a company you can count on.`, name: "Mohamed Hbaieb", role: "General Manager, MTR-Ressort" },
         { quote: "Delivered on time despite a complex site. Coordination with our team was flawless from start to finish.", name: "Faycel Trabelsi", role: "Project Director, food industry" },
         { quote: "The design office caught a load issue before fabrication, which saved us a costly rework.", name: "Sana Ben Amor", role: "Architect, private practice" },
         { quote: "Clean finish, tidy welds, and a serious installation crew. We've already re-hired them for a second hall.", name: "Karim Jendoubi", role: "Manager, industrial unit" },
@@ -139,9 +140,9 @@ const translations = {
         { q: "How long does a typical project take?", a: "Depending on the size of the structure: between 6 and 16 weeks from drawing approval to site handover." },
         { q: "Do you offer support after delivery?", a: "Yes, we provide follow-up, preventive maintenance and diagnosis of existing structures after commissioning." },
         { q: "How do I get a quote?", a: "Send us your drawings or a project description by email; we'll get back to you within 48h with an initial estimate." },
-        { q: "Who is Pilot Constract (Société Pilotage et Construction)?", a: "Pilot Constract (Société Pilotage et Construction) is a Tunisian structural steel company based in Sfax, with an engineering office, a fabrication workshop and qualified installation crews." },
+        { q: `Who is ${BRAND} (${LEGAL_NAME})?`, a: `${BRAND} (${LEGAL_NAME}) is a Tunisian structural steel company based in Sfax, with an engineering office, a fabrication workshop and qualified installation crews.` },
         { q: "Do you build steel hangars and industrial steel frames?", a: "Yes: hangars, industrial halls, warehouses and workshops in steel framing, from design to installation, with sheet roofing and cladding." },
-        { q: "Where is Pilot Constract located?", a: "Pilot Constract is based in Sfax, Tunisia, and our teams work across the country. Phone: +216 28 831 103." },
+        { q: `Where is ${BRAND} located?`, a: `${BRAND} is based in Sfax, Tunisia, and our teams work across the country. Phone: +216 28 831 103.` },
         { q: "Can I get a price estimate online?", a: "Yes, for engineering studies (per m²) and industrial steel framing (by steel weight): create a free account and use the quote calculator. For other services, email us." },
       ],
     },
@@ -385,15 +386,15 @@ const translations = {
       resources: "Ressources",
       contacts: "Contacts",
       email: "E-mail",
-      address: "Sfax, Tunisie",
+      address: ADDRESS.line.fr,
       emailLabels: { general: "Renseignements" },
-      tagline: "Pilotage et Construction (Pilot Constract) — structures métalliques : conception, fabrication et pose, Sfax, Tunisie.",
-      rights: "Pilot Constract — Société Pilotage et Construction",
+      tagline: `${FR_NAME} (${BRAND}) — structures métalliques : conception, fabrication et pose, Sfax, Tunisie.`,
+      rights: `${BRAND} — ${LEGAL_NAME}`,
     },
     home: {
-      eyebrow: "Pilotage et Construction · Charpente métallique · Sfax",
+      eyebrow: `${FR_NAME} · Charpente métallique · Sfax`,
       title: "On construit l'ossature qui porte votre projet.",
-      lead: "Pilot Constract conçoit, fabrique et installe des structures métalliques industrielles et commerciales — du plan d'exécution à la dernière boulonnerie sur site.",
+      lead: `${BRAND} conçoit, fabrique et installe des structures métalliques industrielles et commerciales — du plan d'exécution à la dernière boulonnerie sur site.`,
       ctaPrimary: "Obtenir un devis gratuit",
       ctaSecondary: "Voir nos réalisations",
       stats: [
@@ -440,11 +441,11 @@ const translations = {
       },
       about: {
         eyebrow: "Qui sommes-nous",
-        title: "Pilotage et Construction : un partenaire métallique fondé sur la confiance",
-        lead: "Pilot Constract (Société Pilotage et Construction) est une entreprise tunisienne de structures métalliques basée à Sfax, présente du premier plan à la dernière boulonnerie.",
+        title: `${FR_NAME} : un partenaire métallique fondé sur la confiance`,
+        lead: `${BRAND} (${LEGAL_NAME}) est une entreprise tunisienne de structures métalliques basée à Sfax, présente du premier plan à la dernière boulonnerie.`,
         foundation: {
           title: "Fondation",
-          text: "Pilot Constract est née à Sfax, en Tunisie, d'une idée simple : un seul partenaire qui accompagne une structure métallique de la conception à la réception. Plus de neuf ans après, nous servons des clients partout en Tunisie et à l'étranger.",
+          text: `${BRAND} est née à Sfax, en Tunisie, d'une idée simple : un seul partenaire qui accompagne une structure métallique de la conception à la réception. Plus de neuf ans après, nous servons des clients partout en Tunisie et à l'étranger.`,
         },
         activity: {
           title: "Activité",
@@ -490,8 +491,8 @@ const translations = {
       eyebrow: "Ce qu'en disent nos clients",
       title: "Avis clients",
       items: [
-        { quote: "Nous travaillons avec Pilot Constract depuis des années, et cette confiance s'est construite projet après projet. Leurs équipes sont sérieuses, réactives et respectent leurs engagements. Je les recommande sans hésitation.", name: "Firas Maatar", role: "Gérant, SO.MA.TRAV" },
-        { quote: "Pilot Constract est pour nous un partenaire fiable depuis de nombreuses années. Nous apprécions la qualité de leur travail, leur rigueur et la clarté de leur communication du début à la fin. C'est une entreprise sur laquelle on peut compter.", name: "Mohamed Hbaieb", role: "Directeur général, MTR-Ressort" },
+        { quote: `Nous travaillons avec ${BRAND} depuis des années, et cette confiance s'est construite projet après projet. Leurs équipes sont sérieuses, réactives et respectent leurs engagements. Je les recommande sans hésitation.`, name: "Firas Maatar", role: "Gérant, SO.MA.TRAV" },
+        { quote: `${BRAND} est pour nous un partenaire fiable depuis de nombreuses années. Nous apprécions la qualité de leur travail, leur rigueur et la clarté de leur communication du début à la fin. C'est une entreprise sur laquelle on peut compter.`, name: "Mohamed Hbaieb", role: "Directeur général, MTR-Ressort" },
         { quote: "Livraison dans les délais malgré un chantier compliqué. La coordination avec notre équipe a été impeccable du début à la fin.", name: "Faycel Trabelsi", role: "Directeur de projet, agroalimentaire" },
         { quote: "Le bureau d'études a détecté un problème de charge avant fabrication, ce qui nous a évité une reprise coûteuse.", name: "Sana Ben Amor", role: "Architecte, cabinet privé" },
         { quote: "Bonne finition, soudures propres, et une équipe de pose sérieuse. On a déjà reconduit avec eux sur un second hall.", name: "Karim Jendoubi", role: "Gérant, unité industrielle" },
@@ -506,9 +507,9 @@ const translations = {
         { q: "Combien de temps prend un projet type ?", a: "Selon la taille de l'ouvrage : entre 6 et 16 semaines depuis la validation des plans jusqu'à la réception de chantier." },
         { q: "Proposez-vous un accompagnement après livraison ?", a: "Oui, nous assurons le suivi, la maintenance préventive et le diagnostic de structures existantes après mise en service." },
         { q: "Comment obtenir un devis ?", a: "Envoyez-nous vos plans ou une description du projet par e-mail ; nous revenons vers vous sous 48h avec une première estimation." },
-        { q: "Qui est Pilot Constract (Société Pilotage et Construction) ?", a: "Pilot Constract (Société Pilotage et Construction) est une entreprise tunisienne de structures métalliques basée à Sfax, avec un bureau d'études, un atelier de fabrication et des équipes de pose qualifiées." },
+        { q: `Qui est ${BRAND} (${LEGAL_NAME}) ?`, a: `${BRAND} (${LEGAL_NAME}) est une entreprise tunisienne de structures métalliques basée à Sfax, avec un bureau d'études, un atelier de fabrication et des équipes de pose qualifiées.` },
         { q: "Faites-vous des hangars et des charpentes métalliques ?", a: "Oui : hangars, halls industriels, entrepôts et ateliers en charpente métallique, de l'étude à la pose, avec couverture et bardage en tôle." },
-        { q: "Où se trouve Pilot Constract ?", a: "Pilot Constract est basée à Sfax, en Tunisie, et ses équipes interviennent sur tout le territoire tunisien. Téléphone : +216 28 831 103." },
+        { q: `Où se trouve ${BRAND} ?`, a: `${BRAND} est basée à Sfax, en Tunisie, et ses équipes interviennent sur tout le territoire tunisien. Téléphone : +216 28 831 103.` },
         { q: "Peut-on estimer le prix en ligne ?", a: "Oui, pour l'étude (au m²) et la charpente industrielle (selon le poids d'acier) : créez un compte gratuit et utilisez le calculateur de devis. Pour les autres services, écrivez-nous par e-mail." },
       ],
     },
@@ -752,15 +753,15 @@ const translations = {
       resources: "موارد",
       contacts: "اتصل بنا",
       email: "البريد الإلكتروني",
-      address: "صفاقس، تونس",
+      address: ADDRESS.line.ar,
       emailLabels: { general: "استفسارات عامة" },
       tagline: "الهياكل المعدنية — تصميم وتصنيع وتركيب، صفاقس، تونس.",
-      rights: "شركة القيادة و الإنشاء ",
+      rights: `شركة ${AR_NAME} `,
     },
     home: {
       eyebrow: "هياكل معدنية · صفاقس، تونس",
       title: "نبني الهيكل الذي يحمل مشروعكم.",
-      lead: "تصمّم شركة القيادة و الإنشاء وتصنّع وتركّب الهياكل المعدنية الصناعية والتجارية، من مخططات التنفيذ إلى آخر مسمار في الموقع.",
+      lead: `تصمّم شركة ${AR_NAME} وتصنّع وتركّب الهياكل المعدنية الصناعية والتجارية، من مخططات التنفيذ إلى آخر مسمار في الموقع.`,
       ctaPrimary: "احصل على عرض سعر مجاني",
       ctaSecondary: "شاهد إنجازاتنا",
       stats: [
@@ -808,10 +809,10 @@ const translations = {
       about: {
         eyebrow: "من نحن",
         title: "شريك في الهياكل المعدنية قائم على الثقة",
-        lead: "القيادة و الإنشاء (Société Pilotage et Construction) شركة تونسية للهياكل المعدنية مقرها صفاقس، ترافقكم من أول مخطط إلى آخر مسمار.",
+        lead: `${AR_NAME} (${LEGAL_NAME}) شركة تونسية للهياكل المعدنية مقرها صفاقس، ترافقكم من أول مخطط إلى آخر مسمار.`,
         foundation: {
           title: "التأسيس",
-          text: "تأسست شركة القيادة و الإنشاء في صفاقس، تونس، على فكرة بسيطة: شريك واحد يرافق الهيكل المعدني من التصميم إلى التسليم. وبعد أكثر من تسع سنوات، نخدم حرفاء في كامل تونس وخارجها.",
+          text: `تأسست شركة ${AR_NAME} في صفاقس، تونس، على فكرة بسيطة: شريك واحد يرافق الهيكل المعدني من التصميم إلى التسليم. وبعد أكثر من تسع سنوات، نخدم حرفاء في كامل تونس وخارجها.`,
         },
         activity: {
           title: "النشاط",
@@ -857,8 +858,8 @@ const translations = {
       eyebrow: "آراء عملائنا",
       title: "آراء العملاء",
       items: [
-        { quote: "نعمل مع Pilot Constract منذ سنوات، وقد بُنيت هذه الثقة مشروعًا بعد مشروع. فرقهم جادة وسريعة الاستجابة وتحترم التزاماتها. أنصح بهم دون تردد.", name: "Firas Maatar", role: "مسير، شركة SO.MA.TRAV" },
-        { quote: "تُعدّ Pilot Constract شريكًا موثوقًا بالنسبة لنا منذ سنوات طويلة. نقدّر جودة عملهم ودقّتهم ووضوح تواصلهم من البداية إلى النهاية. إنها شركة يمكن الاعتماد عليها.", name: "Mohamed Hbaieb", role: "المدير العام، شركة MTR-Ressort" },
+        { quote: `نعمل مع ${BRAND} منذ سنوات، وقد بُنيت هذه الثقة مشروعًا بعد مشروع. فرقهم جادة وسريعة الاستجابة وتحترم التزاماتها. أنصح بهم دون تردد.`, name: "Firas Maatar", role: "مسير، شركة SO.MA.TRAV" },
+        { quote: `تُعدّ ${BRAND} شريكًا موثوقًا بالنسبة لنا منذ سنوات طويلة. نقدّر جودة عملهم ودقّتهم ووضوح تواصلهم من البداية إلى النهاية. إنها شركة يمكن الاعتماد عليها.`, name: "Mohamed Hbaieb", role: "المدير العام، شركة MTR-Ressort" },
         { quote: "تم التسليم في الآجال رغم تعقيد الورشة. التنسيق مع فريقنا كان ممتازًا من البداية إلى النهاية.", name: "فيصل الطرابلسي", role: "مدير مشروع، صناعات غذائية" },
         { quote: "اكتشف مكتب الدراسات مشكلة في الحمولة قبل التصنيع، مما جنّبنا إعادة عمل مكلفة.", name: "سناء بن عمر", role: "مهندسة معمارية، مكتب خاص" },
         { quote: "لمسة نهائية نظيفة، لحام متقن، وفريق تركيب جاد. تعاملنا معهم مجددًا في قاعة ثانية.", name: "كريم الجندوبي", role: "مسير، وحدة صناعية" },
@@ -873,9 +874,9 @@ const translations = {
         { q: "كم من الوقت يستغرق المشروع عادة؟", a: "حسب حجم الهيكل: بين 6 و16 أسبوعًا من المصادقة على المخططات إلى تسليم الموقع." },
         { q: "هل تقدمون متابعة بعد التسليم؟", a: "نعم، نضمن المتابعة والصيانة الوقائية وتشخيص الهياكل القائمة بعد دخولها الخدمة." },
         { q: "كيف أحصل على عرض سعر؟", a: "أرسلوا لنا مخططاتكم أو وصفًا للمشروع عبر البريد الإلكتروني، وسنعود إليكم خلال 48 ساعة بتقدير أولي." },
-        { q: "من هي Pilot Constract (Société Pilotage et Construction)؟", a: "Pilot Constract (القيادة و الإنشاء) شركة تونسية للهياكل المعدنية مقرها صفاقس، لديها مكتب دراسات وورشة تصنيع وفرق تركيب مؤهلة." },
+        { q: `من هي ${BRAND} (${LEGAL_NAME})؟`, a: `${BRAND} (${AR_NAME}) شركة تونسية للهياكل المعدنية مقرها صفاقس، لديها مكتب دراسات وورشة تصنيع وفرق تركيب مؤهلة.` },
         { q: "هل تنجزون هناقر وهياكل حديدية صناعية؟", a: "نعم: هناقر وقاعات صناعية ومستودعات وورشات بهيكل معدني، من الدراسة إلى التركيب، مع التغطية والتكسية بالصفائح." },
-        { q: "أين يوجد مقر Pilot Constract؟", a: "مقرنا في صفاقس، تونس، وفرقنا تتدخل في كامل البلاد. الهاتف: +216 28 831 103." },
+        { q: `أين يوجد مقر ${BRAND}؟`, a: "مقرنا في صفاقس، تونس، وفرقنا تتدخل في كامل البلاد. الهاتف: +216 28 831 103." },
         { q: "هل يمكن تقدير السعر عبر الإنترنت؟", a: "نعم، بالنسبة للدراسة (بالمتر المربع) والهياكل الصناعية المعدنية (حسب وزن الحديد): أنشئ حسابًا مجانيًا واستعمل حاسبة عرض السعر. أما الخدمات الأخرى فراسلنا عبر البريد الإلكتروني." },
       ],
     },

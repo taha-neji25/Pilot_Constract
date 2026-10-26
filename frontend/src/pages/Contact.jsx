@@ -3,6 +3,7 @@ import IBeam from "../components/IBeam.jsx";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
 import contactText from "../i18n/contactText.js";
 import contact from "../data/contact.js";
+import { BRAND, FR_NAME, MAPS_URL } from "../data/company.js";
 import "./Contact.css";
 
 const telHref = (n) => `tel:${n.replace(/[^\d+]/g, "")}`;
@@ -66,8 +67,15 @@ export default function Contact() {
 
           <div className="contact-page__card">
             <h2>{c.address}</h2>
-            <p>Pilotage et Construction (Pilot Constract)</p>
+            <p>
+              {FR_NAME} ({BRAND})
+            </p>
             <p>{c.addressValue}</p>
+            <p>
+              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                {c.mapsCta}
+              </a>
+            </p>
           </div>
 
           <div className="contact-page__card">

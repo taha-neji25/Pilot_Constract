@@ -9,6 +9,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { DEFAULT_LANG, INDEXED_PAGES, LANGS, PRIVATE_PAGES, RTL_LANGS, SITE_URL, canonicalUrl, pathFor } from "../src/seo/routes.js";
 import { jsonLdFor, notFoundMeta, pageMeta } from "../src/seo/meta.js";
+import { BRAND } from "../src/data/company.js";
 
 const DIST = "dist";
 const template = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
@@ -30,7 +31,7 @@ function headBlock({ lang, meta, indexed, canonical, alternates, jsonLd }) {
   for (const [hreflang, href] of alternates ?? []) lines.push(`<link rel="alternate" hreflang="${hreflang}" href="${href}" />`);
   lines.push(
     `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="Pilot Constract" />`,
+    `<meta property="og:site_name" content="${BRAND}" />`,
     `<meta property="og:title" content="${esc(meta.title)}" />`,
     `<meta property="og:description" content="${esc(meta.description)}" />`,
     `<meta property="og:image" content="${SITE_URL}/og-image.png" />`,

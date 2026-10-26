@@ -2,6 +2,7 @@
 // General, practical advice; where figures appear (6 to 16 weeks, 19 % VAT, 1 % FODEC) they are the ones already used
 // on the site and in the quote calculator. Addresses: seo/routes.js. Titles/descriptions here feed seo/meta.js.
 
+import { BRAND, FR_NAME } from "../data/company.js";
 export const guideUi = {
   fr: {
     home: "Accueil",
@@ -14,7 +15,7 @@ export const guideUi = {
     ctaQuote: "Demander un devis gratuit",
     more: "À lire aussi",
     services: "Nos services",
-    published: "Par Pilotage et Construction (Pilot Constract), Sfax",
+    published: `Par ${FR_NAME} (${BRAND}), Sfax`,
   },
   en: {
     home: "Home",
@@ -27,7 +28,7 @@ export const guideUi = {
     ctaQuote: "Request a free quote",
     more: "Also worth reading",
     services: "Our services",
-    published: "By Pilot Constract, Sfax",
+    published: `By ${BRAND}, Sfax`,
   },
   ar: {
     home: "الرئيسية",
@@ -40,21 +41,21 @@ export const guideUi = {
     ctaQuote: "اطلب عرض سعر مجاني",
     more: "اقرأ أيضًا",
     services: "خدماتنا",
-    published: "من Pilot Constract، صفاقس",
+    published: `من ${BRAND}، صفاقس`,
   },
 };
 
 export const guidesIndexMeta = {
-  fr: { title: "Guides : construire en charpente métallique | Pilotage et Construction", description: "Conseils de Pilot Constract pour préparer un projet de charpente métallique, de hangar ou d'entrepôt : étapes, choix de la structure, devis." },
-  en: { title: "Guides: Building with a Steel Frame | Pilot Constract", description: "Pilot Constract's advice for preparing a steel frame, hangar or warehouse project: steps, choosing the structure, and quotes." },
-  ar: { title: "أدلة: البناء بالهياكل المعدنية | Pilot Constract", description: "نصائح Pilot Constract لإعداد مشروع هيكل معدني أو هنقار أو مستودع: المراحل واختيار الهيكل وعرض السعر." },
+  fr: { title: `Guides : construire en charpente métallique | ${FR_NAME}`, description: `Conseils de ${BRAND} pour préparer un projet de charpente métallique, de hangar ou d'entrepôt : étapes, choix de la structure, devis.` },
+  en: { title: `Guides: Building with a Steel Frame | ${BRAND}`, description: `${BRAND}'s advice for preparing a steel frame, hangar or warehouse project: steps, choosing the structure, and quotes.` },
+  ar: { title: `أدلة: البناء بالهياكل المعدنية | ${BRAND}`, description: `نصائح ${BRAND} لإعداد مشروع هيكل معدني أو هنقار أو مستودع: المراحل واختيار الهيكل وعرض السعر.` },
 };
 
 // Each article: metaTitle/metaDesc (search results), h1, intro, sections [{ h, p: [...], list: [...] }]
 const guides = {
   fr: {
     steps: {
-      metaTitle: "Étapes d'un projet de charpente métallique | Pilotage et Construction",
+      metaTitle: `Étapes d'un projet de charpente métallique | ${FR_NAME}`,
       metaDesc: "De l'étude et la note de calcul à la fabrication, la pose et la réception : les étapes d'un projet de hall ou d'entrepôt métallique, avec les délais indicatifs.",
       h1: "Les étapes d'un projet de charpente métallique, de l'étude à la réception",
       intro: "Un hall, un entrepôt ou un atelier métallique se réalise en quatre grandes étapes. Les connaître aide à préparer son projet, à comparer les offres et à tenir son planning.",
@@ -63,12 +64,12 @@ const guides = {
         { h: "2. La fabrication en atelier", p: ["Poteaux, traverses, pannes et platines sont découpés, soudés, puis protégés contre la corrosion en atelier, dans des conditions mieux maîtrisées que sur chantier.", "Chaque ensemble est contrôlé avant de partir sur site."] },
         { h: "3. La pose sur site", p: ["Les fondations en béton doivent être prêtes, avec les tiges d'ancrage placées selon les plans. Les équipes de pose lèvent alors les portiques, installent les pannes et le contreventement, puis la couverture et le bardage en tôle."] },
         { h: "4. Le contrôle et la réception", p: ["Le chantier se termine par un contrôle qualité sur site et la réception de l'ouvrage. Un suivi et une maintenance préventive peuvent ensuite être prévus."] },
-        { h: "Quels délais ?", p: ["Selon la taille de l'ouvrage, comptez en général entre 6 et 16 semaines entre la validation des plans et la réception : c'est le délai indicatif annoncé par Pilot Constract."] },
+        { h: "Quels délais ?", p: [`Selon la taille de l'ouvrage, comptez en général entre 6 et 16 semaines entre la validation des plans et la réception : c'est le délai indicatif annoncé par ${BRAND}.`] },
         { h: "Pour demander un devis, préparez", list: ["vos plans ou une description du projet", "les dimensions souhaitées et l'usage du bâtiment", "le lieu du chantier", "votre choix de couverture et de bardage, avec ou sans isolation"] },
       ],
     },
     "steel-or-concrete": {
-      metaTitle: "Hangar métallique ou béton ? | Pilotage et Construction",
+      metaTitle: `Hangar métallique ou béton ? | ${FR_NAME}`,
       metaDesc: "Rapidité, portées, évolutivité, entretien, budget : les critères pour choisir entre une charpente métallique et une construction en béton pour un hall ou un entrepôt.",
       h1: "Hangar métallique ou construction en béton : comment choisir ?",
       intro: "Pour un entrepôt, un atelier ou un hall industriel, la charpente métallique est souvent comparée à la construction en béton. Voici les critères qui comptent vraiment.",
@@ -83,7 +84,7 @@ const guides = {
       ],
     },
     quote: {
-      metaTitle: "Devis de charpente métallique | Pilotage et Construction",
+      metaTitle: `Devis de charpente métallique | ${FR_NAME}`,
       metaDesc: "Poids d'acier, dimensions, profilés, couverture, taxes : ce que comprend le devis d'une charpente métallique et comment estimer son projet en ligne.",
       h1: "Devis de charpente métallique : ce qui fait le prix",
       intro: "Le prix d'une charpente métallique n'est pas un forfait : il découle d'un calcul. Voici ce que contient un devis et ce qui le fait varier.",
@@ -93,14 +94,14 @@ const guides = {
         { h: "Les profilés choisis", p: ["Chaque position de la structure (poteaux, traverses, pannes…) reçoit un profilé adapté aux charges : c'est le travail du bureau d'études. Un profilé plus fort pèse plus et coûte plus."] },
         { h: "Couverture, bardage, isolation", p: ["La couverture et le bardage en tôle, avec ou sans isolation, s'ajoutent à la structure selon votre projet."] },
         { h: "Hors taxes, puis taxes", p: ["Les prix sont présentés hors taxes. S'ajoutent ensuite la TVA (19 %) et, selon le cas, le FODEC (1 %)."] },
-        { h: "Estimer en ligne, confirmer après étude", p: ["Le calculateur de devis de Pilot Constract donne une estimation de charpente industrielle selon vos dimensions et vos profilés. Le prix final est confirmé après étude."] },
+        { h: "Estimer en ligne, confirmer après étude", p: [`Le calculateur de devis de ${BRAND} donne une estimation de charpente industrielle selon vos dimensions et vos profilés. Le prix final est confirmé après étude.`] },
       ],
     },
   },
 
   en: {
     steps: {
-      metaTitle: "Steps of a Steel Frame Project, Study to Handover | Pilot Constract",
+      metaTitle: `Steps of a Steel Frame Project, Study to Handover | ${BRAND}`,
       metaDesc: "From the calculation note to fabrication, installation and handover: the steps of a steel hall or warehouse project, with indicative lead times.",
       h1: "The steps of a steel frame project, from study to handover",
       intro: "A steel hall, warehouse or workshop comes together in four main steps. Knowing them helps you prepare your project, compare offers and keep to your schedule.",
@@ -109,12 +110,12 @@ const guides = {
         { h: "2. Fabrication in the workshop", p: ["Columns, rafters, purlins and base plates are cut, welded and protected against corrosion in the workshop, in better-controlled conditions than on site.", "Each assembly is checked before it leaves for site."] },
         { h: "3. Installation on site", p: ["The concrete foundations must be ready, with the anchor rods set according to the drawings. The installation crews then lift the portal frames, fit the purlins and bracing, then the sheet roofing and cladding."] },
         { h: "4. Inspection and handover", p: ["The project ends with a quality check on site and the handover of the structure. Follow-up and preventive maintenance can then be arranged."] },
-        { h: "How long does it take?", p: ["Depending on the size of the structure, expect roughly 6 to 16 weeks between drawing approval and handover: this is Pilot Constract's indicative lead time."] },
+        { h: "How long does it take?", p: [`Depending on the size of the structure, expect roughly 6 to 16 weeks between drawing approval and handover: this is ${BRAND}'s indicative lead time.`] },
         { h: "To request a quote, prepare", list: ["your drawings or a description of the project", "the dimensions you want and the building's use", "the site location", "your choice of roofing and cladding, with or without insulation"] },
       ],
     },
     "steel-or-concrete": {
-      metaTitle: "Steel or Concrete Building: How to Choose? | Pilot Constract",
+      metaTitle: `Steel or Concrete Building: How to Choose? | ${BRAND}`,
       metaDesc: "Speed, spans, flexibility, maintenance, budget: the criteria for choosing between a steel frame and a concrete building for a hall or warehouse.",
       h1: "Steel hangar or concrete building: how to choose?",
       intro: "For a warehouse, workshop or industrial hall, a steel frame is often compared with concrete construction. Here are the criteria that really matter.",
@@ -129,7 +130,7 @@ const guides = {
       ],
     },
     quote: {
-      metaTitle: "Steel Frame Quote: What Drives the Price | Pilot Constract",
+      metaTitle: `Steel Frame Quote: What Drives the Price | ${BRAND}`,
       metaDesc: "Steel weight, dimensions, sections, roofing, taxes: what a steel frame quote includes and how to estimate your project online.",
       h1: "Steel frame quote: what drives the price",
       intro: "The price of a steel frame is not a flat fee: it comes from a calculation. Here is what a quote contains and what makes it vary.",
@@ -139,14 +140,14 @@ const guides = {
         { h: "The sections chosen", p: ["Each position in the structure (columns, rafters, purlins...) receives a section suited to the loads: this is the engineering office's work. A heavier section weighs more and costs more."] },
         { h: "Roofing, cladding, insulation", p: ["Sheet roofing and cladding, with or without insulation, are added to the structure according to your project."] },
         { h: "Excluding tax, then taxes", p: ["Prices are shown excluding tax. VAT (19 %) and, depending on the case, FODEC (1 %) are then added."] },
-        { h: "Estimate online, confirm after the study", p: ["Pilot Constract's quote calculator gives an industrial steel framing estimate from your dimensions and your sections. The final price is confirmed after the study."] },
+        { h: "Estimate online, confirm after the study", p: [`${BRAND}'s quote calculator gives an industrial steel framing estimate from your dimensions and your sections. The final price is confirmed after the study.`] },
       ],
     },
   },
 
   ar: {
     steps: {
-      metaTitle: "مراحل مشروع هيكل معدني من الدراسة إلى الاستلام | Pilot Constract",
+      metaTitle: `مراحل مشروع هيكل معدني من الدراسة إلى الاستلام | ${BRAND}`,
       metaDesc: "من المذكرة الحسابية إلى التصنيع والتركيب والاستلام: مراحل مشروع قاعة أو مستودع معدني مع الآجال التقديرية.",
       h1: "مراحل مشروع هيكل معدني، من الدراسة إلى الاستلام",
       intro: "تنجز القاعة أو المستودع أو الورشة المعدنية على أربع مراحل رئيسية. معرفتها تساعدك على إعداد مشروعك ومقارنة العروض واحترام برنامج أشغالك.",
@@ -155,12 +156,12 @@ const guides = {
         { h: "2. التصنيع في الورشة", p: ["يتم قصّ الأعمدة والعوارض والصفائح ولحامها ثم حمايتها من التآكل في الورشة، في ظروف أكثر تحكمًا منها في الموقع.", "وتُراقب كل قطعة قبل مغادرتها إلى الموقع."] },
         { h: "3. التركيب في الموقع", p: ["يجب أن تكون الأسس الخرسانية جاهزة مع قضبان التثبيت الموضوعة وفق المخططات. بعدها ترفع فرق التركيب الأُطُر وتركّب عوارض السقف وأنظمة التثبيت، ثم التغطية والتكسية بالصفائح المعدنية."] },
         { h: "4. المراقبة والاستلام", p: ["تنتهي الأشغال بمراقبة الجودة في الموقع واستلام المنشأ. ويمكن بعد ذلك برمجة متابعة وصيانة وقائية."] },
-        { h: "ما هي الآجال؟", p: ["حسب حجم المنشأ، تتراوح المدة عادة بين 6 و16 أسبوعًا من المصادقة على المخططات إلى الاستلام، وهي المدة التقديرية التي تعلنها Pilot Constract."] },
+        { h: "ما هي الآجال؟", p: [`حسب حجم المنشأ، تتراوح المدة عادة بين 6 و16 أسبوعًا من المصادقة على المخططات إلى الاستلام، وهي المدة التقديرية التي تعلنها ${BRAND}.`] },
         { h: "لطلب عرض سعر، جهّز", list: ["مخططاتك أو وصفًا للمشروع", "الأبعاد المرغوبة واستعمال المبنى", "موقع الأشغال", "اختيارك للتغطية والتكسية، مع عزل أو دونه"] },
       ],
     },
     "steel-or-concrete": {
-      metaTitle: "هيكل معدني أم بناء بالخرسانة: كيف تختار؟ | Pilot Constract",
+      metaTitle: `هيكل معدني أم بناء بالخرسانة: كيف تختار؟ | ${BRAND}`,
       metaDesc: "السرعة والامتدادات والمرونة والصيانة والميزانية: معايير الاختيار بين الهيكل المعدني والبناء بالخرسانة لقاعة أو مستودع.",
       h1: "هيكل معدني أم بناء بالخرسانة: كيف تختار؟",
       intro: "بالنسبة لمستودع أو ورشة أو قاعة صناعية، تُقارن الهياكل المعدنية غالبًا بالبناء بالخرسانة. إليك المعايير التي تهمّ فعلًا.",
@@ -175,7 +176,7 @@ const guides = {
       ],
     },
     quote: {
-      metaTitle: "عرض سعر هيكل معدني: ما الذي يحدد الثمن | Pilot Constract",
+      metaTitle: `عرض سعر هيكل معدني: ما الذي يحدد الثمن | ${BRAND}`,
       metaDesc: "وزن الحديد والأبعاد والمقاطع والتغطية والأداءات: ما يتضمنه عرض سعر الهيكل المعدني وكيف تقدّر مشروعك عبر الإنترنت.",
       h1: "عرض سعر هيكل معدني: ما الذي يحدد الثمن",
       intro: "ثمن الهيكل المعدني ليس مبلغًا جزافيًا بل نتيجة حساب. إليك ما يتضمنه عرض السعر وما يجعله يتغير.",
@@ -185,7 +186,7 @@ const guides = {
         { h: "المقاطع المختارة", p: ["يُخصص لكل موضع من الهيكل (أعمدة، عوارض، عوارض سقف...) مقطع يناسب الأحمال: وهذا عمل مكتب الدراسات. والمقطع الأقوى أثقل وأغلى."] },
         { h: "التغطية والتكسية والعزل", p: ["تُضاف التغطية والتكسية بالصفائح، مع عزل أو دونه، إلى الهيكل حسب مشروعك."] },
         { h: "قبل الأداءات وبعدها", p: ["تعرض الأسعار دون أداءات. ثم يُضاف الأداء على القيمة المضافة (19٪) وحسب الحالة FODEC (1٪)."] },
-        { h: "قدّر عبر الإنترنت وأكّد بعد الدراسة", p: ["تمنحك حاسبة عرض السعر من Pilot Constract تقديرًا لهيكل صناعي حسب أبعادك ومقاطعك. ويؤكد السعر النهائي بعد الدراسة."] },
+        { h: "قدّر عبر الإنترنت وأكّد بعد الدراسة", p: [`تمنحك حاسبة عرض السعر من ${BRAND} تقديرًا لهيكل صناعي حسب أبعادك ومقاطعك. ويؤكد السعر النهائي بعد الدراسة.`] },
       ],
     },
   },

@@ -8,107 +8,107 @@ import serviceDetails, { serviceUi } from "../i18n/serviceDetails.js";
 import guides, { guideUi, guidesIndexMeta } from "../i18n/guides.js";
 import { contactMeta } from "../i18n/contactText.js";
 import { SITE_URL, canonicalUrl } from "./routes.js";
+import { ADDRESS, BRAND, FR_NAME, LEGAL_NAME } from "../data/company.js";
 
-const BRAND = "Pilot Constract";
 
 const META = {
   fr: {
     home: {
-      title: "Pilotage et Construction – Pilot Constract | Charpente métallique Sfax",
+      title: `${FR_NAME} – ${BRAND} | Charpente métallique Sfax`,
       description:
-        "Pilotage et Construction (Pilot Constract) à Sfax : conception, fabrication et pose de charpentes et structures métalliques partout en Tunisie. Devis gratuit.",
+        `${FR_NAME} (${BRAND}) à Sfax : conception, fabrication et pose de charpentes et structures métalliques partout en Tunisie. Devis gratuit.`,
     },
     services: {
-      title: "Services de construction métallique | Pilotage et Construction",
+      title: `Services de construction métallique | ${FR_NAME}`,
       description:
         "Étude et calcul, fabrication en atelier, montage, charpente industrielle, passerelles et escaliers, maintenance, ferronnerie et containers sur mesure. Basés à Sfax.",
     },
     reviews: {
-      title: "Avis clients | Pilotage et Construction à Sfax",
+      title: `Avis clients | ${FR_NAME} à Sfax`,
       description:
-        "Ce que disent nos clients industriels de Pilotage et Construction (Pilot Constract) : sérieux, respect des délais, qualité de fabrication et de pose.",
+        `Ce que disent nos clients industriels de ${FR_NAME} (${BRAND}) : sérieux, respect des délais, qualité de fabrication et de pose.`,
     },
     faq: {
-      title: "Questions fréquentes | Pilotage et Construction (Pilot Constract)",
+      title: `Questions fréquentes | ${FR_NAME} (${BRAND})`,
       description:
-        "Types d'ouvrages, délais, zone d'intervention, suivi après livraison, devis : les réponses de Pilotage et Construction (Pilot Constract), constructeur métallique à Sfax.",
+        `Types d'ouvrages, délais, zone d'intervention, suivi après livraison, devis : les réponses de ${FR_NAME} (${BRAND}), constructeur métallique à Sfax.`,
     },
     gallery: {
-      title: "Réalisations : charpentes métalliques | Pilotage et Construction",
+      title: `Réalisations : charpentes métalliques | ${FR_NAME}`,
       description:
-        "Photos de chantiers et de fabrication en atelier : charpentes industrielles, passerelles, escaliers, ferronnerie et containers réalisés par Pilotage et Construction à Sfax.",
+        `Photos de chantiers et de fabrication en atelier : charpentes industrielles, passerelles, escaliers, ferronnerie et containers réalisés par ${FR_NAME} à Sfax.`,
     },
-    quote: { title: "Devis gratuit | Pilot Constract", description: "Estimez votre projet de structure métallique en ligne." },
-    login: { title: "Connexion | Pilot Constract", description: "Connectez-vous à votre compte Pilot Constract." },
-    signup: { title: "Créer un compte | Pilot Constract", description: "Créez votre compte Pilot Constract pour demander un devis." },
-    admin: { title: "Administration | Pilot Constract", description: "Espace réservé à l'administration." },
+    quote: { title: `Devis gratuit | ${BRAND}`, description: "Estimez votre projet de structure métallique en ligne." },
+    login: { title: `Connexion | ${BRAND}`, description: `Connectez-vous à votre compte ${BRAND}.` },
+    signup: { title: `Créer un compte | ${BRAND}`, description: `Créez votre compte ${BRAND} pour demander un devis.` },
+    admin: { title: `Administration | ${BRAND}`, description: "Espace réservé à l'administration." },
   },
   en: {
     home: {
-      title: "Steel Structures & Metal Buildings in Sfax, Tunisia | Pilot Constract",
+      title: `Steel Structures & Metal Buildings in Sfax, Tunisia | ${BRAND}`,
       description:
-        "Pilot Constract (Société Pilotage et Construction) designs, fabricates and installs steel structures in Sfax and across Tunisia: industrial frames, warehouses. Free quote.",
+        `${BRAND} (${LEGAL_NAME}) designs, fabricates and installs steel structures in Sfax and across Tunisia: industrial frames, warehouses. Free quote.`,
     },
     services: {
-      title: "Steel Construction Services in Tunisia | Pilot Constract",
+      title: `Steel Construction Services in Tunisia | ${BRAND}`,
       description:
         "Engineering and calculation, workshop fabrication, installation, industrial steel framing, walkways and stairs, maintenance, metalwork and custom containers. Based in Sfax.",
     },
     reviews: {
-      title: "Client Reviews | Pilot Constract, Steel Contractor in Sfax",
+      title: `Client Reviews | ${BRAND}, Steel Contractor in Sfax`,
       description:
-        "What industrial clients say about Pilot Constract: reliable teams, deadlines kept, and quality fabrication and installation of steel structures.",
+        `What industrial clients say about ${BRAND}: reliable teams, deadlines kept, and quality fabrication and installation of steel structures.`,
     },
     faq: {
-      title: "Steel Construction FAQ | Pilot Constract",
+      title: `Steel Construction FAQ | ${BRAND}`,
       description:
-        "Types of structures, lead times, where we work, after-sales support and how to get a quote: answers from Pilot Constract, steel contractor in Sfax, Tunisia.",
+        `Types of structures, lead times, where we work, after-sales support and how to get a quote: answers from ${BRAND}, steel contractor in Sfax, Tunisia.`,
     },
     gallery: {
-      title: "Projects: Steel Frames & Structures | Pilot Constract",
+      title: `Projects: Steel Frames & Structures | ${BRAND}`,
       description:
-        "Photos from site and from our workshop: industrial steel frames, walkways, stairs, metalwork and containers built by Pilot Constract in Sfax, Tunisia.",
+        `Photos from site and from our workshop: industrial steel frames, walkways, stairs, metalwork and containers built by ${BRAND} in Sfax, Tunisia.`,
     },
-    quote: { title: "Free Quote | Pilot Constract", description: "Estimate your steel structure project online." },
-    login: { title: "Log in | Pilot Constract", description: "Log in to your Pilot Constract account." },
-    signup: { title: "Create an account | Pilot Constract", description: "Create your Pilot Constract account to request a quote." },
-    admin: { title: "Administration | Pilot Constract", description: "Administration area." },
+    quote: { title: `Free Quote | ${BRAND}`, description: "Estimate your steel structure project online." },
+    login: { title: `Log in | ${BRAND}`, description: `Log in to your ${BRAND} account.` },
+    signup: { title: `Create an account | ${BRAND}`, description: `Create your ${BRAND} account to request a quote.` },
+    admin: { title: `Administration | ${BRAND}`, description: "Administration area." },
   },
   ar: {
     home: {
-      title: "Pilot Constract | هياكل معدنية وحدادة في صفاقس، تونس",
+      title: `${BRAND} | هياكل معدنية وحدادة في صفاقس، تونس`,
       description:
-        "Pilot Constract (Société Pilotage et Construction): تصميم وتصنيع وتركيب الهياكل المعدنية في صفاقس وكامل تونس، هياكل صناعية ومستودعات وسلالم. عرض سعر مجاني.",
+        `${BRAND} (${LEGAL_NAME}): تصميم وتصنيع وتركيب الهياكل المعدنية في صفاقس وكامل تونس، هياكل صناعية ومستودعات وسلالم. عرض سعر مجاني.`,
     },
     services: {
-      title: "خدمات البناء المعدني في تونس | Pilot Constract",
+      title: `خدمات البناء المعدني في تونس | ${BRAND}`,
       description:
         "دراسة وحساب، تصنيع في الورشة، تركيب، هياكل صناعية معدنية، ممرات وسلالم، صيانة وتدعيم، حدادة وحاويات حسب الطلب. مقرّنا في صفاقس.",
     },
     reviews: {
-      title: "آراء الحرفاء | Pilot Constract، مقاول هياكل معدنية في صفاقس",
+      title: `آراء الحرفاء | ${BRAND}، مقاول هياكل معدنية في صفاقس`,
       description:
-        "ماذا يقول حرفاؤنا من القطاع الصناعي عن Pilot Constract: جدّية والتزام بالآجال وجودة في تصنيع وتركيب الهياكل المعدنية.",
+        `ماذا يقول حرفاؤنا من القطاع الصناعي عن ${BRAND}: جدّية والتزام بالآجال وجودة في تصنيع وتركيب الهياكل المعدنية.`,
     },
     faq: {
-      title: "أسئلة شائعة حول الهياكل المعدنية | Pilot Constract",
+      title: `أسئلة شائعة حول الهياكل المعدنية | ${BRAND}`,
       description:
-        "أنواع المنشآت والآجال ومناطق التدخل والمتابعة بعد التسليم وكيفية الحصول على عرض سعر: إجابات Pilot Constract من صفاقس، تونس.",
+        `أنواع المنشآت والآجال ومناطق التدخل والمتابعة بعد التسليم وكيفية الحصول على عرض سعر: إجابات ${BRAND} من صفاقس، تونس.`,
     },
     gallery: {
-      title: "إنجازاتنا: هياكل ومنشآت معدنية | Pilot Constract",
+      title: `إنجازاتنا: هياكل ومنشآت معدنية | ${BRAND}`,
       description:
-        "صور من الورشة ومن المواقع: هياكل صناعية معدنية، ممرات، سلالم، حدادة وحاويات أنجزتها Pilot Constract في صفاقس، تونس.",
+        `صور من الورشة ومن المواقع: هياكل صناعية معدنية، ممرات، سلالم، حدادة وحاويات أنجزتها ${BRAND} في صفاقس، تونس.`,
     },
-    quote: { title: "عرض سعر مجاني | Pilot Constract", description: "قدّر تكلفة مشروعك للهياكل المعدنية عبر الإنترنت." },
-    login: { title: "تسجيل الدخول | Pilot Constract", description: "سجّل الدخول إلى حسابك في Pilot Constract." },
-    signup: { title: "إنشاء حساب | Pilot Constract", description: "أنشئ حسابك في Pilot Constract لطلب عرض سعر." },
-    admin: { title: "الإدارة | Pilot Constract", description: "فضاء مخصص للإدارة." },
+    quote: { title: `عرض سعر مجاني | ${BRAND}`, description: "قدّر تكلفة مشروعك للهياكل المعدنية عبر الإنترنت." },
+    login: { title: `تسجيل الدخول | ${BRAND}`, description: `سجّل الدخول إلى حسابك في ${BRAND}.` },
+    signup: { title: `إنشاء حساب | ${BRAND}`, description: `أنشئ حسابك في ${BRAND} لطلب عرض سعر.` },
+    admin: { title: `الإدارة | ${BRAND}`, description: "فضاء مخصص للإدارة." },
   },
 };
 
 export const notFoundMeta = (lang) => ({
-  title: { fr: "Page introuvable | Pilot Constract", en: "Page not found | Pilot Constract", ar: "الصفحة غير موجودة | Pilot Constract" }[lang],
+  title: { fr: `Page introuvable | ${BRAND}`, en: `Page not found | ${BRAND}`, ar: `الصفحة غير موجودة | ${BRAND}` }[lang],
   description: META[lang].home.description,
 });
 
@@ -133,8 +133,7 @@ const ORG_ID = `${SITE_URL}/#organization`;
 
 // "Constract" is the company's own spelling (not the English word "contract"): tell search engines the exact name
 // and its other written forms, so the brand is recognised as a name rather than corrected as a typo.
-const LEGAL_NAME = "Société Pilotage et Construction";
-const ALTERNATE_NAMES = ["PilotConstract", LEGAL_NAME, "Pilotage et Construction"];
+const ALTERNATE_NAMES = [BRAND.replace(" ", ""), LEGAL_NAME, FR_NAME];
 
 const organization = (lang) => {
   const t = translations[lang];
@@ -151,7 +150,7 @@ const organization = (lang) => {
     telephone: contact.phones[0],
     contactPoint: contact.phones.map((telephone) => ({ "@type": "ContactPoint", telephone, contactType: "customer service", areaServed: "TN" })),
     email: contact.emails[0]?.address,
-    address: { "@type": "PostalAddress", addressLocality: "Sfax", addressCountry: "TN" },
+    address: { "@type": "PostalAddress", streetAddress: `${ADDRESS.street}, ${ADDRESS.area}`, addressLocality: ADDRESS.city, addressCountry: ADDRESS.country },
     areaServed: { "@type": "Country", name: "Tunisia" },
     sameAs: [contact.social.facebook, contact.social.instagram, contact.social.linkedin].filter(Boolean),
     hasOfferCatalog: {

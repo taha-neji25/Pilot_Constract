@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import logoReversed from "../assets/brand/logo-horizontal-reversed.svg";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
 import contact from "../data/contact.js";
+import { BRAND } from "../data/company.js";
 import "./Footer.css";
 
 const Icon = ({ children }) => (
@@ -92,7 +93,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer__grid">
           <div className="footer__col footer__col--brand">
-            <img src={logoReversed} alt="Pilot Constract" className="footer__logo" />
+            <img src={logoReversed} alt={BRAND} className="footer__logo" />
             <p className="footer__tagline">{footer.tagline}</p>
             {socials.length > 0 && (
               <div className="footer__social">

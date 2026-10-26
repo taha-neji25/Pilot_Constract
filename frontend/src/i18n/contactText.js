@@ -1,17 +1,20 @@
 // Text of the /contact page (numbers, e-mail and links come from data/contact.js).
 
+import { ADDRESS, BRAND, FR_NAME } from "../data/company.js";
+import contact from "../data/contact.js";
+
 export const contactMeta = {
   fr: {
-    title: "Contact | Pilotage et Construction (Pilot Constract), Sfax",
-    description: "Contactez Pilotage et Construction (Pilot Constract) à Sfax : téléphone +216 28 831 103, WhatsApp, e-mail. Devis gratuit pour votre charpente métallique.",
+    title: `Contact | ${FR_NAME} (${BRAND}), Sfax`,
+    description: `Contactez ${FR_NAME} (${BRAND}) à Sfax : téléphone ${contact.phones[0]}, WhatsApp, e-mail. Devis gratuit pour votre charpente métallique.`,
   },
   en: {
-    title: "Contact Us | Pilotage et Construction (Pilot Constract), Sfax",
-    description: "Contact Pilotage et Construction (Pilot Constract) in Sfax, Tunisia: phone +216 28 831 103, WhatsApp, e-mail. Free quote for your steel structure.",
+    title: `Contact Us | ${FR_NAME} (${BRAND}), Sfax`,
+    description: `Contact ${FR_NAME} (${BRAND}) in Sfax, Tunisia: phone ${contact.phones[0]}, WhatsApp, e-mail. Free quote for your steel structure.`,
   },
   ar: {
-    title: "اتصل بنا | Pilotage et Construction (Pilot Constract)، صفاقس",
-    description: "اتصل بـ Pilotage et Construction (Pilot Constract) في صفاقس، تونس: الهاتف +216 28 831 103 وواتساب والبريد الإلكتروني. عرض سعر مجاني لهيكلك المعدني.",
+    title: `اتصل بنا | ${FR_NAME} (${BRAND})، صفاقس`,
+    description: `اتصل بـ ${FR_NAME} (${BRAND}) في صفاقس، تونس: الهاتف ${contact.phones[0]} وواتساب والبريد الإلكتروني. عرض سعر مجاني لهيكلك المعدني.`,
   },
 };
 
@@ -19,15 +22,16 @@ const contactText = {
   fr: {
     nav: "Contact",
     eyebrow: "Contact",
-    title: "Contactez Pilotage et Construction (Pilot Constract)",
+    title: `Contactez ${FR_NAME} (${BRAND})`,
     lead: "Parlez-nous de votre projet de charpente métallique ou de construction métallique, à Sfax et partout en Tunisie. Nous revenons vers vous sous 48 h avec une première estimation.",
     phone: "Téléphone",
     whatsapp: "WhatsApp",
     whatsappCta: "Écrire sur WhatsApp",
     email: "E-mail",
     address: "Adresse",
-    addressValue: "Sfax, Tunisie",
+    addressValue: ADDRESS.line.fr,
     area: "Zone d'intervention",
+    mapsCta: "Voir sur Google Maps",
     areaValue: "Toute la Tunisie",
     social: "Réseaux sociaux",
     quote: "Demander un devis gratuit",
@@ -36,15 +40,16 @@ const contactText = {
   en: {
     nav: "Contact",
     eyebrow: "Contact",
-    title: "Contact Pilotage et Construction (Pilot Constract)",
+    title: `Contact ${FR_NAME} (${BRAND})`,
     lead: "Tell us about your steel frame or metal construction project in Sfax and across Tunisia. We get back to you within 48 h with an initial estimate.",
     phone: "Phone",
     whatsapp: "WhatsApp",
     whatsappCta: "Message us on WhatsApp",
     email: "E-mail",
     address: "Address",
-    addressValue: "Sfax, Tunisia",
+    addressValue: ADDRESS.line.en,
     area: "Where we work",
+    mapsCta: "View on Google Maps",
     areaValue: "All across Tunisia",
     social: "Social networks",
     quote: "Request a free quote",
@@ -53,15 +58,16 @@ const contactText = {
   ar: {
     nav: "اتصل بنا",
     eyebrow: "اتصل بنا",
-    title: "اتصل بـ Pilotage et Construction (Pilot Constract)",
+    title: `اتصل بـ ${FR_NAME} (${BRAND})`,
     lead: "حدثنا عن مشروعك للهياكل المعدنية أو البناء المعدني في صفاقس وكامل تونس. نعود إليك في أجل 48 ساعة مع تقدير أولي.",
     phone: "الهاتف",
     whatsapp: "واتساب",
     whatsappCta: "راسلنا عبر واتساب",
     email: "البريد الإلكتروني",
     address: "العنوان",
-    addressValue: "صفاقس، تونس",
+    addressValue: ADDRESS.line.ar,
     area: "مناطق التدخل",
+    mapsCta: "عرض على خرائط Google",
     areaValue: "كامل تونس",
     social: "شبكات التواصل",
     quote: "اطلب عرض سعر مجاني",

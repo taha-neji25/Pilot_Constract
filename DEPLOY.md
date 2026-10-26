@@ -96,6 +96,7 @@ The build (`npm run build`) writes one real HTML page per page and language, so 
 - French at the original addresses (`/`, `/services`, `/faq`...), English under `/en/`, Arabic under `/ar/`; one page per service (`/services/charpente-metallique-industrielle`...).
 - Each page has its own title, description, canonical address, `hreflang` links, social preview and structured data (company, services, FAQ). Texts: `frontend/src/seo/meta.js` and `frontend/src/i18n/serviceDetails.js`; addresses: `frontend/src/seo/routes.js`.
 - `sitemap.xml` and `robots.txt` are generated at the same time. Login, account, quote tool and admin pages are `noindex`.
+- **Company names and address live in ONE file: `frontend/src/data/company.js`** (Pilot Constract, Pilotage et Construction, legal name, Arabic name, street address). Titles, headlines, descriptions, footer, contact page and structured data all read from it; an automated test fails if a name is typed into a text again. Phones, e-mail and social links: `frontend/src/data/contact.js`.
 - Guides (`/guides`, 3 articles in 3 languages): texts in `frontend/src/i18n/guides.js`, addresses in `routes.js`. More guides = more ways to be found; write about questions clients actually ask.
 - A new page or service needs: its address in `routes.js`, its texts, and nothing else (sitemap and tags follow).
 

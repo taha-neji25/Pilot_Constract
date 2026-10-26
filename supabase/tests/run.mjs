@@ -1,6 +1,7 @@
 // Unit tests for the Edge Function logic, run with plain Node:  node supabase/tests/run.mjs
 // A tiny in-memory fake stands in for the Supabase admin client (no network, no Docker needed).
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import { isSupportedCountry, parsePhoneNumberFromString } from "libphonenumber-js";
 import { handleAccount, handleSignup, SIGNUP_LIMIT } from "../functions/_shared/signup.js";
 import { handleResend, handleVerify, hashCode, MAX_ATTEMPTS, RESEND_COOLDOWN_MS } from "../functions/_shared/verification.js";
@@ -560,6 +561,17 @@ await test("quote: invalid or unreadable prices fall back to the defaults (a quo
 
 await test("quote: insert failure -> 500", async () => {
   assert.equal((await quote(framing, user, fakeAdmin({ failQuote: true }))).status, 500);
+});
+
+// ---- the company names live in frontend/src/data/company.js only
+await test("seo: titles, texts and structured data read the company names from data/company.js (none typed in)", () => {
+  const dir = "frontend/src";
+  const files = [...fs.readdirSync(`${dir}/i18n`).map((f) => `${dir}/i18n/${f}`), `${dir}/seo/meta.js`, `${dir}/seo/useSeo.js`, `${dir}/pages/Contact.jsx`];
+  for (const file of files) {
+    const code = fs.readFileSync(file, "utf8").split(/\r?\n/).filter((l) => !/^\s*\/\//.test(l)).join(" ");
+    for (const name of ["Pilot Constract", "Pilotage et Construction", "القيادة و الإنشاء"])
+      assert.ok(!code.includes(name), `${file} has "${name}" typed in: use BRAND / FR_NAME / AR_NAME from data/company.js`);
+  }
 });
 
 // ---- page addresses and search-engine tags (frontend/src/seo)

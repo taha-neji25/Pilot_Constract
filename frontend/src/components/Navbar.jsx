@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher.jsx";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
 import { useAuth } from "../auth/AuthContext.jsx";
+import { BRAND } from "../data/company.js";
 import "./Navbar.css";
 import logoReversed from "../assets/brand/logo-horizontal-reversed.svg";
 import markReversed from "../assets/brand/mark-reversed.svg";
@@ -25,9 +26,9 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="container navbar__inner">
-        <NavLink to={path("home")} className="navbar__brand" aria-label="Pilot Constract" onClick={() => setOpen(false)}>
+        <NavLink to={path("home")} className="navbar__brand" aria-label={BRAND} onClick={() => setOpen(false)}>
           {/* Full lockup from 481px; the mark alone on small phones (Brand Guidelines: minimum sizes) */}
-          <img src={logoReversed} alt="Pilot Constract" className="navbar__logo navbar__logo--full" />
+          <img src={logoReversed} alt={BRAND} className="navbar__logo navbar__logo--full" />
           <img src={markReversed} alt="" aria-hidden="true" className="navbar__logo navbar__logo--mark" />
         </NavLink>
 
