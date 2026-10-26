@@ -22,8 +22,8 @@ const contactText = {
   fr: {
     nav: "Contact",
     eyebrow: "Contact",
-    title: `Contactez ${FR_NAME} (${BRAND})`,
-    lead: "Parlez-nous de votre projet de charpente métallique ou de construction métallique, à Sfax et partout en Tunisie. Nous revenons vers vous sous 48 h avec une première estimation.",
+    title: "Contactez-nous",
+    lead: `${FR_NAME} (${BRAND}) est à votre écoute pour votre projet de charpente métallique ou de construction métallique, à Sfax et partout en Tunisie. Nous revenons vers vous sous 48 h avec une première estimation.`,
     phone: "Téléphone",
     whatsapp: "WhatsApp",
     whatsappCta: "Écrire sur WhatsApp",
@@ -40,8 +40,8 @@ const contactText = {
   en: {
     nav: "Contact",
     eyebrow: "Contact",
-    title: `Contact ${FR_NAME} (${BRAND})`,
-    lead: "Tell us about your steel frame or metal construction project in Sfax and across Tunisia. We get back to you within 48 h with an initial estimate.",
+    title: "Get in touch",
+    lead: `${FR_NAME} (${BRAND}) is here for your steel frame or metal construction project in Sfax and across Tunisia. We get back to you within 48 h with an initial estimate.`,
     phone: "Phone",
     whatsapp: "WhatsApp",
     whatsappCta: "Message us on WhatsApp",
@@ -58,8 +58,8 @@ const contactText = {
   ar: {
     nav: "اتصل بنا",
     eyebrow: "اتصل بنا",
-    title: `اتصل بـ ${FR_NAME} (${BRAND})`,
-    lead: "حدثنا عن مشروعك للهياكل المعدنية أو البناء المعدني في صفاقس وكامل تونس. نعود إليك في أجل 48 ساعة مع تقدير أولي.",
+    title: "تواصل معنا",
+    lead: `${FR_NAME} (${BRAND}) في خدمتك لمشروعك للهياكل المعدنية أو البناء المعدني في صفاقس وكامل تونس. نعود إليك في أجل 48 ساعة مع تقدير أولي.`,
     phone: "الهاتف",
     whatsapp: "واتساب",
     whatsappCta: "راسلنا عبر واتساب",
