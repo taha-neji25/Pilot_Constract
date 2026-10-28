@@ -20,6 +20,12 @@ export const SLUGS = {
   signup: { fr: "inscription", en: "signup", ar: "signup" },
   admin: { fr: "admin", en: "admin", ar: "admin" },
   contact: { fr: "contact", en: "contact", ar: "contact" },
+  // legal pages (footer): privacy policy, terms, cookie policy, refund policy, legal notice
+  privacy: { fr: "confidentialite", en: "privacy-policy", ar: "privacy-policy" },
+  terms: { fr: "conditions-generales", en: "terms-and-conditions", ar: "terms-and-conditions" },
+  cookies: { fr: "cookies", en: "cookie-policy", ar: "cookie-policy" },
+  refunds: { fr: "remboursement", en: "refund-policy", ar: "refund-policy" },
+  legal: { fr: "mentions-legales", en: "legal-notice", ar: "legal-notice" },
 };
 
 // One page per service: /services/<address>. ids match the services in i18n/translations.js and the gallery sections.
@@ -56,7 +62,7 @@ for (const id of GUIDE_IDS) {
 }
 
 // Pages Google should list; the others (account, quote tool, admin) carry a "noindex" tag.
-export const INDEXED_PAGES = ["home", "services", ...SERVICE_IDS.map(servicePage), "guides", ...GUIDE_IDS.map(guidePage), "reviews", "faq", "gallery", "contact"];
+export const INDEXED_PAGES = ["home", "services", ...SERVICE_IDS.map(servicePage), "guides", ...GUIDE_IDS.map(guidePage), "reviews", "faq", "gallery", "contact", "privacy", "terms", "cookies", "refunds", "legal"];
 export const PRIVATE_PAGES = ["quote", "login", "signup", "admin"];
 
 // "/services", "/en/services", "/ar" ... (no trailing slash: what the router and the links use)

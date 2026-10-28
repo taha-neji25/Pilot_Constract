@@ -15,7 +15,7 @@
 }
 
 .review-card .i-beam {
-  color: var(--color-steel);
+  color: var(--pc-link);
   margin-bottom: 1rem;
 }
 

@@ -49,6 +49,20 @@ export const HOURS = {
   },
 };
 
+// Legal identity, printed on the Legal notice page. Anything left "" is simply not shown: fill these in when you have them
+// (they are normally on your registration papers and invoices).
+export const LEGAL = {
+  form: "", // legal form, e.g. SARL
+  capital: "", // share capital, e.g. 10 000 DT
+  registryNumber: "", // trade register / RNE number
+  taxId: "", // matricule fiscal
+  director: "", // name of the person responsible for the publication of the site
+};
+
+// Date shown on the legal pages ("last updated") and version of the texts accepted at signup (see CONSENT_VERSION in
+// supabase/functions/_shared/signup.js: keep both the same when the Terms or the Privacy Policy change).
+export const LEGAL_UPDATED = "2026-10-28";
+
 // Opens a place in Google Maps.
 export const mapsUrl = (place) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([BRAND, place.area, place.street, place.city].filter(Boolean).join(", "))}`;

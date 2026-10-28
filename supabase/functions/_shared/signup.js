@@ -11,23 +11,23 @@ import { handleResend, handleVerify, issueCode } from "./verification.js";
 const EMAIL_RE =
   /^(?!\.)(?!.*\.\.)[A-Za-z0-9._%+-]{1,64}(?<!\.)@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,24}$/;
 const NAME_RE = /^\p{L}[\p{L} '.-]*$/u;
-const POSTAL_RE = /^[A-Za-z0-9][A-Za-z0-9 -]{1,8}[A-Za-z0-9]$/;
-const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-const TAX_ID_RE = /^[A-Za-z0-9/ .-]{3,30}$/;
 
 export const SIGNUP_LIMIT = 5; // attempts per IP...
 export const SIGNUP_WINDOW = "1 hour"; // ...per window
 
-// Returns { error } or { data } with cleaned values for the chosen account type.
+// Version of the Terms and Privacy Policy the visitor accepted (kept with the account as proof of consent).
+// Change it when those texts change in a way that needs a new acceptance.
+export const CONSENT_VERSION = "2026-10-28";
+
+// Returns { error } or { data } with cleaned values. Only what is needed is collected: name, e-mail, phone, account
+// type and the password (kept by Supabase Auth as a one-way hash). No address, birth date, gender or tax id.
 // `phone` = { parsePhoneNumberFromString, isSupportedCountry } from libphonenumber-js.
-export function validateSignup(body, phone) {
+export function validateSignup(body, phone, now = new Date()) {
   const str = (k) => String(body?.[k] ?? "").trim();
   const firstName = str("firstName");
   const lastName = str("lastName");
   const email = str("email").toLowerCase();
   const phoneCountry = str("phoneCountry").toUpperCase();
-  const address = str("address");
-  const postalCode = str("postalCode");
   const password = String(body?.password ?? "");
   const accountType = str("accountType");
 
@@ -42,42 +42,28 @@ export function validateSignup(body, phone) {
     : undefined;
   if (!parsed?.isValid()) return { error: "Invalid phone number" };
 
-  if (!address || address.length > 200) return { error: "Address is required" };
-  if (!POSTAL_RE.test(postalCode)) return { error: "Invalid postal code" };
   if (password.length < 8 || password.length > 72)
     return { error: "Password must be 8 to 72 characters" };
+  if (!["person", "company"].includes(accountType)) return { error: "Invalid account type" };
+  // the visitor must have ticked the box (accepting the Terms and the Privacy Policy): never assumed
+  if (body?.consent !== true) return { error: "Consent required" };
 
-  const base = {
-    name: `${firstName} ${lastName}`,
-    first_name: firstName,
-    last_name: lastName,
-    email,
-    phone: parsed.number, // E.164
-    phone_country: phoneCountry,
-    address,
-    postal_code: postalCode,
-    account_type: accountType,
+  return {
+    data: {
+      profile: {
+        name: `${firstName} ${lastName}`,
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        phone: parsed.number, // E.164
+        phone_country: phoneCountry,
+        account_type: accountType,
+        consent_at: now.toISOString(),
+        consent_version: CONSENT_VERSION,
+      },
+      password,
+    },
   };
-
-  if (accountType === "person") {
-    const birthDate = str("birthDate");
-    const gender = str("gender");
-    const d = new Date(birthDate);
-    if (!DATE_RE.test(birthDate) || Number.isNaN(d.getTime()) || d > new Date() || d.getFullYear() < 1900)
-      return { error: "Invalid birth date" };
-    if (!["male", "female"].includes(gender)) return { error: "Invalid gender" };
-    return { data: { profile: { ...base, birth_date: birthDate, gender, tax_id: null, position: null }, password } };
-  }
-
-  if (accountType === "company") {
-    const taxId = str("taxId");
-    const position = str("position");
-    if (!TAX_ID_RE.test(taxId)) return { error: "Invalid tax ID" };
-    if (!position || position.length > 100) return { error: "Position is required" };
-    return { data: { profile: { ...base, tax_id: taxId, position, birth_date: null, gender: null }, password } };
-  }
-
-  return { error: "Invalid account type" };
 }
 
 const first = (data) => (Array.isArray(data) ? data[0] : data) ?? null;

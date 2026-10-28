@@ -8,7 +8,7 @@
 }
 
 .service-page__crumbs a:hover {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 .service-page__intro {
@@ -67,7 +67,7 @@
 
 .service-page__faq:hover,
 .service-page__all:hover {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 .service-page__work {

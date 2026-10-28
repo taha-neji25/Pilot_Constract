@@ -17,7 +17,7 @@
 }
 
 .service-card .i-beam {
-  color: var(--pc-deep);
+  color: var(--pc-link);
   margin-bottom: 1rem;
 }
 
@@ -36,7 +36,8 @@ html[dir="rtl"] .service-card__icon {
   margin: -0.5rem -0.35rem 0.5rem 0;
 }
 
-.service-card h3 {
+.service-card h2 {
+  font-weight: 700;
   font-size: 1.15rem;
   margin-bottom: 0.5rem;
 }
@@ -81,7 +82,7 @@ html[dir="rtl"] .service-card__icon {
 }
 
 .service-card:hover .service-card__link {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 .service-card__count {

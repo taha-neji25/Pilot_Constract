@@ -78,7 +78,7 @@ export default function Admin() {
   const weekAgo = Date.now() - 7 * 24 * 3600 * 1000;
   const lc = search.trim().toLowerCase();
   const clients = data.profiles.filter(
-    (p) => !lc || [p.name, p.email, p.phone, p.address].some((v) => String(v ?? "").toLowerCase().includes(lc))
+    (p) => !lc || [p.name, p.email, p.phone].some((v) => String(v ?? "").toLowerCase().includes(lc))
   );
   const allQuotes = data.quotes.filter(
     (q) =>
@@ -320,23 +320,37 @@ export default function Admin() {
                             <tr className="admin__expand">
                               <td colSpan={5}>
                                 <dl className="admin__facts">
-                                  <dt>{a.address}</dt>
-                                  <dd>
-                                    {p.address}, {p.postal_code}
-                                  </dd>
                                   <dt>{a.country}</dt>
                                   <dd>{p.phone_country}</dd>
-                                  {p.account_type === "person" ? (
+                                  <dt>{a.consent}</dt>
+                                  <dd>{p.consent_at ? `${when(p.consent_at)} (${p.consent_version})` : "-"}</dd>
+                                  {/* older accounts only: these fields are no longer collected */}
+                                  {p.address && (
+                                    <>
+                                      <dt>{a.address}</dt>
+                                      <dd>{[p.address, p.postal_code].filter(Boolean).join(", ")}</dd>
+                                    </>
+                                  )}
+                                  {p.birth_date && (
                                     <>
                                       <dt>{a.birthDate}</dt>
                                       <dd>{p.birth_date}</dd>
+                                    </>
+                                  )}
+                                  {p.gender && (
+                                    <>
                                       <dt>{a.gender}</dt>
                                       <dd>{a[p.gender]}</dd>
                                     </>
-                                  ) : (
+                                  )}
+                                  {p.tax_id && (
                                     <>
                                       <dt>{a.taxId}</dt>
                                       <dd>{p.tax_id}</dd>
+                                    </>
+                                  )}
+                                  {p.position && (
+                                    <>
                                       <dt>{a.position}</dt>
                                       <dd>{p.position}</dd>
                                     </>

@@ -38,7 +38,7 @@ export default function Services() {
               ) : (
                 <IBeam />
               )}
-              <h3>{service.title}</h3>
+              <h2>{service.title}</h2>
               <p>{service.desc}</p>
               <span className="service-card__link">
                 {serviceUi[language].more}

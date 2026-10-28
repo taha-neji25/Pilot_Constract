@@ -8,6 +8,10 @@ const translations = {
       faq: "FAQ",
       guides: "Guides",
       contact: "Contact",
+      skip: "Skip to main content",
+      menuOpen: "Open menu",
+      menuClose: "Close menu",
+      language: "Language",
       gallery: "Gallery",
       cta: "Free Quote",
       login: "Log in",
@@ -43,13 +47,13 @@ const translations = {
       introLink: "Frequently asked questions →",
       list: [
         "In-house design office",
-        "Certified workshop fabrication",
+        "Workshop fabrication",
         "On-site assembly and installation",
         "Follow-up and maintenance after delivery",
       ],
       partnershipEyebrow: "Our Partners",
       partnershipTitle: "Working together to build better",
-      partnershipText: "We collaborate with industry leaders to deliver exceptional results",
+      partnershipText: "Some of the companies we work with",
       partnersPause: "Pause the partners carousel",
       partnersPlay: "Resume the partners carousel",
       scroll: "Scroll",
@@ -68,7 +72,7 @@ const translations = {
         finalCta: "Get a free quote",
         steps: [
           { title: "We calculate", text: "Every structure starts with a load calculation. Our in-house design office produces the calculation notes, execution drawings and 3D model, tailored to the loads and standards of your site." },
-          { title: "We fabricate", text: "Cutting, welding and anti-corrosion treatment are carried out in our certified workshop, so quality is checked before anything leaves for site." },
+          { title: "We fabricate", text: "Cutting, welding and anti-corrosion treatment are carried out in our workshop, so quality is checked before anything leaves for site." },
           { title: "We install", text: "Qualified crews handle lifting and assembly on site, working to your construction schedule." },
           { title: "We hand over, and stay", text: "The job ends with an on-site quality check and handover. After delivery we provide follow-up, diagnosis and preventive maintenance." },
         ],
@@ -79,7 +83,7 @@ const translations = {
         lead: `${BRAND} (${LEGAL_NAME}) is a Tunisian structural steel company based in Sfax, working from the first drawing to the last bolt.`,
         foundation: {
           title: "Foundation",
-          text: `${BRAND} was founded in Sfax, Tunisia, on a simple idea: one partner who carries a steel structure from design to handover. Over nine years later, we serve clients across Tunisia and abroad.`,
+          text: `${BRAND} was founded in Sfax, Tunisia, on a simple idea: one partner who carries a steel structure from design to handover. Over nine years later, we serve clients across Tunisia.`,
         },
         activity: {
           title: "Activity",
@@ -87,7 +91,7 @@ const translations = {
         },
         quality: {
           title: "Our quality",
-          text: "Every structure starts with a load calculation and ends with an on-site quality check. Welding and anti-corrosion treatment are carried out in our certified workshop, and each project is followed through to handover.",
+          text: "Every structure starts with a load calculation and ends with an on-site quality check. Welding and anti-corrosion treatment are carried out in our workshop, and each project is followed through to handover.",
         },
         expertise: {
           title: "Expertise",
@@ -112,7 +116,7 @@ const translations = {
       viewGallery: "View gallery →",
       items: [
         { id: "calculation", title: "Design study", desc: "Load calculations, execution drawings and 3D modeling tailored to site loads and standards." },
-        { id: "fabrication", title: "Workshop fabrication", desc: "Cutting, welding and anti-corrosion treatment carried out in our certified workshop." },
+        { id: "fabrication", title: "Workshop fabrication", desc: "Cutting, welding and anti-corrosion treatment carried out in our workshop." },
         { id: "assembly", title: "Assembly & installation", desc: "Qualified crews for on-site lifting and assembly, on schedule." },
         { id: "framing", title: "Industrial framing", desc: "Halls, warehouses and workshops in steel structure, insulated or not, with cladding." },
         { id: "walkways", title: "Walkways & staircases", desc: "Secondary steel structures: technical walkways, staircases, custom handrails." },
@@ -127,9 +131,6 @@ const translations = {
       items: [
         { quote: `We have worked with ${BRAND} for years, and that trust has been built project after project. Their teams are serious, responsive and keep their commitments. I recommend them without hesitation.`, name: "Firas Maatar", role: "Manager, SO.MA.TRAV" },
         { quote: `For many years, ${BRAND} has been a reliable partner for us. We value the quality of their work, their rigour and the clarity of their communication from start to finish. They are a company you can count on.`, name: "Mohamed Hbaieb", role: "General Manager, MTR-Ressort" },
-        { quote: "Delivered on time despite a complex site. Coordination with our team was flawless from start to finish.", name: "Faycel Trabelsi", role: "Project Director, food industry" },
-        { quote: "The design office caught a load issue before fabrication, which saved us a costly rework.", name: "Sana Ben Amor", role: "Architect, private practice" },
-        { quote: "Clean finish, tidy welds, and a serious installation crew. We've already re-hired them for a second hall.", name: "Karim Jendoubi", role: "Manager, industrial unit" },
       ],
     },
     faqs: {
@@ -137,7 +138,7 @@ const translations = {
       title: "Frequently asked questions",
       items: [
         { q: "What types of structures do you build?", a: "Industrial halls, warehouses, workshops, technical walkways, steel staircases and custom structures, both new-build and extensions." },
-        { q: "Do you work outside Sfax?", a: "Yes, our teams travel across Tunisia, and we have already delivered projects internationally." },
+        { q: "Do you work outside Sfax?", a: "Yes, our teams travel across Tunisia." },
         { q: "How long does a typical project take?", a: "Depending on the size of the structure: between 6 and 16 weeks from drawing approval to site handover." },
         { q: "Do you offer support after delivery?", a: "Yes, we provide follow-up, preventive maintenance and diagnosis of existing structures after commissioning." },
         { q: "How do I get a quote?", a: "Send us your drawings or a project description by email; we'll get back to you within 48h with an initial estimate." },
@@ -195,6 +196,13 @@ const translations = {
       taxId: "Tax ID",
       position: "Your position in the company",
       loading: "Please wait…",
+      consent: {
+        before: "I have read and accept the",
+        terms: "Terms and Conditions",
+        and: "and the",
+        privacy: "Privacy Policy",
+        note: "We only ask for what we need to create your account and answer your quote requests. We never sell your data.",
+      },
       verify: {
         title: "Verify your email",
         sent: "We sent a 6-digit code to",
@@ -220,6 +228,7 @@ const translations = {
         "Invalid gender": "Please select a gender.",
         "Invalid tax ID": "Please enter a valid tax ID.",
         "Position is required": "Please enter your position.",
+        "Consent required": "Please tick the box to accept the Terms and the Privacy Policy.",
         "Invalid account type": "Please choose an account type.",
         "Invalid email or password": "Invalid email or password.",
         "Email already registered": "This email is already registered.",
@@ -308,7 +317,7 @@ const translations = {
         quotes: "Quotes",
         prices: "Prices",
       },
-      search: "Search by name, email, phone or address",
+      search: "Search by name, email or phone",
       searchQuotes: "Search by client name",
       allServices: "All services",
       col: {
@@ -328,6 +337,7 @@ const translations = {
       address: "Address",
       country: "Phone country",
       birthDate: "Date of birth",
+      consent: "Consent (date, version)",
       gender: "Gender",
       male: "Male",
       female: "Female",
@@ -376,6 +386,10 @@ const translations = {
       faq: "FAQ",
       guides: "Guides",
       contact: "Contact",
+      skip: "Aller au contenu principal",
+      menuOpen: "Ouvrir le menu",
+      menuClose: "Fermer le menu",
+      language: "Langue",
       gallery: "Galerie",
       cta: "Devis gratuit",
       login: "Connexion",
@@ -411,13 +425,13 @@ const translations = {
       introLink: "Questions fréquentes →",
       list: [
         "Bureau d'études interne",
-        "Fabrication en atelier certifié",
+        "Fabrication en atelier",
         "Pose et montage sur site",
         "Suivi et maintenance après livraison",
       ],
       "partnershipEyebrow": "Nos partenaires",
       "partnershipTitle": "Travailler ensemble pour construire mieux",
-      "partnershipText": "Nous collaborons avec les leaders de l'industrie pour offrir des résultats exceptionnels",
+      "partnershipText": "Quelques-unes des entreprises avec lesquelles nous travaillons",
       "partnersPause": "Mettre en pause le défilement des partenaires",
       "partnersPlay": "Reprendre le défilement des partenaires",
       scroll: "Défiler",
@@ -436,7 +450,7 @@ const translations = {
         finalCta: "Demander un devis gratuit",
         steps: [
           { title: "Nous calculons", text: "Chaque structure part d'une note de calcul. Notre bureau d'études interne établit les notes de calcul, les plans d'exécution et la modélisation 3D, adaptés aux charges et normes de votre site." },
-          { title: "Nous fabriquons", text: "Découpe, soudure et traitement anticorrosion sont réalisés dans notre atelier certifié : la qualité est contrôlée avant tout départ sur site." },
+          { title: "Nous fabriquons", text: "Découpe, soudure et traitement anticorrosion sont réalisés dans notre atelier : la qualité est contrôlée avant tout départ sur site." },
           { title: "Nous posons", text: "Des équipes qualifiées assurent le levage et l'assemblage sur site, dans le respect de votre planning de chantier." },
           { title: "Nous livrons, et nous restons", text: "Le chantier se termine par un contrôle qualité sur site et la réception. Après livraison, nous assurons suivi, diagnostic et maintenance préventive." },
         ],
@@ -447,7 +461,7 @@ const translations = {
         lead: `${BRAND} (${LEGAL_NAME}) est une entreprise tunisienne de structures métalliques basée à Sfax, présente du premier plan à la dernière boulonnerie.`,
         foundation: {
           title: "Fondation",
-          text: `${BRAND} est née à Sfax, en Tunisie, d'une idée simple : un seul partenaire qui accompagne une structure métallique de la conception à la réception. Plus de neuf ans après, nous servons des clients partout en Tunisie et à l'étranger.`,
+          text: `${BRAND} est née à Sfax, en Tunisie, d'une idée simple : un seul partenaire qui accompagne une structure métallique de la conception à la réception. Plus de neuf ans après, nous servons des clients partout en Tunisie.`,
         },
         activity: {
           title: "Activité",
@@ -455,7 +469,7 @@ const translations = {
         },
         quality: {
           title: "Notre qualité",
-          text: "Chaque structure part d'une note de calcul et se termine par un contrôle qualité sur site. Soudure et traitement anticorrosion sont réalisés dans notre atelier certifié, et chaque projet est suivi jusqu'à la réception.",
+          text: "Chaque structure part d'une note de calcul et se termine par un contrôle qualité sur site. Soudure et traitement anticorrosion sont réalisés dans notre atelier, et chaque projet est suivi jusqu'à la réception.",
         },
         expertise: {
           title: "Expertise",
@@ -480,7 +494,7 @@ const translations = {
       viewGallery: "Voir la galerie →",
       items: [
         { id: "calculation", title: "Étude", desc: "Notes de calcul, plans d'exécution et modélisation 3D adaptés aux charges et normes du site." },
-        { id: "fabrication", title: "Fabrication en atelier", desc: "Découpe, soudure et traitement anticorrosion réalisés dans notre atelier certifié." },
+        { id: "fabrication", title: "Fabrication en atelier", desc: "Découpe, soudure et traitement anticorrosion réalisés dans notre atelier." },
         { id: "assembly", title: "Montage & pose", desc: "Équipes qualifiées pour le levage et l'assemblage sur site, en respect des délais de chantier." },
         { id: "framing", title: "Charpente industrielle", desc: "Halls, entrepôts et ateliers en structure métallique, isolés ou non, avec bardage." },
         { id: "walkways", title: "Passerelles & escaliers", desc: "Ouvrages métalliques secondaires : passerelles techniques, escaliers, garde-corps sur mesure." },
@@ -495,9 +509,6 @@ const translations = {
       items: [
         { quote: `Nous travaillons avec ${BRAND} depuis des années, et cette confiance s'est construite projet après projet. Leurs équipes sont sérieuses, réactives et respectent leurs engagements. Je les recommande sans hésitation.`, name: "Firas Maatar", role: "Gérant, SO.MA.TRAV" },
         { quote: `${BRAND} est pour nous un partenaire fiable depuis de nombreuses années. Nous apprécions la qualité de leur travail, leur rigueur et la clarté de leur communication du début à la fin. C'est une entreprise sur laquelle on peut compter.`, name: "Mohamed Hbaieb", role: "Directeur général, MTR-Ressort" },
-        { quote: "Livraison dans les délais malgré un chantier compliqué. La coordination avec notre équipe a été impeccable du début à la fin.", name: "Faycel Trabelsi", role: "Directeur de projet, agroalimentaire" },
-        { quote: "Le bureau d'études a détecté un problème de charge avant fabrication, ce qui nous a évité une reprise coûteuse.", name: "Sana Ben Amor", role: "Architecte, cabinet privé" },
-        { quote: "Bonne finition, soudures propres, et une équipe de pose sérieuse. On a déjà reconduit avec eux sur un second hall.", name: "Karim Jendoubi", role: "Gérant, unité industrielle" },
       ],
     },
     faqs: {
@@ -505,7 +516,7 @@ const translations = {
       title: "Questions fréquentes",
       items: [
         { q: "Quels types de structures fabriquez-vous ?", a: "Halls industriels, entrepôts, ateliers, passerelles techniques, escaliers métalliques et ouvrages sur mesure, en neuf comme en extension." },
-        { q: "Intervenez-vous en dehors de Sfax ?", a: "Oui, nos équipes se déplacent sur tout le territoire tunisien, et nous avons déjà livré des projets à l'international." },
+        { q: "Intervenez-vous en dehors de Sfax ?", a: "Oui, nos équipes se déplacent sur tout le territoire tunisien." },
         { q: "Combien de temps prend un projet type ?", a: "Selon la taille de l'ouvrage : entre 6 et 16 semaines depuis la validation des plans jusqu'à la réception de chantier." },
         { q: "Proposez-vous un accompagnement après livraison ?", a: "Oui, nous assurons le suivi, la maintenance préventive et le diagnostic de structures existantes après mise en service." },
         { q: "Comment obtenir un devis ?", a: "Envoyez-nous vos plans ou une description du projet par e-mail ; nous revenons vers vous sous 48h avec une première estimation." },
@@ -563,6 +574,13 @@ const translations = {
       taxId: "Matricule fiscal",
       position: "Votre poste dans l'entreprise",
       loading: "Patientez…",
+      consent: {
+        before: "J'ai lu et j'accepte les",
+        terms: "Conditions générales",
+        and: "et la",
+        privacy: "Politique de confidentialité",
+        note: "Nous ne demandons que ce qui est nécessaire pour créer votre compte et répondre à vos demandes de devis. Vos données ne sont jamais vendues.",
+      },
       verify: {
         title: "Vérifiez votre e-mail",
         sent: "Nous avons envoyé un code à 6 chiffres à",
@@ -588,6 +606,7 @@ const translations = {
         "Invalid gender": "Veuillez sélectionner le sexe.",
         "Invalid tax ID": "Veuillez saisir un matricule fiscal valide.",
         "Position is required": "Veuillez saisir votre poste.",
+        "Consent required": "Veuillez cocher la case pour accepter les Conditions générales et la Politique de confidentialité.",
         "Invalid account type": "Veuillez choisir un type de compte.",
         "Invalid email or password": "E-mail ou mot de passe incorrect.",
         "Email already registered": "Cet e-mail est déjà utilisé.",
@@ -676,7 +695,7 @@ const translations = {
         quotes: "Devis",
         prices: "Prix",
       },
-      search: "Rechercher par nom, e-mail, téléphone ou adresse",
+      search: "Rechercher par nom, e-mail ou téléphone",
       searchQuotes: "Rechercher par nom de client",
       allServices: "Tous les services",
       col: {
@@ -696,6 +715,7 @@ const translations = {
       address: "Adresse",
       country: "Pays du téléphone",
       birthDate: "Date de naissance",
+      consent: "Consentement (date, version)",
       gender: "Genre",
       male: "Homme",
       female: "Femme",
@@ -744,6 +764,10 @@ const translations = {
       faq: "الأسئلة الشائعة",
       guides: "الأدلة",
       contact: "اتصل بنا",
+      skip: "انتقل إلى المحتوى الرئيسي",
+      menuOpen: "فتح القائمة",
+      menuClose: "إغلاق القائمة",
+      language: "اللغة",
       gallery: "معرض الأعمال",
       cta: "طلب عرض سعر",
       login: "دخول",
@@ -779,13 +803,13 @@ const translations = {
       introLink: "الأسئلة الشائعة ←",
       list: [
         "مكتب دراسات داخلي",
-        "تصنيع في ورشة معتمدة",
+        "تصنيع في الورشة",
         "تركيب وتجميع في الموقع",
         "متابعة وصيانة بعد التسليم",
       ],
       "partnershipEyebrow": "شركاؤنا",
       "partnershipTitle": "نعمل معًا لبناء الأفضل",
-      "partnershipText": "نتعاون مع قادة الصناعة لتقديم نتائج استثنائية",
+      "partnershipText": "بعض الشركات التي نعمل معها",
       "partnersPause": "إيقاف تمرير الشركاء مؤقتًا",
       "partnersPlay": "استئناف تمرير الشركاء",
       scroll: "مرّر للأسفل",
@@ -804,7 +828,7 @@ const translations = {
         finalCta: "اطلب عرض سعر مجاني",
         steps: [
           { title: "نحسب", text: "تبدأ كل هيكلة بمذكرة حسابية. يُعدّ مكتب الدراسات الداخلي لدينا المذكرات الحسابية والمخططات التنفيذية والنمذجة ثلاثية الأبعاد، بما يتلاءم مع أحمال ومعايير موقعكم." },
-          { title: "نصنّع", text: "القص واللحام والمعالجة المضادة للتآكل تتم داخل ورشتنا المعتمدة، فتُراقَب الجودة قبل أن يغادر أي شيء إلى الموقع." },
+          { title: "نصنّع", text: "القص واللحام والمعالجة المضادة للتآكل تتم داخل ورشتنا، فتُراقَب الجودة قبل أن يغادر أي شيء إلى الموقع." },
           { title: "نركّب", text: "فرق مؤهلة تتولى الرفع والتجميع في الموقع، مع احترام برنامج أشغالكم." },
           { title: "نسلّم ونبقى إلى جانبكم", text: "تنتهي الأشغال بمراقبة الجودة في الموقع ثم التسليم. وبعد ذلك نضمن المتابعة والتشخيص والصيانة الوقائية." },
         ],
@@ -815,7 +839,7 @@ const translations = {
         lead: `${AR_NAME} (${LEGAL_NAME}) شركة تونسية للهياكل المعدنية مقرها صفاقس، ترافقكم من أول مخطط إلى آخر مسمار.`,
         foundation: {
           title: "التأسيس",
-          text: `تأسست شركة ${AR_NAME} في صفاقس، تونس، على فكرة بسيطة: شريك واحد يرافق الهيكل المعدني من التصميم إلى التسليم. وبعد أكثر من تسع سنوات، نخدم حرفاء في كامل تونس وخارجها.`,
+          text: `تأسست شركة ${AR_NAME} في صفاقس، تونس، على فكرة بسيطة: شريك واحد يرافق الهيكل المعدني من التصميم إلى التسليم. وبعد أكثر من تسع سنوات، نخدم حرفاء في كامل تونس.`,
         },
         activity: {
           title: "النشاط",
@@ -823,7 +847,7 @@ const translations = {
         },
         quality: {
           title: "جودتنا",
-          text: "تبدأ كل هيكلة بمذكرة حسابية وتنتهي بمراقبة الجودة في الموقع. يتم اللحام والمعالجة المضادة للتآكل في ورشتنا المعتمدة، ويُتابع كل مشروع إلى غاية التسليم.",
+          text: "تبدأ كل هيكلة بمذكرة حسابية وتنتهي بمراقبة الجودة في الموقع. يتم اللحام والمعالجة المضادة للتآكل في ورشتنا، ويُتابع كل مشروع إلى غاية التسليم.",
         },
         expertise: {
           title: "الخبرة",
@@ -848,7 +872,7 @@ const translations = {
       viewGallery: "شاهد المعرض ←",
       items: [
         { id: "calculation", title: "الدراسة", desc: "مذكرات حسابية ومخططات تنفيذية ونمذجة ثلاثية الأبعاد تتلاءم مع أحمال ومعايير الموقع." },
-        { id: "fabrication", title: "التصنيع في الورشة", desc: "القص واللحام والمعالجة المضادة للتآكل، كلها داخل ورشتنا المعتمدة." },
+        { id: "fabrication", title: "التصنيع في الورشة", desc: "القص واللحام والمعالجة المضادة للتآكل، كلها داخل ورشتنا." },
         { id: "assembly", title: "التركيب والتجميع", desc: "فرق مؤهلة للرفع والتجميع في الموقع، مع احترام آجال الورشة." },
         { id: "framing", title: "الهياكل الصناعية", desc: "قاعات ومستودعات وورشات بهيكل معدني، معزولة أو غير معزولة، مع الكسوة." },
         { id: "walkways", title: "الممرات والسلالم", desc: "هياكل معدنية ثانوية: ممرات فنية وسلالم ودرابزين حسب الطلب." },
@@ -863,9 +887,6 @@ const translations = {
       items: [
         { quote: `نعمل مع ${BRAND} منذ سنوات، وقد بُنيت هذه الثقة مشروعًا بعد مشروع. فرقهم جادة وسريعة الاستجابة وتحترم التزاماتها. أنصح بهم دون تردد.`, name: "Firas Maatar", role: "مسير، شركة SO.MA.TRAV" },
         { quote: `تُعدّ ${BRAND} شريكًا موثوقًا بالنسبة لنا منذ سنوات طويلة. نقدّر جودة عملهم ودقّتهم ووضوح تواصلهم من البداية إلى النهاية. إنها شركة يمكن الاعتماد عليها.`, name: "Mohamed Hbaieb", role: "المدير العام، شركة MTR-Ressort" },
-        { quote: "تم التسليم في الآجال رغم تعقيد الورشة. التنسيق مع فريقنا كان ممتازًا من البداية إلى النهاية.", name: "فيصل الطرابلسي", role: "مدير مشروع، صناعات غذائية" },
-        { quote: "اكتشف مكتب الدراسات مشكلة في الحمولة قبل التصنيع، مما جنّبنا إعادة عمل مكلفة.", name: "سناء بن عمر", role: "مهندسة معمارية، مكتب خاص" },
-        { quote: "لمسة نهائية نظيفة، لحام متقن، وفريق تركيب جاد. تعاملنا معهم مجددًا في قاعة ثانية.", name: "كريم الجندوبي", role: "مسير، وحدة صناعية" },
       ],
     },
     faqs: {
@@ -873,7 +894,7 @@ const translations = {
       title: "الأسئلة الشائعة",
       items: [
         { q: "ما أنواع الهياكل التي تصنعونها؟", a: "قاعات صناعية ومستودعات وورشات وممرات فنية وسلالم معدنية وهياكل حسب الطلب، سواء بناء جديد أو توسعة." },
-        { q: "هل تتدخلون خارج صفاقس؟", a: "نعم، فرقنا تتنقل عبر كامل التراب التونسي، وقد سلّمنا مشاريع دولية من قبل." },
+        { q: "هل تتدخلون خارج صفاقس؟", a: "نعم، فرقنا تتنقل عبر كامل التراب التونسي." },
         { q: "كم من الوقت يستغرق المشروع عادة؟", a: "حسب حجم الهيكل: بين 6 و16 أسبوعًا من المصادقة على المخططات إلى تسليم الموقع." },
         { q: "هل تقدمون متابعة بعد التسليم؟", a: "نعم، نضمن المتابعة والصيانة الوقائية وتشخيص الهياكل القائمة بعد دخولها الخدمة." },
         { q: "كيف أحصل على عرض سعر؟", a: "أرسلوا لنا مخططاتكم أو وصفًا للمشروع عبر البريد الإلكتروني، وسنعود إليكم خلال 48 ساعة بتقدير أولي." },
@@ -931,6 +952,13 @@ const translations = {
       taxId: "المعرّف الجبائي",
       position: "منصبك في الشركة",
       loading: "يرجى الانتظار…",
+      consent: {
+        before: "قرأت وأوافق على",
+        terms: "الشروط العامة",
+        and: "",
+        privacy: "وسياسة الخصوصية",
+        note: "نطلب فقط ما يلزم لإنشاء حسابك والرد على طلبات عروض الأسعار. ولا نبيع بياناتك أبدًا.",
+      },
       verify: {
         title: "تحقّق من بريدك الإلكتروني",
         sent: "أرسلنا رمزًا من 6 أرقام إلى",
@@ -956,6 +984,7 @@ const translations = {
         "Invalid gender": "يرجى اختيار الجنس.",
         "Invalid tax ID": "يرجى إدخال معرّف جبائي صالح.",
         "Position is required": "يرجى إدخال منصبك.",
+        "Consent required": "يرجى تحديد المربع لقبول الشروط العامة وسياسة الخصوصية.",
         "Invalid account type": "يرجى اختيار نوع الحساب.",
         "Invalid email or password": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
         "Email already registered": "هذا البريد الإلكتروني مسجّل بالفعل.",
@@ -1044,7 +1073,7 @@ const translations = {
         quotes: "عروض الأسعار",
         prices: "الأسعار",
       },
-      search: "ابحث بالاسم أو البريد أو الهاتف أو العنوان",
+      search: "ابحث بالاسم أو البريد أو الهاتف",
       searchQuotes: "ابحث باسم العميل",
       allServices: "كل الخدمات",
       col: {
@@ -1064,6 +1093,7 @@ const translations = {
       address: "العنوان",
       country: "بلد الهاتف",
       birthDate: "تاريخ الميلاد",
+      consent: "الموافقة (التاريخ، النسخة)",
       gender: "الجنس",
       male: "ذكر",
       female: "أنثى",

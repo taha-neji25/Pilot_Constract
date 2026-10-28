@@ -93,7 +93,7 @@
 }
 
 .stats__item .i-beam {
-  color: var(--pc-deep);
+  color: var(--pc-link);
   width: 30px;
   height: 20px;
 }
@@ -145,7 +145,7 @@
 }
 
 .intro__list .i-beam {
-  color: var(--color-steel);
+  color: var(--pc-link);
 }
 
 @media (max-width: 760px) {
@@ -249,7 +249,7 @@
 }
 
 .about-card .i-beam {
-  color: var(--pc-deep);
+  color: var(--pc-link);
   margin-bottom: 1rem;
 }
 

@@ -29,7 +29,7 @@
 }
 
 .faq-item__icon--open {
-  color: var(--pc-deep);
+  color: var(--pc-link);
   transform: rotate(90deg);
 }
 

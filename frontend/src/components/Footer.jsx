@@ -3,6 +3,7 @@ import logoReversed from "../assets/brand/logo-horizontal-reversed.svg";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
 import contact from "../data/contact.js";
 import { BRAND } from "../data/company.js";
+import { LEGAL_DOCS, legalUi } from "../i18n/legalText.js";
 import "./Footer.css";
 
 const Icon = ({ children }) => (
@@ -59,7 +60,7 @@ const SOCIAL = {
 };
 
 export default function Footer() {
-  const { t, path } = useLanguage();
+  const { t, path, language } = useLanguage();
   const { footer, nav } = t;
 
   const socials = Object.entries(contact.social).filter(([, url]) => url);
@@ -116,17 +117,17 @@ export default function Footer() {
           </div>
 
           <nav className="footer__col" aria-label={footer.company}>
-            <h4>{footer.company}</h4>
+            <h2>{footer.company}</h2>
             <LinkList links={companyLinks} />
           </nav>
 
           <nav className="footer__col" aria-label={footer.resources}>
-            <h4>{footer.resources}</h4>
+            <h2>{footer.resources}</h2>
             <LinkList links={resourceLinks} />
           </nav>
 
           <div className="footer__col">
-            <h4>{footer.contacts}</h4>
+            <h2>{footer.contacts}</h2>
             <ul className="footer__contact">
               <li>
                 {ICONS.pin}
@@ -154,7 +155,7 @@ export default function Footer() {
           </div>
 
           <div className="footer__col">
-            <h4>{footer.email}</h4>
+            <h2>{footer.email}</h2>
             <ul className="footer__emails">
               {contact.emails.map((e) => (
                 <li key={e.address}>
@@ -173,6 +174,15 @@ export default function Footer() {
           <span>
             © {new Date().getFullYear()} {footer.rights}
           </span>
+          <nav aria-label={legalUi[language].nav}>
+            <ul className="footer__legal">
+              {LEGAL_DOCS.map((doc) => (
+                <li key={doc}>
+                  <Link to={path(doc)}>{legalUi[language].labels[doc]}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>

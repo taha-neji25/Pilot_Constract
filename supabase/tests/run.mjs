@@ -3,7 +3,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { isSupportedCountry, parsePhoneNumberFromString } from "libphonenumber-js";
-import { handleAccount, handleSignup, SIGNUP_LIMIT } from "../functions/_shared/signup.js";
+import { CONSENT_VERSION, handleAccount, handleSignup, SIGNUP_LIMIT } from "../functions/_shared/signup.js";
 import { handleResend, handleVerify, hashCode, MAX_ATTEMPTS, RESEND_COOLDOWN_MS } from "../functions/_shared/verification.js";
 import { createMailer } from "../functions/_shared/mailer.js";
 import { verificationEmail } from "../functions/_shared/emailTemplates.js";
@@ -115,12 +115,10 @@ function fakeMailer({ fail = false } = {}) {
 
 const person = {
   firstName: "Amine", lastName: "Ben Salah", email: "  Amine@Example.com ", phoneCountry: "TN", phone: "20 123 456",
-  address: "1 rue Test, Sfax", postalCode: "3000", password: "correct-horse", accountType: "person",
-  birthDate: "1990-05-01", gender: "male",
+  password: "correct-horse", accountType: "person", consent: true,
 };
 const company = {
-  ...person, email: "boss@acme.tn", accountType: "company", taxId: "1234567/A/M/000", position: "Manager",
-  birthDate: undefined, gender: undefined,
+  ...person, email: "boss@acme.tn", accountType: "company",
 };
 
 let passed = 0;
@@ -144,7 +142,10 @@ await test("signup: valid person -> 201, LOCKED account + profile stored, E.164 
   assert.equal(p.phone, "+21620123456");
   assert.equal(p.name, "Amine Ben Salah");
   assert.equal(p.account_type, "person");
-  assert.equal(p.tax_id, null);
+  for (const k of ["address", "postal_code", "birth_date", "gender", "tax_id", "position"])
+    assert.ok(!(k in p), `${k} is not necessary and must not be collected`);
+  assert.ok(p.consent_at && !Number.isNaN(Date.parse(p.consent_at)), "the moment of consent is recorded");
+  assert.equal(p.consent_version, CONSENT_VERSION);
   assert.equal(p.id, admin.db.users.get("amine@example.com").id);
   assert.equal(JSON.stringify(admin.db.profiles).includes("correct-horse"), false, "password must never be stored in the profile");
   assert.equal(mailer.sent.length, 1);
@@ -153,12 +154,21 @@ await test("signup: valid person -> 201, LOCKED account + profile stored, E.164 
   assert.equal(JSON.stringify(r.json).includes(mailer.last().code), false, "the code must never be returned to the browser");
 });
 
-await test("signup: valid company -> 201 with tax id and position", async () => {
+await test("signup: valid company -> 201, same minimal data", async () => {
   const admin = fakeAdmin();
   const r = await signup(company, admin);
   assert.equal(r.status, 201);
-  assert.equal(admin.db.profiles[0].tax_id, "1234567/A/M/000");
-  assert.equal(admin.db.profiles[0].birth_date, null);
+  assert.equal(admin.db.profiles[0].account_type, "company");
+  assert.deepEqual(Object.keys(admin.db.profiles[0]).sort(), ["account_type", "consent_at", "consent_version", "email", "first_name", "id", "last_name", "name", "phone", "phone_country"]);
+});
+
+await test("signup: extra personal data sent by a client (address, birth date, gender, tax id, position) is ignored, never stored", async () => {
+  const admin = fakeAdmin();
+  const extra = { address: "Rue Unique 77", postalCode: "ZP-4455", birthDate: "1971-03-09", gender: "female", taxId: "TX-9988", position: "Chef Unique" };
+  const r = await signup({ ...person, ...extra }, admin);
+  assert.equal(r.status, 201);
+  const stored = JSON.stringify(admin.db.profiles[0]);
+  for (const v of Object.values(extra)) assert.equal(stored.includes(v), false, `${v} must not be stored`);
 });
 
 await test("signup: email already used by a VERIFIED account -> 409", async () => {
@@ -177,13 +187,12 @@ for (const [label, patch, message] of [
   ["bad email", { email: "nope@" }, "Invalid email"],
   ["bad phone", { phone: "123" }, "Invalid phone number"],
   ["unsupported phone country", { phoneCountry: "ZZ" }, "Invalid phone number"],
-  ["no address", { address: " " }, "Address is required"],
-  ["bad postal code", { postalCode: "!" }, "Invalid postal code"],
   ["short password", { password: "short" }, "Password must be 8 to 72 characters"],
   ["long password", { password: "x".repeat(73) }, "Password must be 8 to 72 characters"],
   ["bad account type", { accountType: "alien" }, "Invalid account type"],
-  ["future birth date", { birthDate: "2999-01-01" }, "Invalid birth date"],
-  ["bad gender", { gender: "x" }, "Invalid gender"],
+  ["no consent", { consent: undefined }, "Consent required"],
+  ["consent not given", { consent: false }, "Consent required"],
+  ["consent that is not a real yes", { consent: "yes" }, "Consent required"],
 ]) {
   await test(`signup: ${label} -> 400 "${message}"`, async () => {
     const admin = fakeAdmin();
@@ -193,11 +202,6 @@ for (const [label, patch, message] of [
     assert.equal(admin.db.users.size, 0, "no user created on invalid input");
   });
 }
-
-await test("signup: company with bad tax id / missing position -> 400", async () => {
-  assert.equal((await signup({ ...company, taxId: "!" })).json.error, "Invalid tax ID");
-  assert.equal((await signup({ ...company, position: "" })).json.error, "Position is required");
-});
 
 await test(`signup: attempt ${SIGNUP_LIMIT + 1} from one IP -> 429, other IP unaffected`, async () => {
   const admin = fakeAdmin();

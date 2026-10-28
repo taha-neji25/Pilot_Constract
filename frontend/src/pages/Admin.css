@@ -87,7 +87,7 @@
 }
 
 .admin__tab.is-active {
-  color: var(--pc-deep);
+  color: var(--pc-link);
   border-bottom-color: var(--pc-deep);
 }
 
@@ -187,7 +187,7 @@
 }
 
 .admin__table a {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 .admin__more {
@@ -204,7 +204,7 @@
 
 .admin__more:hover,
 .admin__more[aria-expanded="true"] {
-  color: var(--pc-deep);
+  color: var(--pc-link);
   border-bottom-color: var(--pc-deep);
 }
 

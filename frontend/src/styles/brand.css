@@ -6,9 +6,55 @@
   color: var(--pc-ink);
 }
 
+/* Focus ring: dark blue on light areas (5:1), light blue on the dark header, footer, hero and photo viewer */
 :focus-visible {
-  outline: 3px solid var(--pc-blue);
+  outline: 3px solid var(--pc-link);
   outline-offset: 2px;
+}
+
+.navbar :focus-visible,
+.footer :focus-visible,
+.hero :focus-visible,
+.lightbox :focus-visible,
+.skip-link:focus-visible {
+  outline-color: var(--pc-sky);
+}
+
+/* the heading that receives focus after a page change is not a control: no ring around it */
+h1:focus {
+  outline: none;
+}
+
+main:focus {
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  top: -5rem;
+  z-index: 2000;
+  padding: 0.7rem 1.1rem;
+  background: var(--pc-ink);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--pc-sky);
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* 30 degree isometric grid: Steel lines on Ink, Concrete lines on Paper */

@@ -43,7 +43,7 @@
 }
 
 .contact-page__card a:hover {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 .contact-page__quote {

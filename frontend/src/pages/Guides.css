@@ -46,7 +46,7 @@
 
 .guide-card:hover .guide-card__read,
 .guide__link:hover {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 /* article */
@@ -64,7 +64,7 @@
 }
 
 .guide__crumbs a:hover {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 .guide__intro {
@@ -137,7 +137,7 @@
 }
 
 .guide__others a:hover {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 @media (max-width: 900px) {

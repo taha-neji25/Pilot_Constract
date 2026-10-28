@@ -105,6 +105,13 @@ What only the owner can do (a website alone does not make Google rank it):
 2. **Google Business Profile** (<https://business.google.com>): create the profile for the Sfax workshop (name, address, phones, category, photos, opening hours, link to the site). This is what makes the company appear on Google Maps and in the local results ("charpente métallique Sfax").
 3. **Reviews and links**: ask satisfied clients for a Google review; get the site listed in partner/supplier pages, directories and social profiles (Facebook, Instagram and LinkedIn already link to it).
 
+## Legal and compliance (read `COMPLIANCE.md`)
+
+Privacy Policy, Terms, Cookie Policy, Refund Policy and Legal Notice are in the footer (texts: `frontend/src/i18n/legal*.js`). Signup collects only name,
+e-mail, phone and account type, and requires a ticked consent box. **Roll-out order for this change:** migration `consent_and_minimal_data` (already applied),
+then deploy the `signup` function, then push the site (the new form sends `consent`, the old function would refuse it, and the new function refuses the old form).
+Owner to-do list (INPDP declaration, legal identity fields, lawyer review, proofs): see `COMPLIANCE.md`.
+
 ## Day-to-day
 
 | Task | How |

@@ -14,12 +14,10 @@ import "./Auth.css";
 // Keep in sync with server/auth.js
 const EMAIL_RE =
   /^(?!\.)(?!.*\.\.)[A-Za-z0-9._%+-]{1,64}(?<!\.)@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,24}$/;
-const POSTAL_RE = /^[A-Za-z0-9][A-Za-z0-9 -]{1,8}[A-Za-z0-9]$/;
 
 const DEFAULT_COUNTRY = "TN";
 
 const isEmailValid = (v) => v.length <= 254 && EMAIL_RE.test(v.trim());
-const isPostalValid = (v) => POSTAL_RE.test(v.trim());
 const isPhoneValid = (value, country) =>
   Boolean(parsePhoneNumberFromString(value, country)?.isValid());
 
@@ -39,13 +37,8 @@ export default function Auth({ mode }) {
     email: "",
     phoneCountry: DEFAULT_COUNTRY,
     phone: "",
-    address: "",
-    postalCode: "",
-    birthDate: "",
-    gender: "",
-    taxId: "",
-    position: "",
     password: "",
+    consent: false, // must be ticked by the visitor: accepting the Terms and the Privacy Policy
   });
   const [touched, setTouched] = useState({});
   const [error, setError] = useState("");
@@ -93,7 +86,6 @@ export default function Auth({ mode }) {
   const fieldErrors = {
     email: form.email && !isEmailValid(form.email) ? auth.emailInvalid : "",
     phone: form.phone && !isPhoneValid(form.phone, form.phoneCountry) ? auth.phoneInvalid : "",
-    postalCode: form.postalCode && !isPostalValid(form.postalCode) ? auth.postalInvalid : "",
   };
   const showError = (key) => (touched[key] && fieldErrors[key] ? fieldErrors[key] : "");
 
@@ -102,7 +94,7 @@ export default function Auth({ mode }) {
     setError("");
 
     if (isSignup && Object.values(fieldErrors).some(Boolean)) {
-      setTouched({ email: true, phone: true, postalCode: true });
+      setTouched({ email: true, phone: true });
       return;
     }
 
@@ -344,81 +336,6 @@ export default function Auth({ mode }) {
                   <FieldError text={showError("phone")} />
                 </label>
               </div>
-
-              <label>
-                {auth.address}
-                <input
-                  type="text"
-                  value={form.address}
-                  onChange={set("address")}
-                  autoComplete="street-address"
-                  required
-                />
-              </label>
-              <label className="auth__short">
-                {auth.postalCode}
-                <input
-                  type="text"
-                  value={form.postalCode}
-                  onChange={set("postalCode")}
-                  onBlur={blur("postalCode")}
-                  autoComplete="postal-code"
-                  maxLength={10}
-                  aria-invalid={Boolean(showError("postalCode"))}
-                  required
-                />
-                <FieldError text={showError("postalCode")} />
-              </label>
-
-              {form.accountType === "person" ? (
-                <>
-                  <label>
-                    {auth.birthDate}
-                    <input
-                      type="date"
-                      value={form.birthDate}
-                      onChange={set("birthDate")}
-                      min="1900-01-01"
-                      max={new Date().toISOString().slice(0, 10)}
-                      autoComplete="bday"
-                      required
-                    />
-                  </label>
-                  <fieldset className="auth__choice">
-                    <legend>{auth.gender}</legend>
-                    {["male", "female"].map((g) => (
-                      <label key={g} className="auth__radio">
-                        <input
-                          type="radio"
-                          name="gender"
-                          value={g}
-                          checked={form.gender === g}
-                          onChange={set("gender")}
-                          required
-                        />
-                        {auth[g]}
-                      </label>
-                    ))}
-                  </fieldset>
-                </>
-              ) : (
-                <>
-                  <label>
-                    {auth.taxId}
-                    <input type="text" value={form.taxId} onChange={set("taxId")} required />
-                  </label>
-                  <label>
-                    {auth.position}
-                    <input
-                      type="text"
-                      value={form.position}
-                      onChange={set("position")}
-                      autoComplete="organization-title"
-                      required
-                    />
-                  </label>
-                </>
-              )}
             </>
           )}
 
@@ -434,6 +351,31 @@ export default function Auth({ mode }) {
             />
             {isSignup && <small>{auth.passwordHint}</small>}
           </label>
+
+          {isSignup && (
+            <div className="auth__consent">
+              <label className="auth__check">
+                <input
+                  type="checkbox"
+                  checked={form.consent}
+                  onChange={(e) => setForm({ ...form, consent: e.target.checked })}
+                  required
+                />
+                <span>
+                  {auth.consent.before}{" "}
+                  <Link to={path("terms")} target="_blank">
+                    {auth.consent.terms}
+                  </Link>{" "}
+                  {auth.consent.and}{" "}
+                  <Link to={path("privacy")} target="_blank">
+                    {auth.consent.privacy}
+                  </Link>
+                  .
+                </span>
+              </label>
+              <small>{auth.consent.note}</small>
+            </div>
+          )}
 
           {error && (
             <p className="auth__error" role="alert">

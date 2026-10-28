@@ -5,6 +5,7 @@
   --pc-ink: #1a1b1c;       /* side faces of the mark, text, dark fields */
   --pc-steel: #333536;     /* top face of the mark, secondary dark */
   --pc-deep: #307faf;      /* brand blue: wordmark, links, headings, buttons on light */
+  --pc-link: #2a6f9c;      /* the brand blue, darkened for TEXT on light backgrounds: contrast 5.0:1 (the brand blue gives 4.05:1, below the 4.5:1 WCAG AA minimum) */
   --pc-blue: #49a9d9;      /* highlights, charts, the project block */
   --pc-sky: #81c9eb;       /* light accent, accents on dark */
 

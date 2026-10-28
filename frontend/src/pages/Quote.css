@@ -148,7 +148,7 @@
 }
 
 .qsel__input:checked + .qsel__card .qsel__name {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 /* check badge on the selected card */
@@ -624,7 +624,7 @@
 }
 
 .qsel__input:checked + .qsel__card .qsel__badge {
-  color: var(--pc-deep);
+  color: var(--pc-link);
   border-color: var(--pc-deep);
 }
 

@@ -92,7 +92,7 @@ export default function Navbar() {
           <LanguageSwitcher />
           <button
             className="navbar__toggle"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t.nav.menuClose : t.nav.menuOpen}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >

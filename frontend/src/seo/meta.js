@@ -7,6 +7,7 @@ import translations from "../i18n/translations.js";
 import serviceDetails, { serviceUi } from "../i18n/serviceDetails.js";
 import guides, { guideUi, guidesIndexMeta } from "../i18n/guides.js";
 import { contactMeta } from "../i18n/contactText.js";
+import { legalMeta } from "../i18n/legalText.js";
 import { SITE_URL, canonicalUrl } from "./routes.js";
 import { BRAND, FR_NAME, HOURS, LEGAL_NAME, PLACES, mapsUrl } from "../data/company.js";
 
@@ -119,6 +120,7 @@ const guideIdOf = (page) => (page?.startsWith("guide:") ? page.slice(6) : null);
 export function pageMeta(page, lang) {
   if (page === "guides") return guidesIndexMeta[lang];
   if (page === "contact") return contactMeta[lang];
+  if (legalMeta[lang]?.[page]) return legalMeta[lang][page];
   const gid = guideIdOf(page);
   if (gid) return { title: guides[lang][gid].metaTitle, description: guides[lang][gid].metaDesc };
   const id = serviceIdOf(page);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import IBeam from "../components/IBeam.jsx";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
@@ -24,11 +24,13 @@ function useRowHeight() {
 }
 
 export default function Gallery() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { gallery } = t;
   const [params, setParams] = useSearchParams();
   const [openIndex, setOpenIndex] = useState(null);
   const rowHeight = useRowHeight();
+  const openerRef = useRef(null); // the photo that opened the viewer: it gets focus back when the viewer closes
+  const dialogRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -42,6 +44,9 @@ export default function Gallery() {
     filter === "all" ? galleryImages : galleryImages.filter((img) => img.section === filter);
 
   const categoryLabel = (id) => gallery.categories.find((c) => c.id === id)?.label ?? id;
+  const photoWord = { fr: "photo", en: "photo", ar: "صورة" }[language];
+  // each photo has its own text (category + number): identical text on 146 images tells a screen-reader user nothing
+  const altFor = (img, n) => `${categoryLabel(img.section)} — Sfax, ${photoWord} ${n}`;
   const countFor = (id) => galleryImages.filter((img) => img.section === id).length;
 
   const selectFilter = (id) => {
@@ -56,12 +61,34 @@ export default function Gallery() {
       ?.scrollIntoView({ inline: "center", block: "nearest" });
   }, [filter]);
 
+  // viewer opens: focus moves into it; it closes: focus goes back to the photo that was opened
+  const viewerOpen = openIndex !== null;
   useEffect(() => {
-    if (openIndex === null) return;
+    if (!viewerOpen) return undefined;
+    dialogRef.current?.querySelector("button")?.focus();
+    const opener = openerRef.current;
+    return () => opener?.focus();
+  }, [viewerOpen]);
+
+  useEffect(() => {
+    if (openIndex === null) return undefined;
     const onKey = (e) => {
       if (e.key === "Escape") setOpenIndex(null);
       if (e.key === "ArrowRight") setOpenIndex((i) => (i + 1) % filtered.length);
       if (e.key === "ArrowLeft") setOpenIndex((i) => (i - 1 + filtered.length) % filtered.length);
+      if (e.key === "Tab" && dialogRef.current) {
+        // keep Tab inside the viewer while it is open
+        const buttons = [...dialogRef.current.querySelectorAll("button")];
+        const first = buttons[0];
+        const last = buttons[buttons.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -109,12 +136,15 @@ export default function Gallery() {
                 type="button"
                 className="gallery-card__image"
                 style={{ aspectRatio: `${img.w} / ${img.h}` }}
-                onClick={() => setOpenIndex(i)}
-                aria-label={categoryLabel(img.section)}
+                onClick={(e) => {
+                  openerRef.current = e.currentTarget;
+                  setOpenIndex(i);
+                }}
+                aria-haspopup="dialog"
               >
                 <img
                   src={`/gallery/thumb/${img.id}.webp`}
-                  alt={`${categoryLabel(img.section)} — Sfax`}
+                  alt={altFor(img, i + 1)}
                   loading="lazy"
                   decoding="async"
                 />
@@ -130,9 +160,12 @@ export default function Gallery() {
           className="lightbox"
           role="dialog"
           aria-modal="true"
+          aria-label={gallery.title}
+          ref={dialogRef}
           onClick={() => setOpenIndex(null)}
         >
           <button
+            type="button"
             className="lightbox__btn lightbox__close"
             aria-label={gallery.close}
             onClick={() => setOpenIndex(null)}
@@ -152,7 +185,7 @@ export default function Gallery() {
           <img
             className="lightbox__img"
             src={`/gallery/${current.id}.webp`}
-            alt={categoryLabel(current.section)}
+            alt={altFor(current, openIndex + 1)}
             onClick={(e) => e.stopPropagation()}
           />
           <button

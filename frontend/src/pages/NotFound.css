@@ -6,7 +6,7 @@
 .not-found__icon {
   width: 44px;
   height: 28px;
-  color: var(--pc-deep);
+  color: var(--pc-link);
   margin: 0 auto 1rem;
 }
 

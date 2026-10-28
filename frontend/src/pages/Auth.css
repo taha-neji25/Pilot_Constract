@@ -58,7 +58,7 @@
 }
 
 .auth__switch a {
-  color: var(--color-steel);
+  color: var(--pc-link);
   text-decoration: underline;
 }
 
@@ -201,9 +201,45 @@
   align-self: start;
   padding: 0;
   font: inherit;
-  color: var(--pc-deep);
+  color: var(--pc-link);
   text-decoration: underline;
   background: none;
   border: 0;
   cursor: pointer;
+}
+
+/* ---- consent checkbox (Terms and Privacy Policy) */
+.auth__consent {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.auth__form label.auth__check {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.auth__form .auth__check input {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  margin-top: 0.15rem;
+  padding: 0;
+  accent-color: var(--pc-link);
+}
+
+.auth__check a {
+  color: var(--pc-link);
+  text-decoration: underline;
+}
+
+.auth__consent small {
+  color: var(--color-text-muted);
 }

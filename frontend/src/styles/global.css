@@ -55,7 +55,7 @@ p {
 }
 
 a {
-  color: var(--color-steel);
+  color: var(--pc-link);
   text-decoration: none;
 }
 
@@ -94,7 +94,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--pc-link);
   margin-bottom: 0.75rem;
 }
 
@@ -113,7 +113,7 @@ button {
 
 /* I-beam bullets are brand blue by default (orange is reserved for actions) */
 .eyebrow .i-beam {
-  color: var(--pc-deep);
+  color: var(--pc-link);
 }
 
 .btn {

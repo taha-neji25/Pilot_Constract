@@ -16,8 +16,9 @@
   min-width: 0;
 }
 
-.footer__col h4 {
+.footer__col h2 {
   color: #fff;
+  font-weight: 700;
   font-size: 1.15rem;
   margin: 0 0 1.1rem;
 }
@@ -139,6 +140,29 @@ html[dir="rtl"] .footer__links a::before {
   padding-top: 1.25rem;
   font-size: 0.85rem;
   color: var(--color-on-dark);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+}
+
+.footer__legal {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+}
+
+.footer__legal a {
+  color: var(--color-on-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer__legal a:hover {
+  color: #fff;
 }
 
 @media (max-width: 1024px) {
