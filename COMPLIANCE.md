@@ -63,7 +63,9 @@ Tunisian lawyer read the five legal pages once (about an hour); the points marke
   `frontend/src/i18n/legal*.js`; names and addresses come from `frontend/src/data/company.js`.
 * Signup: fewer fields, consent checkbox, server-side check (`supabase/functions/_shared/signup.js`), database migration `consent_and_minimal_data`.
 * Removed: 3 sample testimonials with no real client; every "certified workshop" (no certificate); "projects delivered internationally"; "industry leaders /
-  exceptional results"; the flag images (a flag is not a language, one file had unclear origin).
+  exceptional results".
+* Language flags (US for English, the historical pan-Arab "Arab Revolt" flag for Arabic, France for French): kept at the owner's request. They are decorative
+  (the language name is always written next to them). Keep a note of where the three image files came from.
 * Fonts self-hosted (`@fontsource/*`, SIL Open Font License).
 * Accessibility: automated audit (axe-core, WCAG 2.1 A/AA) = 0 violations on 26 pages x desktop/phone; text blue darkened to 5:1 contrast; heading levels;
   skip link; focus moves to the page heading after each page change; visible focus ring on light and dark areas; language menu and photo viewer work

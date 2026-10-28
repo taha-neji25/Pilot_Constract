@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext.jsx";
 import "./LanguageSwitcher.css";
+// Flag images: decorative (the language name is always available as text and in the button's accessible name)
+import enFlag from "../../assets/flags/en.webp";
+import frFlag from "../../assets/flags/fr.png";
+import arFlag from "../../assets/flags/ar.png";
 
-// Language names are written in their own language. No flags: a flag stands for a country, not a language.
+// Language names are written in their own language, next to a flag.
 const OPTIONS = [
-  { code: "en", label: "English" },
-  { code: "fr", label: "Français" },
-  { code: "ar", label: "العربية" },
+  { code: "en", flag: enFlag, label: "English" },
+  { code: "fr", flag: frFlag, label: "Français" },
+  { code: "ar", flag: arFlag, label: "العربية" },
 ];
 
 // Language menu: a button that opens a list of buttons. Works with the keyboard (Tab, Enter/Space, Escape closes and
@@ -45,7 +49,10 @@ export default function LanguageSwitcher() {
         aria-expanded={open}
         aria-label={`${current.code.toUpperCase()} - ${t.nav.language}: ${current.label}`}
       >
-        <span className="lang-switcher__code">{current.code.toUpperCase()}</span>
+        <img src={current.flag} alt="" aria-hidden="true" className="lang-switcher__flag-img" />
+        <span className="lang-switcher__code" aria-hidden="true">
+          {current.code.toUpperCase()}
+        </span>
       </button>
 
       {open && (
@@ -66,6 +73,7 @@ export default function LanguageSwitcher() {
                   setOpen(false);
                 }}
               >
+                <img src={opt.flag} alt="" aria-hidden="true" className="lang-switcher__flag-img" />
                 <span>{opt.label}</span>
               </button>
             </li>
